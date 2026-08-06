@@ -330,6 +330,8 @@
 
   /* Lainey's rock-nap shell game (cricket scene) */
   .rockStage{position:relative;width:min(92vw,520px);height:240px;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:linear-gradient(180deg,#2b2158 0%,#41337a 54%,#1e4633 54%,#143324 100%);}
+  /* reward clips that are portrait play full-screen so the whole frame is seen */
+  .fullScreenReward{position:fixed;inset:0;z-index:9999;background:#000;display:flex;align-items:center;justify-content:center;}
   .rockBand{position:absolute;top:8px;right:12px;font-size:clamp(20px,5vw,28px);opacity:.9;}
   .rockBand.pulse{animation:rockBandPulse .4s ease;}
   @keyframes rockBandPulse{0%{transform:scale(1)}40%{transform:scale(1.2)}100%{transform:scale(1)}}
@@ -715,7 +717,15 @@ function pickVioletVoice(){
                || pool[0];
   }catch(e){}
 }
+/* The robotic device voice is disabled everywhere — this app uses ONLY the
+   recorded clips. If an audio file is missing or fails to load, we stay silent
+   (and note it in the console) instead of speaking in a synthetic voice. */
+const USE_DEVICE_VOICE = false;
 function say(text){
+  if(!USE_DEVICE_VOICE){
+    if(text) console.warn('[audio missing — stayed silent]:', text);
+    return;
+  }
   try{
     if(!('speechSynthesis' in window)) return;
     const clean = text.replace(/[^\w\s'!?.,]/g,'').trim();
@@ -741,6 +751,10 @@ function say(text){
   }catch(e){}
 }
 function sayAsViolet(text){
+  if(!USE_DEVICE_VOICE){
+    if(text) console.warn('[word audio missing — stayed silent]:', text);
+    return;
+  }
   try{
     if(!('speechSynthesis' in window)) return;
     const clean = text.replace(/[^\w\s'!?.,-]/g,'').trim();
@@ -3712,18 +3726,21 @@ function rnCelebrate(){
 /* plays the reward clip at art/rockreward1.mp4; if it can't load, falls
    straight to the confetti celebration — same pattern as the other games */
 function playRockNapReward(fallbackFn){
-  const stageEl = document.getElementById('rockStage');
+  // the rock stage is a short landscape strip but this clip is portrait, so it
+  // plays as a FULL-SCREEN overlay — the whole frame fills the phone
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
   const vid = document.createElement('video');
   vid.src = 'art/rockreward1.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  // 'contain' so the whole video frame is visible (it's portrait; cover would crop it)
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;z-index:8;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  overlay.appendChild(vid);
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  document.body.appendChild(overlay);
   // the child just tapped a rock, so the page has user activation — play WITH
   // sound first; if the browser blocks it, retry muted then unmute on play
   vid.muted = false;
@@ -4335,8 +4352,10 @@ function awHit(el, ch){
     awActive=false;
     if(awSpawnTimer){ clearInterval(awSpawnTimer); awSpawnTimer=null; }
     document.querySelectorAll('#awakeStage .awLetter').forEach(l=>l.remove());
-    awSetPose(AW_AWAKE_IMG);
-    setTimeout(awCelebrate, 500);
+    // straight into the reward video — don't flash the awake image first, that
+    // both looked like a glitch and gave away the video's own wake-up moment.
+    // (the awake image is set once the video finishes, as the resting state)
+    awCelebrate();
   } else {
     // still sleepy — flip to a DIFFERENT sleepy pose
     let next; do{ next = AW_SLEEP[Math.floor(Math.random()*AW_SLEEP.length)]; }while(next===awPose && AW_SLEEP.length>1);
@@ -4370,6 +4389,7 @@ function playAwakeReward(fallbackFn){
 function awConfetti(){
   const fb = document.getElementById('awFeedback');
   fb.innerHTML = '<span class="star">⭐ You helped her stay awake! Great job! ⭐</span>';
+  awSetPose(AW_AWAKE_IMG);   // the video is over — leave her wide awake
   const stageEl = document.getElementById('awakeStage');
   for(let c=0;c<14;c++){
     const conf=document.createElement('div');
