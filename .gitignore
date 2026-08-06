@@ -1,0 +1,25 @@
+# --- regenerable / tooling ---
+node_modules/
+build-web/node_modules/
+build-web/ios/
+build-web/package-lock.json
+
+# --- working files: too big for GitHub (kites2.psd alone is 115MB, limit is 100MB) ---
+app/art/elevenlabs videos/
+*.psd
+
+# --- large media: keep these backed up on a drive / cloud, not in git ---
+*.mp4
+*.mov
+*.mp3
+*.wav
+
+# --- large images (source art). index.html is what we version here. ---
+app/art/
+build-web/www/art/
+build-web/www/audio/
+app/audio/
+
+# --- archives / junk ---
+*.zip
+.DS_Store

@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Adventures of Violet &amp; Lainey — Interactive Demo</title>
+<style>
+  :root{
+    --violet:#7b4ea8; --violet-deep:#5e3a85;
+    --lainey:#e23b3b; --lainey-deep:#b71f1f;
+    --daisy:#ffd34e; --sky:#bfe7ff; --grass:#a7e08a;
+    --cream:#fff8ec; --ink:#3a2c4a;
+  }
+  *{box-sizing:border-box; -webkit-tap-highlight-color:transparent;}
+  html,body{margin:0;height:100%;}
+  body{
+    font-family:"Comic Sans MS","Baloo 2",system-ui,sans-serif;
+    background:linear-gradient(180deg,var(--sky),#e9f7ff);
+    color:var(--ink); overflow:hidden; touch-action:manipulation;
+  }
+  #app{height:100dvh;width:100vw;position:relative;display:flex;align-items:center;justify-content:center;}
+  .screen{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;padding:18px;}
+  .screen.active{display:flex;animation:fade .4s ease;}
+  @keyframes fade{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+  h1{font-size:clamp(28px,7vw,52px);margin:.2em 0;color:var(--violet-deep);text-shadow:2px 2px 0 #fff;text-align:center;}
+  .subtitle{font-size:clamp(15px,3.5vw,20px);color:var(--lainey-deep);margin-bottom:18px;text-align:center;}
+
+  .btn{
+    border:none;border-radius:999px;padding:14px 26px;font-size:clamp(16px,4vw,20px);
+    font-family:inherit;font-weight:bold;color:#fff;cursor:pointer;margin:7px;
+    box-shadow:0 5px 0 rgba(0,0,0,.18);transition:transform .08s, box-shadow .08s;
+  }
+  .btn:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.18);}
+  .btn-violet{background:var(--violet);} .btn-lainey{background:var(--lainey);}
+  .btn-daisy{background:var(--daisy);color:var(--ink);} .btn-grass{background:#4caf50;}
+  .menu-grid{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;max-width:520px;}
+  .menu-grid .btn{flex:1 1 200px;min-height:64px;}
+
+  .topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;z-index:20;}
+  .home-btn{background:#fff;color:var(--violet-deep);border:none;border-radius:50%;width:46px;height:46px;font-size:22px;box-shadow:0 3px 0 rgba(0,0,0,.15);cursor:pointer;}
+  .pill{background:#fff;border-radius:999px;padding:6px 16px;font-weight:bold;color:var(--violet-deep);box-shadow:0 3px 0 rgba(0,0,0,.12);}
+
+  /* characters */
+  .stage{position:relative;width:min(92vw,640px);height:min(44vh,360px);background:linear-gradient(180deg,#d6f0ff 60%,var(--grass));border-radius:26px;overflow:hidden;box-shadow:inset 0 -10px 20px rgba(0,0,0,.06),0 8px 24px rgba(0,0,0,.12);}
+  .cloud{position:absolute;background:#fff;border-radius:50%;opacity:.85;}
+  .char{position:absolute;bottom:8%;width:34%;max-width:170px;cursor:pointer;transition:transform .2s;filter:drop-shadow(0 6px 6px rgba(0,0,0,.18));}
+  .char:active{transform:scale(.94);}
+  .char.violet{left:6%;width:44%;max-width:230px;animation:floaty 3.2s ease-in-out infinite;}
+  .char.lainey{right:9%;width:17%;max-width:90px;animation:floaty 3.6s ease-in-out infinite .4s;}
+  @keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-14px)}}
+  .bubble{position:absolute;max-width:62%;background:#fff;border:3px solid var(--violet);border-radius:18px;padding:10px 14px;font-size:clamp(14px,3.4vw,18px);font-weight:bold;color:var(--ink);box-shadow:0 4px 10px rgba(0,0,0,.15);opacity:0;transform:scale(.8);transition:.25s;z-index:5;}
+  .bubble.show{opacity:1;transform:scale(1);}
+  .bubble.v{left:6%;top:8%;border-color:var(--violet);}
+  .bubble.l{right:6%;top:8%;border-color:var(--lainey);}
+
+  /* story */
+  .storytext{font-size:clamp(18px,4.6vw,26px);line-height:1.5;text-align:center;max-width:640px;margin:16px 8px 6px;}
+  .word{transition:background .15s,color .15s;border-radius:6px;padding:0 2px;}
+  .word.hi{background:var(--daisy);color:var(--ink);}
+  .pagenav{display:flex;gap:10px;align-items:center;margin-top:6px;}
+
+  /* coloring */
+  .palette{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:12px 0;}
+  .swatch{width:42px;height:42px;border-radius:50%;border:3px solid #fff;box-shadow:0 2px 5px rgba(0,0,0,.25);cursor:pointer;}
+  .swatch.sel{outline:4px solid var(--ink);}
+  #colorSvg{width:min(90vw,560px);height:auto;background:#fff;border-radius:22px;box-shadow:0 8px 24px rgba(0,0,0,.12);touch-action:none;}
+  #colorSvg .fillable{cursor:pointer;transition:fill .15s;}
+
+  /* game */
+  .gamewrap{text-align:center;width:min(94vw,640px);}
+  .ask{font-size:clamp(20px,5vw,30px);font-weight:bold;color:var(--violet-deep);margin:6px 0 10px;}
+  .bugs{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;background:linear-gradient(180deg,#eafbe2,#d2f3c4);border-radius:20px;padding:18px;min-height:120px;box-shadow:inset 0 -6px 14px rgba(0,0,0,.05);}
+  .bug{width:54px;height:54px;animation:wiggle 2s ease-in-out infinite;}
+  @keyframes wiggle{0%,100%{transform:rotate(-6deg)}50%{transform:rotate(6deg)}}
+  .choices{display:flex;gap:10px;justify-content:center;margin-top:14px;flex-wrap:wrap;}
+  .choice{width:70px;height:70px;border-radius:18px;border:none;background:#fff;font-size:30px;font-weight:bold;color:var(--violet-deep);box-shadow:0 5px 0 rgba(0,0,0,.15);cursor:pointer;}
+  .choice:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.15);}
+  .feedback{font-size:clamp(20px,5vw,28px);font-weight:bold;min-height:36px;margin-top:12px;}
+  .star{color:var(--daisy);}
+
+  .hint{position:absolute;bottom:8px;left:0;right:0;text-align:center;font-size:12px;color:#6b5b7a;opacity:.8;}
+  .swap-note{font-size:12px;color:#6b5b7a;max-width:360px;text-align:center;margin-top:14px;}
+
+  /* ===== opening video splash ===== */
+  #splash{padding:0;background:#000;}
+  #splashVideo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;background:#000;}
+  /* tap-to-start overlay (shown until the child taps) */
+  #startOverlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    background:linear-gradient(180deg,#5e3a85,#7b4ea8);z-index:10;cursor:pointer;}
+  #startOverlay h1{color:#fff;text-shadow:2px 2px 0 rgba(0,0,0,.25);}
+  #startOverlay .subtitle{color:#ffe9b3;}
+  .play-circle{width:104px;height:104px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;
+    box-shadow:0 8px 0 rgba(0,0,0,.18);margin-top:6px;animation:pulse 1.6s ease-in-out infinite;}
+  .play-circle .tri{width:0;height:0;border-style:solid;border-width:24px 0 24px 40px;border-color:transparent transparent transparent var(--violet);margin-left:8px;}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.08)}}
+  /* skip button shown while the video plays */
+  #skipBtn{position:absolute;bottom:18px;right:18px;z-index:11;background:rgba(0,0,0,.55);color:#fff;border:none;
+    border-radius:999px;padding:10px 20px;font-family:inherit;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.3);}
+  #skipBtn:active{transform:translateY(3px);}
+  /* replay button on home */
+  .replay-btn{background:#fff;color:var(--violet-deep);border:none;border-radius:999px;padding:8px 18px;
+    font-family:inherit;font-size:14px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.12);margin-top:6px;}
+  .replay-btn:active{transform:translateY(3px);}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <!-- ================= OPENING VIDEO ================= -->
+  <section class="screen active" id="splash">
+    <video id="splashVideo" playsinline preload="auto" src="opening-video.mp4"></video>
+    <button id="skipBtn" style="display:none" onclick="endSplash()">Skip ⏭️</button>
+    <div id="startOverlay" onclick="startSplash()">
+      <h1>Adventures of<br>Violet &amp; Lainey</h1>
+      <p class="subtitle">Tap to begin! 💜🐞</p>
+      <div class="play-circle"><div class="tri"></div></div>
+    </div>
+  </section>
+
+  <!-- ================= HOME ================= -->
+  <section class="screen" id="home">
+    <div class="stage" style="height:min(40vh,300px);margin-bottom:14px;">
+      <div class="cloud" style="width:90px;height:60px;top:14%;left:12%"></div>
+      <div class="cloud" style="width:70px;height:46px;top:22%;right:18%"></div>
+      <!-- CHARACTER SLOTS: swap the SVGs for Mindy's real images -->
+      <div class="char violet" data-char="violet" onclick="speak('violet')"></div>
+      <div class="char lainey" data-char="lainey" onclick="speak('lainey')"></div>
+    </div>
+    <h1>Adventures of<br>Violet &amp; Lainey</h1>
+    <p class="subtitle">Tap a friend to say hello! 💜🐞</p>
+    <div class="menu-grid">
+      <button class="btn btn-violet" onclick="go('story')">📖 Read the Story</button>
+      <button class="btn btn-lainey" onclick="go('color')">🎨 Color a Page</button>
+      <button class="btn btn-daisy" onclick="go('game')">🌼 Counting Game</button>
+    </div>
+    <button class="replay-btn" onclick="replayIntro()">▶️ Play the opening video</button>
+    <p class="swap-note">Demo with placeholder characters. Mindy can swap in the real Violet &amp; Lainey art — see the note at the bottom of the roadmap.</p>
+  </section>
+
+  <!-- ================= STORY ================= -->
+  <section class="screen" id="story">
+    <div class="topbar">
+      <button class="home-btn" onclick="go('home')">🏠</button>
+      <span class="pill" id="pagePill">Page 1</span>
+      <button class="home-btn" id="readBtn" onclick="toggleRead()">🔊</button>
+    </div>
+    <div class="stage">
+      <div class="cloud" style="width:80px;height:52px;top:12%;left:14%"></div>
+      <div class="bubble v" id="bubbleV"></div>
+      <div class="bubble l" id="bubbleL"></div>
+      <div class="char violet" data-char="violet" onclick="speak('violet')"></div>
+      <div class="char lainey" data-char="lainey" onclick="speak('lainey')"></div>
+    </div>
+    <p class="storytext" id="storyText"></p>
+    <div class="pagenav">
+      <button class="btn btn-grass" onclick="prevPage()">⬅️ Back</button>
+      <button class="btn btn-violet" onclick="nextPage()">Next ➡️</button>
+    </div>
+  </section>
+
+  <!-- ================= COLOR ================= -->
+  <section class="screen" id="color">
+    <div class="topbar">
+      <button class="home-btn" onclick="go('home')">🏠</button>
+      <span class="pill">Color Time!</span>
+      <button class="home-btn" onclick="resetColor()">↺</button>
+    </div>
+    <div class="palette" id="palette"></div>
+    <!-- Simple line-art scene the child taps to fill. Swap for Mindy's coloring-page art later. -->
+    <svg id="colorSvg" viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg">
+      <rect class="fillable" x="0" y="0" width="400" height="300" fill="#ffffff"/>
+      <rect class="fillable" x="0" y="210" width="400" height="90" fill="#ffffff" stroke="#333" stroke-width="2"/>
+      <!-- sun -->
+      <circle class="fillable" cx="60" cy="55" r="34" fill="#ffffff" stroke="#333" stroke-width="2"/>
+      <!-- flower -->
+      <circle class="fillable" cx="330" cy="150" r="18" fill="#ffffff" stroke="#333" stroke-width="2"/>
+      <circle class="fillable" cx="330" cy="118" r="14" fill="#ffffff" stroke="#333" stroke-width="2"/>
+      <circle class="fillable" cx="330" cy="182" r="14" fill="#ffffff" stroke="#333" stroke-width="2"/>
+      <circle class="fillable" cx="298" cy="150" r="14" fill="#ffffff" stroke="#333" stroke-width="2"/>
+      <circle class="fillable" cx="362" cy="150" r="14" fill="#ffffff" stroke="#333" stroke-width="2"/>
+      <!-- Violet (bat) body -->
+      <ellipse class="fillable" cx="150" cy="150" rx="40" ry="46" fill="#ffffff" stroke="#333" stroke-width="2"/>
+      <path class="fillable" d="M110 140 Q70 110 60 150 Q95 150 110 165 Z" fill="#ffffff" stroke="#333" stroke-width="2"/>
+      <path class="fillable" d="M190 140 Q230 110 240 150 Q205 150 190 165 Z" fill="#ffffff" stroke="#333" stroke-width="2"/>
+      <circle cx="138" cy="142" r="5" fill="#333"/><circle cx="162" cy="142" r="5" fill="#333"/>
+      <!-- Lainey (ladybug) body -->
+      <ellipse class="fillable" cx="250" cy="200" rx="34" ry="30" fill="#ffffff" stroke="#333" stroke-width="2"/>
+      <line x1="250" y1="172" x2="250" y2="228" stroke="#333" stroke-width="2"/>
+      <circle class="fillable" cx="236" cy="190" r="5" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+      <circle class="fillable" cx="264" cy="195" r="5" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+      <circle class="fillable" cx="240" cy="212" r="5" fill="#ffffff" stroke="#333" stroke-width="1.5"/>
+    </svg>
+    <p class="hint">Pick a color, then tap a shape to fill it in.</p>
+  </section>
+
+  <!-- ================= GAME ================= -->
+  <section class="screen" id="game">
+    <div class="topbar">
+      <button class="home-btn" onclick="go('home')">🏠</button>
+      <span class="pill" id="scorePill">⭐ 0</span>
+      <span style="width:46px"></span>
+    </div>
+    <div class="gamewrap">
+      <p class="ask" id="ask">How many ladybugs do you see?</p>
+      <div class="bugs" id="bugs"></div>
+      <div class="choices" id="choices"></div>
+      <div class="feedback" id="feedback"></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+/* ============================================================
+   CHARACTER ART CONFIG
+   To use Mindy's real art: set imgSrc to an image file path,
+   e.g. violet.imgSrc = "art/violet.png". If imgSrc is empty,
+   the built-in placeholder SVG is drawn instead.
+   ============================================================ */
+const CHARACTERS = {
+  violet: { name:"Violet", color:"#7b4ea8", imgSrc:"",
+            lines:["Hi! I'm Violet the bat! 💜","Will you read with us?","Meeting halfway is what friends do!"] },
+  lainey: { name:"Lainey", color:"#e23b3b", imgSrc:"",
+            lines:["I'm Lainey the ladybug! 🐞","Let's count together!","Yay, you found me!"] }
+};
+
+/* Placeholder art that follows the written descriptions. Real uploaded art
+   will replace these via CHARACTERS[*].imgSrc — see roadmap Section 6. */
+function violetSVG(){return `<svg viewBox="0 0 140 130" xmlns="http://www.w3.org/2000/svg">
+  <!-- pink wing membranes -->
+  <path d="M42 60 Q2 30 4 72 Q6 92 26 86 Q34 74 44 78 Z" fill="#f4a6c8" stroke="#5e3a85" stroke-width="2"/>
+  <path d="M98 60 Q138 30 136 72 Q134 92 114 86 Q106 74 96 78 Z" fill="#f4a6c8" stroke="#5e3a85" stroke-width="2"/>
+  <!-- ears (pink inner) -->
+  <path d="M48 40 L54 18 L64 40 Z" fill="#9b6fce"/><path d="M52 38 L56 24 L61 38 Z" fill="#f4a6c8"/>
+  <path d="M92 40 L86 18 L76 40 Z" fill="#9b6fce"/><path d="M88 38 L84 24 L79 38 Z" fill="#f4a6c8"/>
+  <!-- head/body lilac -->
+  <ellipse cx="70" cy="72" rx="34" ry="38" fill="#b89bdc"/>
+  <ellipse cx="70" cy="64" rx="30" ry="30" fill="#c8b1e6"/>
+  <!-- daisy near LEFT ear (viewer's right) -->
+  <g transform="translate(96,34)">
+    <circle r="6" fill="#ffd34e"/>
+    ${[0,60,120,180,240,300].map(a=>`<ellipse cx="${10*Math.cos(a*Math.PI/180)}" cy="${10*Math.sin(a*Math.PI/180)}" rx="6" ry="3.4" fill="#fff" stroke="#e9c84a" stroke-width="1" transform="rotate(${a})"/>`).join('')}
+    <circle r="4" fill="#ffd34e"/>
+  </g>
+  <!-- big sparkly purple eyes -->
+  <circle cx="58" cy="66" r="11" fill="#fff"/><circle cx="82" cy="66" r="11" fill="#fff"/>
+  <circle cx="58" cy="67" r="7" fill="#6a3fb0"/><circle cx="82" cy="67" r="7" fill="#6a3fb0"/>
+  <circle cx="55" cy="64" r="2.6" fill="#fff"/><circle cx="79" cy="64" r="2.6" fill="#fff"/>
+  <!-- smile + tiny fangs -->
+  <path d="M60 84 Q70 92 80 84" stroke="#5e3a85" stroke-width="3" fill="none" stroke-linecap="round"/>
+  <path d="M64 87 L66 92 L68 87 Z" fill="#fff"/><path d="M72 87 L74 92 L76 87 Z" fill="#fff"/>
+</svg>`;}
+function laineySVG(){return `<svg viewBox="0 0 120 130" xmlns="http://www.w3.org/2000/svg">
+  <!-- transparent wings -->
+  <ellipse cx="36" cy="74" rx="20" ry="26" fill="#ffffff" opacity=".55" stroke="#ccc"/>
+  <ellipse cx="84" cy="74" rx="20" ry="26" fill="#ffffff" opacity=".55" stroke="#ccc"/>
+  <!-- red shell with spots -->
+  <ellipse cx="60" cy="78" rx="34" ry="32" fill="#e23b3b"/>
+  <line x1="60" y1="48" x2="60" y2="110" stroke="#7a1414" stroke-width="3"/>
+  <circle cx="44" cy="68" r="5" fill="#222"/><circle cx="76" cy="68" r="5" fill="#222"/>
+  <circle cx="48" cy="92" r="5" fill="#222"/><circle cx="72" cy="92" r="5" fill="#222"/>
+  <!-- black head -->
+  <ellipse cx="60" cy="44" rx="22" ry="18" fill="#1c1c1c"/>
+  <!-- antennae -->
+  <line x1="48" y1="30" x2="40" y2="14" stroke="#1c1c1c" stroke-width="3" stroke-linecap="round"/>
+  <line x1="72" y1="30" x2="80" y2="14" stroke="#1c1c1c" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="40" cy="13" r="3" fill="#1c1c1c"/><circle cx="80" cy="13" r="3" fill="#1c1c1c"/>
+  <!-- green eyes -->
+  <circle cx="52" cy="44" r="6" fill="#fff"/><circle cx="68" cy="44" r="6" fill="#fff"/>
+  <circle cx="52" cy="45" r="3.4" fill="#2e8b57"/><circle cx="68" cy="45" r="3.4" fill="#2e8b57"/>
+  <circle cx="51" cy="43" r="1.2" fill="#fff"/><circle cx="67" cy="43" r="1.2" fill="#fff"/>
+  <path d="M54 52 Q60 56 66 52" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round"/>
+  <!-- pink bow on head -->
+  <g transform="translate(60,24)">
+    <path d="M0 0 L-14 -7 L-14 7 Z" fill="#ff7eb6"/>
+    <path d="M0 0 L14 -7 L14 7 Z" fill="#ff7eb6"/>
+    <circle r="3.5" fill="#ff4f9e"/>
+  </g>
+</svg>`;}
+
+function renderChars(){
+  document.querySelectorAll('.char').forEach(el=>{
+    const c = CHARACTERS[el.dataset.char];
+    if(c.imgSrc){ el.innerHTML = `<img src="${c.imgSrc}" alt="${c.name}" style="width:100%;height:auto">`; }
+    else { el.innerHTML = el.dataset.char==='violet'?violetSVG():laineySVG(); }
+  });
+}
+
+/* ---------- opening video splash ---------- */
+const splashVideo = document.getElementById('splashVideo');
+// when the video finishes on its own, go to home
+splashVideo.addEventListener('ended', endSplash);
+function startSplash(){
+  document.getElementById('startOverlay').style.display='none';
+  document.getElementById('skipBtn').style.display='block';
+  splashVideo.currentTime = 0;
+  const p = splashVideo.play();
+  if(p && p.catch){ p.catch(()=>endSplash()); } // if play fails, don't trap the child
+}
+function endSplash(){
+  try{ splashVideo.pause(); }catch(e){}
+  document.getElementById('skipBtn').style.display='none';
+  go('home');
+}
+function replayIntro(){
+  // reset overlay so it's a fresh tap-to-start, then show splash
+  document.getElementById('startOverlay').style.display='flex';
+  document.getElementById('skipBtn').style.display='none';
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById('splash').classList.add('active');
+}
+
+/* ---------- navigation ---------- */
+function go(id){
+  stopRead();
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='story'){ renderPage(); }
+  if(id==='game'){ newRound(); }
+}
+
+/* ---------- talking ---------- */
+function say(text){
+  try{
+    if(!('speechSynthesis' in window)) return;
+    const u = new SpeechSynthesisUtterance(text.replace(/[^\w\s'!?.,]/g,''));
+    u.rate=.95; u.pitch=1.25; speechSynthesis.cancel(); speechSynthesis.speak(u);
+  }catch(e){}
+}
+let lineIdx={violet:0,lainey:0};
+function speak(who){
+  const c=CHARACTERS[who];
+  const line=c.lines[lineIdx[who]%c.lines.length]; lineIdx[who]++;
+  say(line);
+  // show a bubble if on story screen
+  const b=document.getElementById(who==='violet'?'bubbleV':'bubbleL');
+  if(b){ b.textContent=line; b.classList.add('show'); setTimeout(()=>b.classList.remove('show'),2600); }
+}
+
+/* ---------- story / read-along ---------- */
+const PAGES=[
+  "Meet Violet the bat with wings soft and wide,\nShe usually likes the darkness to sleep and to hide.\nBut her very best friend, Lainey, is a ladybug so bright,\nWho sleeps in the dark and wakes with the light.",
+  "\"Violet, please stay awake!\" Lainey started to say,\n\"I want you to see all the things in my day!\nThe flowers! The sunshine! There's so much to see!\nOh please, won't you spend just this one day with me?\"",
+  "Her eyes were so heavy, she gave a big yawn,\n\"I shouldn't be awake at the break of the dawn.\"",
+  "Violet stretched out her wings and let out a sigh,\nThen she followed her friend for a trip through the sky.",
+  "\"First stop!\" Lainey cheered, \"is the Butterfly Grove!\nWith colors so bright, it's a real treasure trove!\"\nViolet gasped at the wings painted orange and blue,\n\"I've never seen anything this beautiful — it's true!\"",
+  "They flew past a pond where the water was clear,\n\"The fish shimmer like stars!\" Violet said with a cheer.",
+  "Lainey splashed at the fountain, \"This will wake you right up!\"\nCool water flew everywhere — drip, drizzle, and drop!\nViolet squealed as it tickled her fuzzy bat face,\n\"Okay, I'm awake now!\" she laughed with such grace.",
+  "Next, Lainey flew high to a tall apple tree,\n\"Try this!\" Lainey said, \"taste the nectar with me!\"",
+  "But then Violet wobbled — her eyes started to close,\nHer head started nodding right down to her toes.\n\"I'm so sleepy, Lainey, I don't quite belong,\nI've tried to be brave, but the day is too long.\"",
+  "Lainey smiled softly, \"Let's nap, me and you,\nAnd when the stars wake up, I'll try your world too!\"",
+  "The sun waved goodbye with a warm golden glow,\nViolet jumped up and said, \"Ready? Let's go!\nYou showed me your world, now I'll show you mine —\nThe nighttime is magic, and you'll see it shine!\"",
+  "Violet raced down the slide as the sun slipped away,\n\"It's MY turn to show you how nighttime can play!\"\nBut Lainey swung softly, still rubbing her eyes,\n\"I'm up... I'm up...\" she yawned at the skies.",
+  "They flew past the fireflies, all twinkling and bright,\nLainey gasped, \"Oh! I had no idea about night!\"\nHer sleepy eyes opened as wide as can be,\n\"Forget about napping — there's so much to see!\"",
+  "The lake shimmered with the reflection of the big silver moon,\nAnd night flowers opened to dance in tune.\n\"You see?\" Violet smiled, \"while the whole world's asleep,\nMy nighttime has treasures it likes to keep.\"",
+  "Violet flew to a creek where the crickets all played,\nA nighttime orchestra — a sweet serenade.\nBut Lainey sat still on a stone by the stream,\nHer eyes gently closing, slipping into a dream.",
+  "\"Just one more thing, Lainey, before you can rest!\"\nShe flew to a tree where an owl had its nest.\nIt sang a sweet song to the moon way up high,\n\"That's lovely...\" yawned Lainey, \"a nighttime lullaby.\"",
+  "The lullaby ended, and Lainey was still,\nViolet carried her softly over the hill.\nShe made her a bed out of petals and dew,\n\"Sweet dreams, little Lainey — I'll be right here for you.\"",
+  "As morning arrived, Lainey stretched open wide,\nWhile Violet grew sleepy right there by her side.\n\"Let's do this each week — I'll stay up, then it's you!\"\n\"Every Wednesday!\" said Violet, \"that's what best friends do.\"",
+  "Because that's what friends do when their worlds are apart —\nThey meet in the middle with love in their heart.\nWhere the daylight meets darkness, their friendship will glow,\nThe brightest of lights that the whole world will know.",
+  "The End.\nSee you next Wednesday! 💜🐞"
+];
+let page=0, reading=false, wordTimer=null;
+function renderPage(){
+  document.getElementById('pagePill').textContent = (page<19? "Page "+(page+1) : "The End");
+  const lines=PAGES[page].split('\n');
+  let i=0, html='';
+  lines.forEach((line,li)=>{
+    html += line.split(' ').map(w=>`<span class="word" data-i="${i++}">${w}</span>`).join(' ');
+    if(li<lines.length-1) html += '<br>';
+  });
+  document.getElementById('storyText').innerHTML=html;
+}
+function plainPage(){ return PAGES[page].replace(/\n/g,' '); }
+function nextPage(){ stopRead(); if(page<PAGES.length-1){page++;renderPage();} else {speak('violet');} }
+function prevPage(){ stopRead(); if(page>0){page--;renderPage();} }
+function toggleRead(){ reading?stopRead():startRead(); }
+function startRead(){
+  reading=true; document.getElementById('readBtn').textContent='⏸';
+  say(plainPage());
+  let i=0; const spans=document.querySelectorAll('#storyText .word');
+  function step(){
+    spans.forEach(s=>s.classList.remove('hi'));
+    if(i<spans.length){ spans[i].classList.add('hi'); i++; wordTimer=setTimeout(step,340); }
+    else { stopRead(); }
+  }
+  step();
+}
+function stopRead(){
+  reading=false; clearTimeout(wordTimer);
+  try{speechSynthesis.cancel();}catch(e){}
+  const rb=document.getElementById('readBtn'); if(rb) rb.textContent='🔊';
+  document.querySelectorAll('#storyText .word').forEach(s=>s.classList.remove('hi'));
+}
+
+/* ---------- coloring ---------- */
+const COLORS=["#e23b3b","#ff8c42","#ffd34e","#4caf50","#2196f3","#7b4ea8","#ff7eb6","#8d5524","#222222","#ffffff"];
+let curColor=COLORS[5];
+function buildPalette(){
+  const p=document.getElementById('palette');
+  p.innerHTML=COLORS.map((c,i)=>`<div class="swatch ${i===5?'sel':''}" style="background:${c}" onclick="pick('${c}',this)"></div>`).join('');
+}
+function pick(c,el){ curColor=c; document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('sel')); el.classList.add('sel'); }
+function setupColoring(){
+  document.querySelectorAll('#colorSvg .fillable').forEach(el=>{
+    el.addEventListener('click',()=>{ el.setAttribute('fill',curColor); });
+  });
+}
+function resetColor(){ document.querySelectorAll('#colorSvg .fillable').forEach(el=>el.setAttribute('fill','#ffffff')); }
+
+/* ---------- counting game ---------- */
+let score=0, answer=0;
+function ladybugSVG(){ return laineySVG().replace('<svg ','<svg class="bug" '); }
+function newRound(){
+  document.getElementById('feedback').textContent='';
+  answer=Math.floor(Math.random()*5)+1;
+  document.getElementById('bugs').innerHTML=Array(answer).fill(ladybugSVG()).join('');
+  // build choices: answer + a few distractors
+  let opts=new Set([answer]);
+  while(opts.size<4){ opts.add(Math.floor(Math.random()*6)+1); }
+  opts=[...opts].sort(()=>Math.random()-.5);
+  document.getElementById('choices').innerHTML=
+    opts.map(n=>`<button class="choice" onclick="guess(${n},this)">${n}</button>`).join('');
+  say("How many ladybugs do you see?");
+}
+function guess(n,btn){
+  const fb=document.getElementById('feedback');
+  if(n===answer){
+    score++; document.getElementById('scorePill').textContent='⭐ '+score;
+    fb.innerHTML='<span class="star">⭐ Yes! '+answer+'! Great job! ⭐</span>';
+    say("Yes! "+answer+"! Great job!");
+    setTimeout(newRound,1500);
+  } else {
+    fb.textContent='Try again! 🐞'; say("Try again!");
+    btn.style.opacity=.4; btn.disabled=true;
+  }
+}
+
+/* ---------- init ---------- */
+renderChars(); buildPalette(); setupColoring(); renderPage();
+// warm up speech voices
+window.addEventListener('click',function once(){ try{speechSynthesis.getVoices();}catch(e){} window.removeEventListener('click',once);},{once:true});
+</script>
+</body>
+</html>

@@ -1,0 +1,18 @@
+{
+  "name": "build-web",
+  "version": "1.0.0",
+  "description": "This folder is the **clean, deployable copy** of the app. It contains only what the app actually loads (no `.psd` files, no `elevenlabs videos` working folder).",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "@capacitor/cli": "^8.5.0",
+    "@capacitor/core": "^8.5.0",
+    "@capacitor/ios": "^8.5.0"
+  }
+}
