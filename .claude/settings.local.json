@@ -383,7 +383,11 @@
       "Bash(open -R \"/Users/mindyjenkins/Desktop/AdventuresOfVioletAndLainey-build3.ipa\")",
       "Bash(echo \"current: $\\(xcode-select -p\\)\")",
       "Bash(nohup xcodebuild -scheme App -project App.xcodeproj -sdk iphonesimulator -configuration Debug -derivedDataPath /tmp/simbuild CODE_SIGNING_ALLOWED=NO build)",
-      "Bash(git -c 'user.name=Mindy Jenkins' -c user.email=mindydvs@yahoo.com commit -q -m 'iPad: let story pages fill the screen *)"
+      "Bash(git -c 'user.name=Mindy Jenkins' -c user.email=mindydvs@yahoo.com commit -q -m 'iPad: let story pages fill the screen *)",
+      "Bash(mdls -name kMDItemPixelWidth -name kMDItemPixelHeight -name kMDItemDurationSeconds art/paintreward.mp4)",
+      "Bash(cp art/paintreward.mp4 /tmp/paintreward_OLD_backup.mp4)",
+      "Bash(cp ~/Downloads/kling_20260808_VIDEO_Have_the_l_1190_0.mp4 art/paintreward.mp4)",
+      "Bash(mdls -name kMDItemPixelWidth -name kMDItemPixelHeight -name kMDItemDurationSeconds -name kMDItemAudioBitRate art/paintreward.mp4)"
     ]
   }
 }
