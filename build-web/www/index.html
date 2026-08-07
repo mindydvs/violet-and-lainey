@@ -5667,8 +5667,10 @@ function bubAfterAttach(r,c,color){
     bubMatchCount++;
     bubDropFloating();
     bubUpdateFeedback();
-    playAudio('greatjob', "Great job!", null, ()=>{});
+    // on the FINAL match go straight to the reward — playing "great job" here
+    // just gets cut off a moment later by the reward video
     if(bubMatchCount >= BUB_WIN_MATCHES){ bubWin(); return; }
+    playAudio('greatjob', "Great job!", null, ()=>{});
   }
   bubShots++;
   bubCur = bubQueue.shift(); bubQueue.push(bubRandColorInGrid());

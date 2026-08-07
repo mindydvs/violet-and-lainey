@@ -370,7 +370,8 @@
       "Bash(open -a Transporter)",
       "Bash(open -R \"/Users/mindyjenkins/Desktop/AdventuresOfVioletAndLainey-build2.ipa\")",
       "Bash(awk '{print \"file ready: \"$9\"  \"$5}')",
-      "Bash(echo \"server: $\\(curl -s -o /dev/null -w '%{http_code}' http://localhost:8734/index.html\\)\")"
+      "Bash(echo \"server: $\\(curl -s -o /dev/null -w '%{http_code}' http://localhost:8734/index.html\\)\")",
+      "Bash(awk '{print $9, $5\" bytes\", $6, $7, $8}')"
     ]
   }
 }
