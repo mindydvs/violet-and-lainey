@@ -609,7 +609,8 @@
     .ccBoard{width:min(92vw,900px);}
     .ccPalette{width:min(56vw,520px);}
     .ccColor{width:15%;}
-    .paintStudio{height:min(83vh,1100px);}
+    .paintStudio{height:min(83vh,1100px);aspect-ratio:2048/2732;}
+    .paintCanvasFrame{left:21%;top:24%;width:58%;aspect-ratio:1085/1449;}
     .paintRewardWrap{width:min(66vw,660px);}
     .treasureRefGrid{width:min(76vw,680px);}
     .treasureSlot{width:52px;height:52px;}
@@ -1172,7 +1173,7 @@ const NUMBERED_PALETTE=[
    ============================================================ */
 const SEQUENCE = [
   {type:'scene', page:1, art:'art/page1video2.png', video:'art/page1video3.mp4', title:'Meet Violet & Lainey'},
-  {type:'color', page:1, art:'art/scene1-color.png', title:'Paint: Meet Violet & Lainey', ask:'Pick a paint bucket, then tap the picture to fill it in!', audio:'paint', buckets:[
+  {type:'color', page:1, art:'art/scene1-color.png', artTablet:'art/scene1-color-ipad.png', bgTablet:'art/paintbackground-ipad.jpg', title:'Paint: Meet Violet & Lainey', ask:'Pick a paint bucket, then tap the picture to fill it in!', audio:'paint', buckets:[
     {name:'purple', hex:'#8e3bbf', style:'left:10%;top:8%;width:10%;height:11%'},
     {name:'orange', hex:'#e8892b', style:'left:19%;top:8%;width:10%;height:11%'},
     {name:'yellow', hex:'#f4d13f', style:'left:27%;top:8%;width:10%;height:11%'},
@@ -1389,6 +1390,14 @@ function togglePageRead(page){
 const COLORS=["#e23b3b","#ff8c42","#ffd34e","#4caf50","#2196f3","#7b4ea8","#ff7eb6","#8d5524","#222222"];
 let curColor=COLORS[5];
 let colorCtx=null, colorOriginal=null;
+
+/* the iPad artwork is a different shape, so the paint-by-number screen swaps in
+   a wider background + coloring page and re-spaces the buckets to match it */
+function isTabletWidth(){ return window.matchMedia('(min-width:700px)').matches; }
+function tabletBucketStyle(i){
+  const left = 20.7 + i*7.22;           // shelf runs 20.7% -> 85.7% in the iPad art
+  return `left:${left.toFixed(1)}%;top:9.5%;width:7.2%;height:9.5%`;
+}
 function paintBucketSVG(hex){
   return `<svg viewBox="0 0 40 44" xmlns="http://www.w3.org/2000/svg">
     <path d="M8 14 Q20 2 32 14" fill="none" stroke="#7a5c3a" stroke-width="2.5" stroke-linecap="round"/>
@@ -1405,7 +1414,7 @@ function renderColor(step, stage){
     // the shelf as the tappable colour picker and the picture below
     curColor = step.buckets[0].hex;
     stage.innerHTML = `
-      <div class="paintStudio" id="paintStudio" style="background-image:url('art/paintbackground.jpg')">
+      <div class="paintStudio" id="paintStudio" style="background-image:url('${(isTabletWidth() && step.bgTablet) ? step.bgTablet : 'art/paintbackground.jpg'}')">
         <div class="paintCanvasFrame"><canvas id="colorCanvas"></canvas></div>
         <div class="studioTools">
           <button class="replay-btn" onclick="resetColor()">↺ Clear</button>
@@ -1416,7 +1425,7 @@ function renderColor(step, stage){
     step.buckets.forEach((b,i)=>{
       const btn = document.createElement('button');
       btn.className = 'bucketZone'+(i===0?' sel':'');
-      btn.style.cssText = b.style;
+      btn.style.cssText = isTabletWidth() ? tabletBucketStyle(i) : b.style;
       btn.setAttribute('aria-label', b.name+' paint');
       btn.onclick = ()=>pickBucket(b.hex, btn);
       studio.appendChild(btn);
@@ -1442,7 +1451,7 @@ function renderColor(step, stage){
     colorCtx.drawImage(img,0,0);
     colorOriginal = colorCtx.getImageData(0,0,canvas.width,canvas.height);
   };
-  img.src = step.art;
+  img.src = (isTabletWidth() && step.artTablet) ? step.artTablet : step.art;
   canvas.addEventListener('click', onCanvasClick);
 }
 function pickColor(c,el){ curColor=c; document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('sel')); el.classList.add('sel'); }

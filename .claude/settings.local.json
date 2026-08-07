@@ -387,7 +387,8 @@
       "Bash(mdls -name kMDItemPixelWidth -name kMDItemPixelHeight -name kMDItemDurationSeconds art/paintreward.mp4)",
       "Bash(cp art/paintreward.mp4 /tmp/paintreward_OLD_backup.mp4)",
       "Bash(cp ~/Downloads/kling_20260808_VIDEO_Have_the_l_1190_0.mp4 art/paintreward.mp4)",
-      "Bash(mdls -name kMDItemPixelWidth -name kMDItemPixelHeight -name kMDItemDurationSeconds -name kMDItemAudioBitRate art/paintreward.mp4)"
+      "Bash(mdls -name kMDItemPixelWidth -name kMDItemPixelHeight -name kMDItemDurationSeconds -name kMDItemAudioBitRate art/paintreward.mp4)",
+      "Bash(awk 'NR>=1421 && NR<=1432{print NR\": \"$0}' index.html)"
     ]
   }
 }
