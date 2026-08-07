@@ -371,7 +371,19 @@
       "Bash(open -R \"/Users/mindyjenkins/Desktop/AdventuresOfVioletAndLainey-build2.ipa\")",
       "Bash(awk '{print \"file ready: \"$9\"  \"$5}')",
       "Bash(echo \"server: $\\(curl -s -o /dev/null -w '%{http_code}' http://localhost:8734/index.html\\)\")",
-      "Bash(awk '{print $9, $5\" bytes\", $6, $7, $8}')"
+      "Bash(awk '{print $9, $5\" bytes\", $6, $7, $8}')",
+      "Bash(rm -rf /tmp/VL3.xcarchive)",
+      "Bash(nohup xcodebuild -scheme App -project App.xcodeproj -destination \"generic/platform=iOS\" -configuration Release -archivePath /tmp/VL3.xcarchive archive)",
+      "Bash(plutil -p __TRACKED_VAR__/Info.plist)",
+      "Bash(rm -rf /tmp/VLExport3)",
+      "Bash(xcodebuild -exportArchive -archivePath /tmp/VL3.xcarchive -exportPath /tmp/VLExport3 -exportOptionsPlist /tmp/ExportOptions.plist)",
+      "Bash(rm -f \"/Users/mindyjenkins/Desktop/AdventuresOfVioletAndLainey-build2.ipa\")",
+      "Bash(cp /tmp/VLExport3/App.ipa \"/Users/mindyjenkins/Desktop/AdventuresOfVioletAndLainey-build3.ipa\")",
+      "Bash(awk '{print \"✓ \"$9\" \"$5}')",
+      "Bash(open -R \"/Users/mindyjenkins/Desktop/AdventuresOfVioletAndLainey-build3.ipa\")",
+      "Bash(echo \"current: $\\(xcode-select -p\\)\")",
+      "Bash(nohup xcodebuild -scheme App -project App.xcodeproj -sdk iphonesimulator -configuration Debug -derivedDataPath /tmp/simbuild CODE_SIGNING_ALLOWED=NO build)",
+      "Bash(git -c 'user.name=Mindy Jenkins' -c user.email=mindydvs@yahoo.com commit -q -m 'iPad: let story pages fill the screen *)"
     ]
   }
 }

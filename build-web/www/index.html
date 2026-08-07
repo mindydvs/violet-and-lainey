@@ -586,8 +586,9 @@
      The phone never reads this block, so nothing here can change the iPhone
      layout. It simply lets the stages grow to use the bigger screen. */
   @media (min-width: 700px){
-    .bookPageArt{max-width:78vw;}
-    .bookPageText{font-size:clamp(19px,2.5vw,26px);}
+    .bookPage{width:min(82vw,780px);max-height:88vh;}
+    .bookPageArt{max-height:46vh;max-width:none;}
+    .bookPageText{font-size:clamp(19px,2.5vw,26px);padding:8px 30px 26px;}
     .ask{font-size:clamp(20px,2.6vw,28px);}
 
     .kiteStage{width:min(74vw,620px);}
