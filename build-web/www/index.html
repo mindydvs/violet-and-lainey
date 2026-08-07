@@ -363,7 +363,7 @@
   /* catch the apples drag game */
   .appleStage{position:relative;width:min(94vw,640px);height:440px;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/appletree.png') center/cover;touch-action:none;cursor:grab;}
   /* apple bucket: sits in the bottom-LEFT corner (as big as the character), caught apples pile into it, then it flashes (tappable) once all 10 are caught */
-  .apBucket{position:absolute;left:0.5%;bottom:2%;width:20%;z-index:7;pointer-events:none;-webkit-tap-highlight-color:transparent;animation:apBucketPop .4s ease;}
+  .apBucket{position:absolute;left:0.5%;bottom:2%;width:20%;z-index:7;pointer-events:none;border:none;background:transparent;padding:0;appearance:none;-webkit-appearance:none;-webkit-tap-highlight-color:transparent;animation:apBucketPop .4s ease;}
   .apBucket img{width:100%;height:auto;display:block;filter:drop-shadow(0 5px 10px rgba(0,0,0,.4));}
   @keyframes apBucketPop{0%{transform:translateY(30%) scale(.6);opacity:0}100%{transform:translateY(0) scale(1);opacity:1}}
   .apBucket.apBucketFlash{cursor:pointer;pointer-events:auto;z-index:9;animation:apBucketFlash .6s ease-in-out infinite;}
@@ -4137,7 +4137,7 @@ function startAppleGame(character){
   // once all 10 are caught so they remember to tap it for the reward
   const apStage = document.getElementById('appleStage');
   if(apStage && !document.getElementById('apBucket')){
-    const b=document.createElement('div'); b.id='apBucket'; b.className='apBucket';
+    const b=document.createElement('button'); b.type='button'; b.id='apBucket'; b.className='apBucket';
     b.innerHTML='<img src="art/applebucket.png" alt="apple bucket">';
     b.querySelector('img').addEventListener('error', ()=>b.remove());  // missing art -> just skip it
     apStage.appendChild(b);
@@ -4245,7 +4245,9 @@ function apCelebrate(){
   if(!bucket){ playAppleReward(apConfetti); return; }   // no bucket art -> just play the reward
   bucket.classList.add('apBucketFlash');
   let done=false;
-  bucket.addEventListener('click', ()=>{ if(done) return; done=true; bucket.remove(); playAppleReward(apConfetti); });
+  const goApple=()=>{ if(done) return; done=true; bucket.remove(); playAppleReward(apConfetti); };
+  bucket.addEventListener('click', goApple);
+  bucket.addEventListener('pointerdown', goApple);
 }
 /* plays art/applereward.mp4 from the bucket TAP (so it has sound); falls back
    to confetti if the clip is missing */

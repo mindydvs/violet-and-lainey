@@ -352,7 +352,13 @@
       "Bash(python3 -)",
       "Bash(rm -rf /tmp/VioletTest.xcarchive)",
       "Bash(nohup xcodebuild -scheme App -project App.xcodeproj -destination \"generic/platform=iOS\" -archivePath /tmp/VioletTest.xcarchive archive)",
-      "Bash(codesign -dvv /tmp/VioletTest.xcarchive/Products/Applications/App.app)"
+      "Bash(codesign -dvv /tmp/VioletTest.xcarchive/Products/Applications/App.app)",
+      "Bash(pkill -f \"http.server\")",
+      "Bash(nohup python3 -m http.server 8734 --bind 0.0.0.0 --directory \"/Users/mindyjenkins/Desktop/Violet an LAiney app/build-web/www\")",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:8734/art/applereward.mp4)",
+      "Bash(echo \"applereward: $\\(curl -s -o /dev/null -w '%{http_code}' http://localhost:8734/art/applereward.mp4\\)\")",
+      "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:8734/art/wake/gong.mp4)",
+      "Bash(grep -c '^Gong.mp4$')"
     ]
   }
 }
