@@ -537,7 +537,7 @@
 
   /* ===== opening video splash ===== */
   #splash{padding:0;background:#000;}
-  #splashVideo{position:fixed;inset:0;width:100vw;height:100vh;object-fit:cover;background:#000;}
+  #splashVideo{position:fixed;inset:0;width:100vw;height:100vh;object-fit:contain;background:#000;}
   #startOverlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
     background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.5) 100%);z-index:10;cursor:pointer;padding-bottom:44px;}
   #startOverlay .subtitle{color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6);}
@@ -548,7 +548,7 @@
   #skipBtn{position:absolute;bottom:18px;right:18px;z-index:11;background:rgba(0,0,0,.55);color:#fff;border:none;
     border-radius:999px;padding:10px 20px;font-family:inherit;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.3);}
   #skipBtn:active{transform:translateY(3px);}
-  #welcomeVideo{position:fixed;inset:0;width:100vw;height:100vh;object-fit:cover;background:#000;z-index:13;display:none;}
+  #welcomeVideo{position:fixed;inset:0;width:100vw;height:100vh;object-fit:contain;background:#000;z-index:13;display:none;}
   #welcomeSkipBtn{position:absolute;bottom:18px;right:18px;z-index:14;background:rgba(0,0,0,.55);color:#fff;border:none;
     border-radius:999px;padding:10px 20px;font-family:inherit;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.3);display:none;}
   #welcomeSkipBtn:active{transform:translateY(3px);}
