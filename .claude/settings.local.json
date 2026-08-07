@@ -358,7 +358,19 @@
       "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:8734/art/applereward.mp4)",
       "Bash(echo \"applereward: $\\(curl -s -o /dev/null -w '%{http_code}' http://localhost:8734/art/applereward.mp4\\)\")",
       "Bash(curl -s -o /dev/null -w '%{http_code}' http://localhost:8734/art/wake/gong.mp4)",
-      "Bash(grep -c '^Gong.mp4$')"
+      "Bash(grep -c '^Gong.mp4$')",
+      "Bash(rm -rf /tmp/VioletLainey2.xcarchive)",
+      "Bash(nohup xcodebuild -scheme App -project App.xcodeproj -destination \"generic/platform=iOS\" -configuration Release -archivePath /tmp/VioletLainey2.xcarchive archive)",
+      "Bash(plutil -p /tmp/VioletLainey2.xcarchive/Products/Applications/App.app/Info.plist)",
+      "Bash(rm -rf /tmp/VioletExport2)",
+      "Bash(xcodebuild -exportArchive -archivePath /tmp/VioletLainey2.xcarchive -exportPath /tmp/VioletExport2 -exportOptionsPlist /tmp/ExportOptions.plist)",
+      "Bash(rm -f \"/Users/mindyjenkins/Desktop/AdventuresOfVioletAndLainey.ipa\")",
+      "Bash(cp /tmp/VioletExport2/App.ipa \"/Users/mindyjenkins/Desktop/AdventuresOfVioletAndLainey-build2.ipa\")",
+      "Bash(awk '{print \"   \"$9\"  \"$5}')",
+      "Bash(open -a Transporter)",
+      "Bash(open -R \"/Users/mindyjenkins/Desktop/AdventuresOfVioletAndLainey-build2.ipa\")",
+      "Bash(awk '{print \"file ready: \"$9\"  \"$5}')",
+      "Bash(echo \"server: $\\(curl -s -o /dev/null -w '%{http_code}' http://localhost:8734/index.html\\)\")"
     ]
   }
 }

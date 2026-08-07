@@ -581,6 +581,39 @@
   .replay-btn{background:#fff;color:var(--violet-deep);border:none;border-radius:999px;padding:8px 18px;
     font-family:inherit;font-size:14px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.12);margin-top:4px;}
   .replay-btn:active{transform:translateY(3px);}
+
+  /* ===== iPad / tablet only (>=700px wide) =====
+     The phone never reads this block, so nothing here can change the iPhone
+     layout. It simply lets the stages grow to use the bigger screen. */
+  @media (min-width: 700px){
+    .bookPageArt{max-width:78vw;}
+    .bookPageText{font-size:clamp(19px,2.5vw,26px);}
+    .ask{font-size:clamp(20px,2.6vw,28px);}
+
+    .kiteStage{width:min(74vw,620px);}
+    .mazeStage{height:min(76vh,860px);}
+    .appleStage{width:min(80vw,820px);height:min(52vh,560px);}
+    .fountainStage{width:min(74vw,620px);height:min(34vh,380px);}
+    .rockStage{width:min(76vw,680px);height:min(30vh,330px);}
+    .duskStage{width:min(74vw,620px);height:min(38vh,420px);}
+    .seesawStage{width:min(74vw,620px);height:min(36vh,400px);}
+    .tuckStage{width:min(74vw,620px);height:min(38vh,420px);}
+    .awakeStage{width:min(74vw,620px);}
+    .skyBox{width:min(74vw,620px);height:min(46vw,420px);}
+    .pondStage{width:min(72vw,600px);}
+    .treasureScene{width:min(76vw,680px);}
+    .fdStage{width:min(84vw,760px);}
+    .kmSky{width:min(78vw,720px);height:min(52vh,560px);}
+    .wakeStage{width:min(62vw,560px);}
+    .ccBoard{width:min(74vw,720px);}
+    .paintStudio{height:min(72vh,860px);}
+    .treasureRefGrid{width:min(76vw,680px);}
+    .treasureSlot{width:52px;height:52px;}
+    .treasureRefImg{width:54px;height:54px;}
+    .basket{width:170px;}
+    .method{font-size:clamp(30px,4vw,44px);}
+    .modePick{width:min(30vw,230px);}
+  }
 </style>
 </head>
 <body>
