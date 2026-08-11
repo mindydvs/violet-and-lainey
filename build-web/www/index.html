@@ -70,19 +70,18 @@
   .swatch svg{width:100%;height:100%;display:block;}
   .swatch.sel{transform:translateY(-5px) scale(1.12);filter:drop-shadow(0 6px 8px rgba(0,0,0,.4));}
   .swatchNum{position:absolute;left:0;right:0;bottom:9px;font-size:12px;font-weight:900;color:#5a4632;text-shadow:0 1px 1px rgba(255,255,255,.7);pointer-events:none;}
-  /* reward video shown in place of the coloring page when Done is tapped */
-  .paintRewardWrap{width:min(94vw,560px);aspect-ratio:16/9;margin:0 auto;border-radius:20px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.2);background:#000;}
-  .paintRewardWrap video{width:100%;height:100%;object-fit:contain;display:block;}
   /* paint studio: attic background, buckets on the shelf as the colour picker */
   .paintStudio{position:relative;aspect-ratio:1292/2296;height:min(74vh,760px);width:auto;max-width:96vw;margin:0 auto;background-size:cover;background-position:center;border-radius:18px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.25);}
   .bucketZone{position:absolute;border:none;background:transparent;cursor:pointer;padding:0;border-radius:12px;-webkit-tap-highlight-color:transparent;z-index:3;}
   .bucketZone.sel{}   /* no highlight box around the chosen bucket */
   .paintCanvasFrame{position:absolute;left:8%;top:23%;width:84%;aspect-ratio:1;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.55);z-index:2;}
-  .paintCanvasFrame canvas{width:100%;height:100%;display:block;}
+  /* in the studio the picture fills its frame exactly. The ID rule for
+     #colorCanvas below is more specific than a plain descendant selector, so
+     this has to name the id too — otherwise the square min(88vw,480px) wins
+     and the picture is squashed (iPad) or cropped (phone). */
+  .paintCanvasFrame canvas, .paintCanvasFrame #colorCanvas{width:100%;height:100%;display:block;border-radius:0;box-shadow:none;}
   .studioTools{position:absolute;left:0;right:0;bottom:3.5%;display:flex;gap:10px;justify-content:center;z-index:4;}
-  /* reward video plays right where the picture was, keeping the studio around it */
-  .paintStudioReward{position:absolute;left:8%;top:23%;width:84%;aspect-ratio:16/9;background:#000;border-radius:8px;overflow:hidden;box-shadow:0 6px 18px rgba(0,0,0,.55);z-index:5;}
-  .paintStudioReward video{width:100%;height:100%;object-fit:cover;display:block;}
+  /* the paint reward plays full screen (.fullScreenReward), not boxed in here */
   #colorCanvas{width:min(88vw,480px);height:min(88vw,480px);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.15);touch-action:none;background:#fff;cursor:pointer;}
   #paintCanvas{width:min(88vw,480px);height:min(88vw,480px);border-radius:18px;box-shadow:0 8px 24px rgba(0,0,0,.15);touch-action:none;cursor:crosshair;display:block;}
   .colorTools{display:flex;gap:8px;margin-top:8px;}
@@ -102,7 +101,11 @@
 
   /* fish counting */
   /* fish memory match */
-  .pondStage{position:relative;width:min(92vw,480px);aspect-ratio:4/3;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/fishbackground.png') center/cover;display:grid;grid-template-columns:repeat(4,1fr);gap:3%;padding:4%;box-sizing:border-box;align-content:center;}
+  /* lillypadbackground.png is portrait 941x1672, so the stage takes that shape
+     and the 12 cards go 3 across x 4 down instead of 4x3 — that way `cover`
+     shows the whole pond with no crop. align-content:center floats the rows in
+     the middle of the taller box. */
+  .pondStage{position:relative;width:min(92vw,480px);aspect-ratio:941/1672;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/lillypadbackground.png') center/cover;display:grid;grid-template-columns:repeat(3,1fr);gap:3%;padding:4%;box-sizing:border-box;align-content:center;}
   .card{position:relative;aspect-ratio:1/1;background:none;border:none;padding:0;cursor:pointer;perspective:600px;}
   .cardInner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;}
   .card.flipped .cardInner{transform:rotateY(180deg);}
@@ -267,8 +270,13 @@
   .colorPickBtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.15);}
 
   /* firefly pattern game */
-  .fireflyStage{position:relative;width:min(96vw,720px);aspect-ratio:12/7;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/fireflybackground.png') center/cover, radial-gradient(circle at 50% 20%,#2b2158,#14102c 75%);margin-bottom:10px;}
-  .firefly{position:absolute;bottom:22%;border:none;background:transparent;width:20%;max-width:120px;aspect-ratio:1/1;transform:translateX(-50%);cursor:pointer;padding:0;}
+  /* fireflybackground.png is portrait 941x1672 (starry sky on top, meadow
+     below), so the stage takes that shape and is sized by HEIGHT — a width-
+     driven portrait box would be taller than the screen. */
+  .fireflyStage{position:relative;height:min(58vh,600px);width:auto;max-width:96vw;aspect-ratio:941/1672;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/fireflybackground.png') center/cover, radial-gradient(circle at 50% 20%,#2b2158,#14102c 75%);margin-bottom:10px;}
+  /* scattered across the sky rather than lined up along the bottom, so each
+     one carries its own top as well as left (see FF_SLOTS) */
+  .firefly{position:absolute;border:none;background:transparent;width:26%;max-width:120px;aspect-ratio:1/1;transform:translate(-50%,-50%);cursor:pointer;padding:0;}
   .ffProgress{display:flex;gap:12px;justify-content:center;margin:2px 0 8px;}
   .ffDot{width:20px;height:20px;border-radius:50%;border:3px solid #b18ce0;background:transparent;box-sizing:border-box;transition:background .2s,box-shadow .2s;}
   .ffDot.done{background:#ffd34e;border-color:#ffd34e;box-shadow:0 0 10px rgba(255,211,78,.75);}
@@ -309,8 +317,17 @@
   .tttWheelImg{position:absolute;transform:translate(-50%,-50%);width:19%;height:19%;object-fit:contain;filter:drop-shadow(0 1px 2px rgba(0,0,0,.35));}
   .tttHub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:16%;height:16%;border-radius:50%;background:#fff;box-shadow:0 2px 5px rgba(0,0,0,.3);z-index:4;}
   .tttSpinBtn{margin-top:16px;}
-  .tttBoard{position:relative;width:min(94vw,540px);aspect-ratio:1672/941;margin:2px auto;border-radius:14px;overflow:hidden;}
-  .tttBoard .tttBg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;}
+  /* The wooden grid only fills x 23-76.5% / y 8-92.5% of the 1672x941 art —
+     the rest is grass border. The board box takes the shape of THAT region and
+     .tttZoom scales the picture up so the region exactly fills it, cropping the
+     border away. The cells live inside .tttZoom, so they keep their original
+     image-percentage coordinates and line up with the drawn grid for free.
+     Zoom maths: 100/0.535 = 186.92% wide, 100/0.845 = 118.34% tall,
+     offset by -(0.23*186.92)% and -(0.08*118.34)%. The ratio works out to
+     1672/941, so the art is not distorted. */
+  .tttBoard{position:relative;width:min(94vw,540px);aspect-ratio:894/795;margin:2px auto;border-radius:14px;overflow:hidden;}
+  .tttZoom{position:absolute;width:186.92%;height:118.34%;left:-42.99%;top:-9.47%;}
+  .tttBoard .tttBg{position:absolute;inset:0;width:100%;height:100%;object-fit:fill;display:block;}
   .tttCell{position:absolute;background:transparent;border:none;padding:0;cursor:pointer;display:flex;align-items:center;justify-content:center;border-radius:10px;-webkit-tap-highlight-color:transparent;}
   .tttCell:disabled{cursor:default;}
   .tttCell img{width:86%;height:86%;object-fit:contain;pointer-events:none;animation:tttPop .28s ease;filter:drop-shadow(0 3px 5px rgba(0,0,0,.3));}
@@ -319,7 +336,15 @@
   @keyframes tttWin{from{filter:drop-shadow(0 0 4px #ffd34e);transform:scale(1);}to{filter:drop-shadow(0 0 16px #ffd34e) drop-shadow(0 0 26px #ffd34e);transform:scale(1.08);}}
 
   /* ===== Catch the Rising Hearts (The End) ===== */
-  .heartStage{position:relative;width:min(94vw,520px);height:min(64vh,600px);border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.18);background:url('art/page19video2.png') center/cover;}
+  /* end2.jpg is portrait 1479x1975 with the characters low and open sky above,
+     so the stage just takes the picture's own shape and `cover` shows all of it
+     — no crop, and the hearts still get a tall column to rise through.
+     TO GO BACK to the old closing art, swap the two lines below for:
+       height:min(58vh,540px);background:url('art/page19video2.png') center/cover;
+     and drop the aspect-ratio (that art is landscape 1672x941, so it needed the
+     sky-extension trick to keep Violet and Lainey from being sliced in half). */
+  .heartStage{position:relative;width:min(94vw,520px);aspect-ratio:1479/1975;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.18);
+    background:url('art/end2.jpg') center/cover;}
   .heartProgress{display:flex;gap:8px;justify-content:center;margin:4px 0 8px;min-height:30px;}
   .heartPip{font-size:26px;filter:grayscale(1) opacity(.45);transition:filter .2s,transform .2s;}
   .heartPip.done{filter:none;transform:scale(1.15);}
@@ -476,7 +501,9 @@
   @keyframes sheepNumPop{0%{transform:scale(.5);opacity:0}30%{transform:scale(1.25);opacity:1}100%{transform:scale(1) translateY(-24px);opacity:0}}
 
   /* bubble pop (bubble shooter) */
-  .bubStage{position:relative;width:min(94vw,440px);border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:linear-gradient(180deg,#d7ccf5,#c3b6ec 60%,#b6a8e6);touch-action:none;}
+  /* flex:none so the surrounding column can never squeeze the stage shorter
+     than its canvas — that clips the launcher and the row of next balls */
+  .bubStage{position:relative;flex:none;width:min(94vw,440px);border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:linear-gradient(180deg,#d7ccf5,#c3b6ec 60%,#b6a8e6);touch-action:none;}
   .bubStage canvas{display:block;width:100%;cursor:crosshair;}
 
   /* tuck them in — dress-up + bedtime game */
@@ -592,26 +619,84 @@
     .ask{font-size:clamp(20px,2.6vw,28px);}
 
     .kiteStage{width:min(74vw,620px);}
-    .mazeStage{height:min(76vh,860px);}
+    /* the bubbles are sized as stageWidth/12, so a wider stage = bigger bubbles */
+    .bubStage{width:min(86vw,760px);}
+    /* tic-tac-toe: the picks and the wheel were pinned at their phone caps */
+    .tttChoose4{max-width:min(76vw,680px);gap:22px;}
+    .tttChoose4 .tttPick img{width:min(30vw,260px);height:min(30vw,260px);}
+    .tttChoose4 .tttPick{padding:14px 14px 10px;}
+    .tttPick span{font-size:clamp(20px,2.4vw,28px);}
+    .tttWheelCircle{width:min(78vw,660px);height:min(78vw,660px);}
+    .tttBoard{width:min(90vw,820px);}
+    /* height drives it here so the aspect-ratio can set the width — the closing
+       picture then fills the tall iPad screen and the characters are big */
+    .heartStage{height:min(72vh,900px);width:auto;}
+    /* 9 columns here (see MAZE_COLS_TABLET) — the ratio must match the grid */
+    .mazeStage{height:min(76vh,860px);aspect-ratio:9/10;}
     .appleStage{width:min(80vw,820px);height:min(52vh,560px);}
     .fountainStage{width:min(74vw,620px);height:min(34vh,380px);}
     .rockStage{width:min(76vw,680px);height:min(30vh,330px);}
     .duskStage{width:min(74vw,620px);height:min(38vh,420px);}
     .seesawStage{width:min(74vw,620px);height:min(36vh,400px);}
-    .tuckStage{width:min(74vw,620px);height:min(38vh,420px);}
-    .awakeStage{width:min(74vw,620px);}
-    .skyBox{width:min(74vw,620px);height:min(46vw,420px);}
-    .pondStage{width:min(72vw,600px);}
+    /* the sleepy-Violet poses are square 1024x1024 and .awFull uses
+       object-fit:contain, so in the phone's 3/2 box she only drew 411px wide
+       with ~206px of dead bands each side. A square stage lets her fill it.
+       flex:none so the surrounding column can't shrink it (same trap as the
+       bubble and wake-up stages). */
+    .awakeStage{flex:none;width:min(96vw,800px);aspect-ratio:1/1;}
+    /* butterflybackground.png is square 1254x1254 — the old 1.6:1 box cropped
+       ~38% of it away and left ~450px of the screen unused below. Bigger and
+       squarer shows more of the art and gives the butterflies room. */
+    .skyBox{width:min(92vw,780px);height:min(70vw,640px);}
+    /* the butterflies are a fixed pixel size, so they need scaling up too —
+       they're also the tap targets */
+    .butterfly{width:88px;height:66px;}
+    /* Nets are fixed-pixel too. The net PNGs are ~220x565 (tall and narrow), and
+       object-fit:contain scales them by HEIGHT — so height is what makes them
+       bigger, and the button should stay only slightly wider than the rendered
+       art (280 * 220/565 = 109px) or the number badge drifts off into the gap
+       between two nets. At most 4 show (3 round colours + 1 decoy):
+       4x114 + 3x46 of gap = 594px, inside the 767px row. */
+    .netChoices{gap:46px;}
+    .netChoice{width:114px;height:280px;}
+    .netNumber{width:52px;height:52px;font-size:27px;border-width:4px;bottom:-6px;right:-10px;}
+    /* fish memory match — now portrait (see the base rule), so it has to be
+       sized by HEIGHT here; a 92vw width would make it 1362px tall. */
+    .pondStage{height:min(74vh,880px);width:auto;max-width:96vw;}
+    /* firefly — portrait now (see base rule), so height drives it here too */
+    .fireflyStage{height:min(74vh,880px);width:auto;max-width:96vw;}
+    /* rock game — background is a CSS gradient, so it resizes freely */
+    .rockStage{width:min(92vw,780px);height:min(44vh,500px);}
+    /* owl song — had NO tablet rule either. aspect matches owlsinging.png
+       (2821x1751) exactly, so widening is all that's needed; notes are placed
+       in percentages and follow. */
+    .owlScene{width:min(94vw,800px);}
+    /* tuck them in — the tablet rule below used to name .tuckStage, which this
+       game does not use (that class belongs to an unreachable older version),
+       so it had no tablet sizing at all. */
+    .tuckScene{width:min(92vw,780px);}
+    /* Violet's art (violetmaze.png) is 1536x1024 and her visible pixels are a
+       wide 1.374 aspect, so her on-screen width is roughly 0.73 x her height%.
+       The pajamas hang between x 36% and 62%, so she has to stay under 36% wide
+       and sit to their left: 48% height -> ~35% wide, spanning about 1%-36%.
+       (At 54%/left:50% she was ~39% wide and covered the lower shelf.) */
+    .tuckCharPj.plain{left:20%;height:48%;}
     .treasureScene{width:min(76vw,680px);}
     .fdStage{width:min(84vw,760px);}
     .kmSky{width:min(78vw,720px);height:min(52vh,560px);}
-    .wakeStage{width:min(62vw,560px);}
+    /* sized by HEIGHT here (aspect-ratio 1/1 gives the width), so it uses the
+       tall iPad screen instead of being pinned by 62vw. There was ~320px of
+       dead space under the buttons before. */
+    .wakeStage{flex:none;height:min(64vh,780px);width:auto;max-width:94vw;}
+    /* the two canvases stack one above the other so each can be much larger
+       than they were side by side */
+    .ccChoose{flex-direction:column;align-items:center;gap:14px;}
+    .ccPick img{width:min(60vw,470px);}
     .ccBoard{width:min(92vw,900px);}
     .ccPalette{width:min(56vw,520px);}
     .ccColor{width:15%;}
     .paintStudio{height:min(83vh,1100px);aspect-ratio:2048/2732;}
     .paintCanvasFrame{left:21%;top:24%;width:58%;aspect-ratio:1085/1449;}
-    .paintRewardWrap{width:min(66vw,660px);}
     .treasureRefGrid{width:min(76vw,680px);}
     .treasureSlot{width:52px;height:52px;}
     .treasureRefImg{width:54px;height:54px;}
@@ -855,6 +940,8 @@ function stopAudio(){
     }
   }catch(e){}
   try{speechSynthesis.cancel();}catch(e){}
+  // the owl song runs on its own timers + Web Audio, outside currentAudio
+  try{ owlStopAll(); }catch(e){}
 }
 /* plays audio/<id>.mp3 if present; otherwise falls back — by default to
    speaking fallbackText, or to a custom onFail() if one is passed (used
@@ -1457,43 +1544,31 @@ function renderColor(step, stage){
 function pickColor(c,el){ curColor=c; document.querySelectorAll('.swatch').forEach(s=>s.classList.remove('sel')); el.classList.add('sel'); }
 function pickBucket(hex, btn){ curColor=hex; document.querySelectorAll('.bucketZone').forEach(b=>b.classList.remove('sel')); btn.classList.add('sel'); }
 function resetColor(){ if(colorCtx && colorOriginal) colorCtx.putImageData(colorOriginal,0,0); }
-/* when they're done, the reward video (16:9) plays right where the picture
-   was. In the paint studio it stays on the same page — the attic + buckets
-   remain and the video takes the picture's spot; on the plain layout it swaps
-   the whole coloring area. Advances when the video finishes. It's a tap, so
-   it plays with sound; muted fallback if blocked; advances even if it can't
-   load. */
+/* when they're done the reward plays FULL SCREEN over everything — the attic
+   and the paint buckets are hidden behind it, same as the rock game. */
 function finishColoring(){
-  const frame = document.querySelector('.paintCanvasFrame');
-  if(frame){
-    // studio: keep the background + buckets, drop the video into the picture spot
-    const tools = document.querySelector('.studioTools'); if(tools) tools.remove();
-    document.querySelectorAll('.bucketZone').forEach(b=>b.style.pointerEvents='none');
-    const wrap = document.createElement('div');
-    wrap.className = 'paintStudioReward';
-    wrap.innerHTML = '<video id="paintRewardVid" playsinline preload="auto"></video>';
-    frame.replaceWith(wrap);
-    playPaintRewardVideo(document.getElementById('paintRewardVid'));
-    return;
-  }
-  const stage = document.getElementById('stageArea');
-  if(!stage){ stepForward(); return; }
-  stage.innerHTML = `<div class="paintRewardWrap"><video id="paintRewardVid" playsinline preload="auto"></video></div>`;
-  playPaintRewardVideo(document.getElementById('paintRewardVid'));
+  const tools = document.querySelector('.studioTools'); if(tools) tools.remove();
+  document.querySelectorAll('.bucketZone').forEach(b=>b.style.pointerEvents='none');
+  playPaintRewardVideo('art/paintreward.mp4');
 }
-function playPaintRewardVideo(vid, src, onEnd){
+/* full-screen reward overlay — the clip is portrait, so this lets it fill the
+   whole phone instead of being boxed into the picture's spot. Advances when it
+   finishes, and still advances if the clip can't load. "I'm Done" was a tap so
+   the page has user activation: play WITH sound first, muted retry if blocked. */
+function playPaintRewardVideo(src, onEnd){
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
+  const vid = document.createElement('video');
   vid.src = (src || 'art/paintreward.mp4')+'?v='+Date.now();
-  // size the frame to the clip's real shape so a portrait video isn't cropped
-  // into a 16:9 box (and a landscape one still fills it) — works for any clip
-  vid.addEventListener('loadedmetadata', ()=>{
-    if(!vid.videoWidth || !vid.videoHeight) return;
-    const wrap = vid.closest('.paintRewardWrap');
-    if(wrap) wrap.style.aspectRatio = vid.videoWidth+' / '+vid.videoHeight;
-  }, {once:true});
+  vid.playsInline = true; vid.autoplay = false;
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  overlay.appendChild(vid);
   let done=false;
-  const finish = ()=>{ if(done) return; done=true; (onEnd || stepForward)(); };
+  const finish = ()=>{ if(done) return; done=true;
+    if(overlay.parentNode) overlay.remove(); (onEnd || stepForward)(); };
   vid.addEventListener('ended', finish);
   vid.addEventListener('error', finish);
+  document.body.appendChild(overlay);
   vid.muted = false;
   const p = vid.play();
   if(p && p.catch){
@@ -1528,15 +1603,20 @@ const CC_INNER = {
   black: {l:15, t:12, w:70, h:66, bg:'art/blackcanvaslarge.png', reward:'art/blackcanvasreward.mp4'}
 };
 let ccCtx=null, ccDrawing=false, ccColor='#e11e1e', ccBrush=14, ccWhich='white';
-function renderCreateCanvas(stage){
+/* `silent` is used when coming back from a reward — the child has already heard
+   the "choose a canvas" line, so it just shows the picker again. Note the picks
+   normally stay disabled until that line finishes, so the silent path has to
+   enable them itself or they'd never become tappable. */
+function renderCreateCanvas(stage, silent){
   stage.innerHTML = `
-    <p class="ask" id="ccAsk">Pick a canvas to draw on!</p>
+    <p class="ask" id="ccAsk">${silent ? '🎨 Paint again? Pick a canvas — or tap “Next Scene” below.' : 'Pick a canvas to draw on!'}</p>
     <div class="ccChoose">
       <button class="ccPick" onclick="ccStart('white')" disabled><img src="art/whitecanvaslarge.png" alt="White canvas"><span>White Canvas</span></button>
       <button class="ccPick" onclick="ccStart('black')" disabled><img src="art/blackcanvaslarge.png" alt="Black canvas"><span>Black Canvas</span></button>
     </div>`;
   // the canvases can't be picked until the "choose a canvas" instructions finish
   const enable = ()=>document.querySelectorAll('.ccPick').forEach(b=>b.disabled=false);
+  if(silent){ enable(); return; }
   const a = playAudio('choosecanvas', "Choose a white canvas or a black canvas to create a painting!",
     (ms)=>{ const g=audioGeneration; setTimeout(()=>{ if(g===audioGeneration) enable(); }, ms+150); }, ()=>{ enable(); });
   if(a){ const g=audioGeneration;
@@ -1602,23 +1682,17 @@ function ccBindDraw(canvas){
 }
 function ccClear(){ if(ccCtx) ccCtx.clearRect(0,0,ccCtx.canvas.width,ccCtx.canvas.height); }
 function ccDone(){
-  const stage = document.getElementById('stageArea');
-  if(!stage){ stepForward(); return; }
-  stage.innerHTML = `<div class="paintRewardWrap"><video id="paintRewardVid" playsinline preload="auto"></video></div>`;
   // play the reward video for whichever canvas the child painted on,
   // then offer a "paint another picture" button instead of auto-advancing
-  playPaintRewardVideo(document.getElementById('paintRewardVid'), CC_INNER[ccWhich].reward, ccAfterReward);
+  playPaintRewardVideo(CC_INNER[ccWhich].reward, ccAfterReward);
 }
+/* after the reward, go straight back to the canvas chooser — the child can pick
+   a canvas to paint again, or tap Next Scene to move on. (This used to show a
+   near-empty "Great painting!" screen with a button, which read as blank.) */
 function ccAfterReward(){
   const stage = document.getElementById('stageArea');
   if(!stage) return;
-  stage.innerHTML = `
-    <div class="ccStudio" style="justify-content:center;gap:18px;padding-top:40px">
-      <p class="ask">🎨 Great painting!</p>
-      <button class="btn btn-grass" onclick="renderCreateCanvas(document.getElementById('stageArea'))">🎨 Paint Another Picture</button>
-      <p class="wordHint">…or tap “Next Scene” below to keep going</p>
-    </div>`;
-  playAudio('paintanotherpicture', "If you want to paint another picture, click the green button!", null, ()=>{});
+  renderCreateCanvas(stage, true);   // silent — don't repeat the opening line
 }
 function onCanvasClick(e){
   const canvas = e.currentTarget;
@@ -1890,7 +1964,14 @@ function wakeConfetti(){
    always solvable with exactly one path). Drag Violet from branch to
    branch — she only hops to a neighboring cell if there's no wall
    between it and her current spot. */
-const MAZE_COLS = 6, MAZE_ROWS = 10;   // portrait maze (taller = larger on a phone)
+/* portrait maze (taller = larger on a phone). Cells are square — mazeCell is
+   width/MAZE_COLS and used for both axes — so the stage's aspect-ratio has to
+   equal COLS/ROWS. On a tablet the phone's 6 columns leave ~160px of dead space
+   down each side, so renderMazeGame() widens it to 9 columns there and the CSS
+   switches to aspect-ratio 9/10 to match. Cell size stays the same; there's
+   just more maze across. */
+let MAZE_COLS = 6; const MAZE_ROWS = 10;
+const MAZE_COLS_PHONE = 6, MAZE_COLS_TABLET = 9;
 const MAZE_WALL_COLOR = '#3f7a2e';
 const MAZE_FLOWER_COLORS = ['#ff6fa3','#b06fe0','#ffd93d','#ff8c42','#5eb8ff'];
 const MAZE_ASK = 'Drag Violet through the bushes to find Lainey!';
@@ -1914,6 +1995,9 @@ function renderMazeGame(stage){
     <div class="feedback" id="mazeFeedback"></div>
     <button class="btn btn-daisy" id="mazePlayAgainBtn" onclick="renderMazeGame(document.getElementById('stageArea'))" style="visibility:hidden">🔁 Play Again</button>
   `;
+  // pick the column count for this screen BEFORE generating — the CSS
+  // aspect-ratio for the same breakpoint has to match it
+  MAZE_COLS = isTabletWidth() ? MAZE_COLS_TABLET : MAZE_COLS_PHONE;
   const startX = 0, startY = MAZE_ROWS-1;
   mazeGrid = generateMaze(MAZE_COLS, MAZE_ROWS, startX, startY);
   mazeGoal = {x: MAZE_COLS-1, y: 0};
@@ -2224,7 +2308,11 @@ const KB_CHARS = {
   violet: {name:'Violet', plain:'art/violetplainframe.png', kite:'art/violetdecoframe.png', built1:'art/violetbuilt1.png', deco:'art/yellowflower.png', ref:'art/violetref.png', spoolItem:'art/spoolandropeviolet.png', giveBox:'art/violetkitebox1.png', supply:'art/kitesupplybox.png',
     bows:[{f:'toppurplebow',x:63.0,y:58.7,w:17.4},{f:'yellowbow',x:72.5,y:63.8,w:14.5},{f:'bottompurplebow',x:80.4,y:73.9,w:18.1}]},
   lainey: {name:'Lainey', plain:'art/laineyplainframe.png', kite:'art/laineydecoframe.png', built1:'art/laineybuilt1.png', deco:'art/blackdot.png',    ref:'art/laineyref.png', spoolItem:'art/spoolandthreadlainey.png', giveBox:'art/laineykitebox1.png', supply:'art/laineykitesupplybox.png',
-    bows:[{f:'topredbow',x:65.9,y:58.2,w:16.4},{f:'topblackbow',x:74.8,y:62.3,w:13.6},{f:'lowredbow',x:79.5,y:68.4,w:13.6},{f:'lowblackbow',x:84.3,y:75.9,w:15.0}]}
+    // Each bow must land exactly on the faint ghost bow printed on
+    // laineyplainframe.png — if it doesn't, the pale ghost peeks out and the
+    // bow reads as a washed-out smear. Ghost centres measured from that art:
+    // red 65.5/56.1 (w 16.9), black 72.9/62.6, red 79.3/69.4 (w 13.3), black 84.3/75.9.
+    bows:[{f:'topredbow',x:65.5,y:56.1,w:17.4},{f:'topblackbow',x:74.8,y:62.3,w:13.6},{f:'lowredbow',x:79.3,y:69.4,w:14.1},{f:'lowblackbow',x:84.3,y:75.9,w:15.0}]}
 };
 let kbChar, kbPlaced, kbPhase, kbRAF, kbActive, kbCaught, kbTarget, kbSpawnTimer;
 /* ---- pick whose kite to build ---- */
@@ -2503,18 +2591,23 @@ function kbConfettiBurst(){
    catch happens in kbMoveKite while the finger is down), so the video can
    play WITH sound on iOS — muted fallback only if the browser still blocks
    it. Falls back to confetti if the clip is missing. */
+/* art/violetflykitereward.mp4 / art/laineyflykitereward.mp4 are portrait
+   720x1280, so they play FULL SCREEN like the other rewards — boxed into the
+   kite stage with object-fit:cover they lost most of the frame. */
 function playKiteReward(fallbackFn){
-  const stageEl = document.getElementById('kiteStage');
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
   const vid = document.createElement('video');
   vid.src = 'art/'+(kbChar||'violet')+'flykitereward.mp4?v='+Date.now();
   vid.playsInline = true;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  overlay.appendChild(vid);
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  document.body.appendChild(overlay);
   vid.muted = false;                   // within the tap gesture -> sound allowed
   const p = vid.play();
   if(p && p.catch){
@@ -2670,6 +2763,7 @@ function renderButterflyGame(stage){
     <p class="ask">How many <span id="targetName">?</span> butterflies do you see? <span class="targetSwatch" id="targetSwatch"></span></p>
     <div class="skyBox" id="skyBox"></div>
     <div class="netChoices" id="netChoices"></div>
+    <button class="btn btn-daisy" id="bflyPlayAgainBtn" onclick="newButterflyRound()" style="visibility:hidden">🔁 Play Again</button>
     <div class="feedback" id="bflyFeedback">🦋 Choose the net that matches the color and the number of butterflies!</div>
   `;
   newButterflyRound();
@@ -2678,6 +2772,8 @@ function newButterflyRound(){
   bflyRoundNum++;
   bflyRoundHadWrongTap = false;
   bflyReady = false;   // no net taps count until the instructions finish
+  const againBtn = document.getElementById('bflyPlayAgainBtn');
+  if(againBtn) againBtn.style.visibility='hidden';
   // pick 3 colors for this round and a random count (1-4) of each;
   // the target is whichever one the question asks about
   bflyRoundColors = [...BFLY_COLORS].sort(()=>Math.random()-.5).slice(0,3)
@@ -2816,27 +2912,37 @@ function swoopNet(btn, color){
     else { setTimeout(newButterflyRound,600); }
   }, 1500);
 }
+/* after the reward video, STOP — don't roll straight into another round with
+   its spoken instructions. Show Play Again and let the child decide. */
 function butterflyCelebrate(){
-  playButterflyReward(()=>setTimeout(newButterflyRound,600));
+  playButterflyReward(()=>{
+    const b=document.getElementById('bflyPlayAgainBtn'); if(b) b.style.visibility='visible';
+    const fb=document.getElementById('bflyFeedback'); if(fb) fb.textContent='🦋 Great counting!';
+  });
 }
 /* tries a real reward clip at art/butterflyreward.mp4; if it doesn't
    exist yet (or fails to load), just moves straight to the next round —
    same fallback pattern as the kite/maze/fish games' clips */
+/* art/butterflyreward.mp4 is portrait 720x1280, so it plays FULL SCREEN like
+   the other rewards — inside the sky box with object-fit:cover it lost most of
+   the frame. The mute handling below is unchanged. */
 function playButterflyReward(fallbackFn){
-  const stageEl = document.getElementById('skyBox');
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
   const vid = document.createElement('video');
   vid.src = 'art/butterflyreward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
   // this plays after a swoop delay (not directly in the tap), so start
   // muted to guarantee autoplay, then unmute once running for sound
   vid.muted = true;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:20px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  overlay.appendChild(vid);
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   vid.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } });
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
   vid.addEventListener('playing', ()=>{ vid.muted = false; }, {once:true});
-  stageEl.appendChild(vid);
+  document.body.appendChild(overlay);
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } }); }
 }
@@ -2920,20 +3026,24 @@ function flipCard(i){
 function pondCelebrate(){
   playPondReward(pondConfetti);
 }
-/* tries a real reward clip at art/fishreward.mp4; if it doesn't exist
+/* tries a real reward clip at art/fishmatchreward.mp4; if it doesn't exist
    yet (or fails to load), falls straight to the confetti celebration —
    same pattern as the maze's and kite game's clips */
+/* art/fishmatchreward.mp4 is portrait 720x1280, so it plays FULL SCREEN like
+   the other rewards — boxed in the pond stage it would lose most of the frame. */
 function playPondReward(fallbackFn){
-  const stageEl = document.getElementById('pondStage');
+  const stageEl = document.createElement('div');
+  stageEl.className = 'fullScreenReward';
   const vid = document.createElement('video');
-  vid.src = 'art/fishreward.mp4?v='+Date.now();
+  vid.src = 'art/fishmatchreward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(stageEl.parentNode) stageEl.remove(); };
   vid.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } });
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
   stageEl.appendChild(vid);
+  document.body.appendChild(stageEl);
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } }); }
 }
@@ -3105,7 +3215,9 @@ function hsCelebrate(){
    kid taps them back in the same order — plays into the "fireflies
    twinkling" beat of that page of the story. */
 const FF_COUNT = 4;
-const FF_SLOT_X = [15, 38, 62, 85];
+/* scattered across the starry half of fireflybackground.png (the horizon sits
+   at about y=58%), rather than in a row along the bottom */
+const FF_SLOTS = [{x:24,y:19},{x:70,y:13},{x:32,y:44},{x:76,y:38}];
 const FF_ROUNDS = 3;      // three chances
 const FF_BASE_LEN = 3;    // round 1 = 3 lights, round 2 = 4, round 3 = 5
 const FF_IMAGES = ['art/firefly1.png','art/firefly2.png','art/firefly3.png','art/firefly4.png'];
@@ -3118,8 +3230,8 @@ function renderFireflyGame(stage){
     <button class="btn btn-violet" id="ffPlayAgainBtn" onclick="renderFireflyGame(document.getElementById('stageArea'))" style="visibility:hidden">✨ Play Again</button>
     <div class="feedback" id="ffFeedback"></div>
   `;
-  document.getElementById('fireflyStage').innerHTML = FF_SLOT_X.map((x,i)=>
-    `<button class="firefly" id="firefly${i}" style="left:${x}%" onclick="ffTap(${i})" disabled><img src="${FF_IMAGES[i]}" alt=""></button>`).join('');
+  document.getElementById('fireflyStage').innerHTML = FF_SLOTS.map((s,i)=>
+    `<button class="firefly" id="firefly${i}" style="left:${s.x}%;top:${s.y}%" onclick="ffTap(${i})" disabled><img src="${FF_IMAGES[i]}" alt=""></button>`).join('');
   ffRound = 0;
   ffUpdateProgress();
   newFireflyRound();
@@ -3223,19 +3335,23 @@ function ffCelebrate(){
 }
 /* firefly reward video over the stage, then confetti. Triggered by the tap
    that completes the pattern, so it plays with sound. */
+/* art/fireflyreward2.mp4 is portrait 720x1280, so it plays FULL SCREEN like the
+   other rewards — boxed in the stage with object-fit:cover it lost most of the
+   frame. Triggered by the tap that completes the pattern, so it has sound. */
 function playFfReward(fallbackFn){
-  const stageEl = document.getElementById('fireflyStage');
-  if(!stageEl){ fallbackFn(); return; }
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
   const vid = document.createElement('video');
-  vid.src = 'art/fireflyreward.mp4?v='+Date.now();
+  vid.src = 'art/fireflyreward2.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  overlay.appendChild(vid);
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  document.body.appendChild(overlay);
   vid.muted = false;
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ vid.muted = true; const p2 = vid.play(); if(p2 && p2.catch){ p2.catch(fail); } }); }
@@ -3349,13 +3465,15 @@ function tttStartPlay(winner){
   const first = TTT_NAME[winner];
   document.getElementById('tttArea').innerHTML = `
     <div class="tttBoard" id="tttBoard">
-      <img class="tttBg" src="art/tictactoebackground.png" alt="">
-      ${[0,1,2,3,4,5,6,7,8].map(i=>{
-        const r=Math.floor(i/3), c=i%3;
-        const left=TTT_COLS[c][0], top=TTT_ROWS[r][0];
-        const w=TTT_COLS[c][1]-TTT_COLS[c][0], h=TTT_ROWS[r][1]-TTT_ROWS[r][0];
-        return `<button class="tttCell" id="tttCell${i}" style="left:${left}%;top:${top}%;width:${w}%;height:${h}%" onclick="tttPlay(${i})"></button>`;
-      }).join('')}
+      <div class="tttZoom">
+        <img class="tttBg" src="art/tictactoebackground.png" alt="">
+        ${[0,1,2,3,4,5,6,7,8].map(i=>{
+          const r=Math.floor(i/3), c=i%3;
+          const left=TTT_COLS[c][0], top=TTT_ROWS[r][0];
+          const w=TTT_COLS[c][1]-TTT_COLS[c][0], h=TTT_ROWS[r][1]-TTT_ROWS[r][0];
+          return `<button class="tttCell" id="tttCell${i}" style="left:${left}%;top:${top}%;width:${w}%;height:${h}%" onclick="tttPlay(${i})"></button>`;
+        }).join('')}
+      </div>
     </div>`;
   document.getElementById('tttFeedback').textContent='';
   const goesFirstId = winner+'goesfirst';   // violetgoesfirst / laineygoesfirst
@@ -3450,19 +3568,24 @@ function tttFinish(result, line){
 }
 /* win reward video over the board — art/<char><letter>reward.mp4, e.g.
    violetXreward.mp4. Triggered by the winning tap so it plays with sound. */
+/* the win clip for whichever character + letter the child played, i.e.
+   art/violetXreward.mp4, art/violetOreward.mp4, art/laineyXreward.mp4 or
+   art/laineyOreward.mp4. Plays FULL SCREEN like the other rewards, so a clip
+   of any shape is shown whole — no need to match the board's proportions. */
 function playTttReward(fallbackFn){
-  const board=document.getElementById('tttBoard');
-  if(!board){ fallbackFn(); return; }
+  const overlay=document.createElement('div');
+  overlay.className='fullScreenReward';
   const vid=document.createElement('video');
   vid.src='art/'+tttPlayerChar+tttPlayerLetter+'reward.mp4?v='+Date.now();
   vid.playsInline=true; vid.autoplay=false;
-  vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:14px;';
+  vid.style.cssText='width:100%;height:100%;object-fit:contain;display:block;';
+  overlay.appendChild(vid);
   let handled=false;
-  const cleanup=()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup=()=>{ if(overlay.parentNode) overlay.remove(); };
   const fail=()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ if(!handled){ handled=true; cleanup(); document.getElementById('tttAgain').style.visibility='visible'; } });
-  board.appendChild(vid);
+  document.body.appendChild(overlay);
   vid.muted=false;
   const p=vid.play();
   if(p&&p.catch){ p.catch(()=>{ vid.muted=true; const p2=vid.play(); if(p2&&p2.catch){ p2.catch(fail); } }); }
@@ -3573,21 +3696,24 @@ function hcWin(){
   // a gentle rainbow-heart shower so the game is fully playable now
   playHcReward(hcCloseShower);
 }
-/* rainbow reward video over the closing scene, then the heart shower.
-   Drop art/rainbowreward.mp4 in and it plays automatically. */
+/* the ending reward, then the heart shower. Plays FULL SCREEN like the rock,
+   paint and bubble rewards — the clip is portrait and the heart stage is a
+   landscape-ish box, so boxing it here would crop most of it away. If the file
+   is missing it falls through to the heart shower and the game still finishes. */
 function playHcReward(fallbackFn){
-  const stageEl=document.getElementById('hcStage');
-  if(!stageEl){ fallbackFn(); return; }
+  const overlay=document.createElement('div');
+  overlay.className='fullScreenReward';
   const vid=document.createElement('video');
-  vid.src='art/endreward1.mp4?v='+Date.now();
+  vid.src='art/endingreward.mp4?v='+Date.now();
   vid.playsInline=true; vid.autoplay=false;
-  vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
+  vid.style.cssText='width:100%;height:100%;object-fit:contain;display:block;';
+  overlay.appendChild(vid);
   let handled=false;
-  const cleanup=()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup=()=>{ if(overlay.parentNode) overlay.remove(); };
   const fail=()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  document.body.appendChild(overlay);
   vid.muted=false;
   const p=vid.play();
   if(p&&p.catch){ p.catch(()=>{ vid.muted=true; const p2=vid.play(); if(p2&&p2.catch){ p2.catch(fail); } }); }
@@ -3852,6 +3978,16 @@ const OWL_MAX_NOTES = 50;   // song fills up at 50 notes, then they play it
 // each entry is {freq, ins} — the note AND the instrument it was tapped with,
 // so playback can switch instruments note-by-note just like they built it
 let owlAudioCtx=null, owlSong=[], owlInstrument=OWL_INSTRUMENTS[0];
+/* playback schedules one setTimeout per note plus one for the reward video.
+   Leaving the page doesn't cancel those on its own, so the song kept playing
+   over the next scene — track them and let owlStopAll() (called from
+   stopAudio(), which enterStep() runs on every page change) kill them. */
+let owlTimers=[];
+function owlStopAll(){
+  owlTimers.forEach(clearTimeout); owlTimers = [];
+  // silence anything mid-note; the context is reused, not closed
+  try{ if(owlAudioCtx && owlAudioCtx.state === 'running') owlAudioCtx.suspend(); }catch(e){}
+}
 function renderOwlSongGame(stage){
   owlSong = [];
   stage.innerHTML = `
@@ -3977,15 +4113,16 @@ function owlPlayBack(){
   document.getElementById('owlAsk').textContent = 'Here comes your song! 🎶';
   const notesByFreq = {};
   document.querySelectorAll('.owlNote').forEach((btn,i)=>{ notesByFreq[OWL_NOTES[i].freq] = btn; });
+  owlTimers.forEach(clearTimeout); owlTimers = [];
   owlSong.forEach((note,i)=>{
-    setTimeout(()=>{
+    owlTimers.push(setTimeout(()=>{
       owlPlayTone(note.freq, note.ins);   // each note in its own instrument
       const btn = notesByFreq[note.freq];
       if(btn){ const img = btn.querySelector('.owlNoteImg'); img.classList.remove('pop'); void img.offsetWidth; img.classList.add('pop'); owlSparkle(btn); }
-    }, i*440);
+    }, i*440));
   });
   // after the whole song has played, roll the reward video
-  setTimeout(playOwlReward, owlSong.length*440 + 400);
+  owlTimers.push(setTimeout(playOwlReward, owlSong.length*440 + 400));
 }
 /* reward video over the owl scene; on end (or if it can't load) we offer to
    play another song, and Next Scene is always there to move on */
@@ -5178,22 +5315,25 @@ function tuckShowPlayAgain(){
   const btn = document.getElementById('tuckPlayAgainBtn');
   if(btn) btn.style.visibility='visible';
 }
-/* tries the reward clip at art/naprewardvideo.mp4; falls back to confetti
-   if it doesn't load. Plays after a setTimeout (not a tap), so start muted
-   to guarantee autoplay, then unmute — same as the other games. */
+/* tries the reward clip at art/tucktheminreward.mp4; falls back to confetti
+   if it doesn't load. It's portrait 720x1280 so it plays FULL SCREEN like the
+   other rewards. Plays after a setTimeout (not a tap), so start muted to
+   guarantee autoplay, then unmute — same as the other games. */
 function playNapReward(fallbackFn){
-  const stageEl = document.getElementById('tuckScene');
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
   const vid = document.createElement('video');
-  vid.src = 'art/naprewardvideo.mp4?v='+Date.now();
+  vid.src = 'art/tucktheminreward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
   vid.muted = true;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:20px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   vid.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } });
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
   vid.addEventListener('playing', ()=>{ vid.muted = false; }, {once:true});
-  stageEl.appendChild(vid);
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } }); }
 }
@@ -5575,7 +5715,11 @@ function renderBubbleGame(stage){
   // fit the canvas to the space actually available below the title so the
   // launcher + row of next balls at the bottom stay visible (not clipped)
   const rectTop = stageEl.getBoundingClientRect().top;
-  const avail = window.innerHeight - rectTop - 165;
+  // room to leave under the canvas for the feedback line + the nav buttons.
+  // a tablet's nav row is taller, and if we ask for more than fits, the flex
+  // column shrinks the stage and clips the launcher row off the bottom.
+  const reserve = window.innerWidth >= 700 ? 230 : 165;
+  const avail = window.innerHeight - rectTop - reserve;
   const dispH = Math.round(Math.max(dispW*0.9, Math.min(dispW*1.35, avail)));
   const dpr = window.devicePixelRatio||1;
   bubCanvas.width = dispW*dpr; bubCanvas.height = dispH*dpr;
@@ -5790,18 +5934,23 @@ function bubWin(){
   // no spoken line — go straight to the reward video
   playBubbleReward(bubConfetti);
 }
+/* the reward plays FULL SCREEN over everything — the bubble stage is a narrow
+   box and object-fit:cover would crop most of the clip away. Same overlay the
+   rock and paint games use. */
 function playBubbleReward(fallbackFn){
-  const stageEl = document.getElementById('bubStage');
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
   const vid = document.createElement('video');
   vid.src = 'art/bubblereward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  overlay.appendChild(vid);
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  document.body.appendChild(overlay);
   // try WITH sound first; if blocked, play muted and leave it muted (no freeze)
   vid.muted = false;
   const p = vid.play();
