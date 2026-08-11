@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
 <title>Adventures of Violet &amp; Lainey</title>
 <style>
   :root{
@@ -36,7 +36,11 @@
   .btn-daisy{background:var(--daisy);color:var(--ink);} .btn-grass{background:#4caf50;}
   .btn:disabled{opacity:.4;cursor:default;}
 
-  .topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;padding:10px 14px;z-index:20;}
+  /* keep the home / title / games row clear of the notch and Dynamic Island.
+     Needs viewport-fit=cover on the viewport meta for env() to report real
+     insets; without both, the title sat underneath the island on iPhone. */
+  .topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;
+    padding:calc(10px + env(safe-area-inset-top,0px)) calc(14px + env(safe-area-inset-right,0px)) 10px calc(14px + env(safe-area-inset-left,0px));z-index:20;}
   .home-btn{background:#fff;color:var(--violet-deep);border:none;border-radius:50%;width:46px;height:46px;font-size:22px;box-shadow:0 3px 0 rgba(0,0,0,.15);cursor:pointer;flex:none;}
   .pill{background:#fff;border-radius:999px;padding:6px 16px;font-weight:bold;color:var(--violet-deep);box-shadow:0 3px 0 rgba(0,0,0,.12);font-size:clamp(13px,3vw,16px);text-align:center;}
 
@@ -87,7 +91,9 @@
   .colorTools{display:flex;gap:8px;margin-top:8px;}
 
   /* bottom nav / next arrow */
-  .navbar{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:10px;padding:12px 14px;z-index:20;background:linear-gradient(0deg,rgba(233,247,255,.95),rgba(233,247,255,0));}
+  /* and clear of the home indicator at the bottom */
+  .navbar{position:absolute;bottom:0;left:0;right:0;display:flex;justify-content:center;gap:10px;
+    padding:12px calc(14px + env(safe-area-inset-right,0px)) calc(12px + env(safe-area-inset-bottom,0px)) calc(14px + env(safe-area-inset-left,0px));z-index:20;background:linear-gradient(0deg,rgba(233,247,255,.95),rgba(233,247,255,0));}
   .arrowBtn{border:none;border-radius:999px;padding:14px 24px;font-size:clamp(15px,4vw,19px);font-family:inherit;font-weight:bold;color:#fff;background:var(--violet);cursor:pointer;box-shadow:0 5px 0 var(--violet-deep);}
   .arrowBtn:active{transform:translateY(4px);box-shadow:0 1px 0 var(--violet-deep);}
   .backBtn{background:#fff;color:var(--violet-deep);box-shadow:0 5px 0 rgba(0,0,0,.15);}
@@ -566,8 +572,24 @@
   #splash{padding:0;background:#000;}
   #splashVideo{position:fixed;inset:0;width:100vw;height:100vh;object-fit:contain;background:#000;}
   #startOverlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
-    background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.5) 100%);z-index:10;cursor:pointer;padding-bottom:44px;}
+    background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.5) 100%);z-index:10;cursor:pointer;
+    padding-bottom:calc(44px + env(safe-area-inset-bottom,0px));}
   #startOverlay .subtitle{color:#fff;text-shadow:0 2px 8px rgba(0,0,0,.6);}
+  /* Authorship credit for the picture book the app is based on. Deliberately a
+     static image + line of text with NO link and no purchase prompt — Kids
+     Category apps may not contain links out or buying opportunities unless
+     they sit behind a parental gate, and a plain credit avoids all of that. */
+  .bookCredit{display:flex;align-items:center;gap:10px;margin-top:16px;
+    background:rgba(0,0,0,.38);border-radius:14px;padding:8px 14px 8px 8px;
+    backdrop-filter:blur(2px);pointer-events:none;}
+  .bookCredit img{width:46px;height:46px;border-radius:7px;display:block;
+    box-shadow:0 2px 6px rgba(0,0,0,.5);}
+  .bookCredit span{color:#fff;font-size:clamp(12px,2.9vw,15px);font-weight:bold;
+    text-shadow:0 1px 4px rgba(0,0,0,.7);line-height:1.25;text-align:left;}
+  @media (min-width: 700px){
+    .bookCredit img{width:64px;height:64px;border-radius:9px;}
+    .bookCredit span{font-size:clamp(15px,1.9vw,19px);}
+  }
   .play-circle{width:88px;height:88px;border-radius:50%;background:#fff;display:flex;align-items:center;justify-content:center;
     box-shadow:0 8px 0 rgba(0,0,0,.18);margin-top:6px;animation:pulse 1.6s ease-in-out infinite;}
   .play-circle .tri{width:0;height:0;border-style:solid;border-width:22px 0 22px 36px;border-color:transparent transparent transparent var(--violet);margin-left:8px;}
@@ -716,6 +738,10 @@
     <div id="startOverlay" onclick="startSplash()">
       <p class="subtitle">Tap to begin! 💜🐞</p>
       <div class="play-circle"><div class="tri"></div></div>
+      <div class="bookCredit">
+        <img src="art/cover.png" alt="">
+        <span>Based on the picture book<br>by Mindy Jenkins</span>
+      </div>
     </div>
     <div id="nameOverlay">
       <h1>What's Your Name?</h1>
