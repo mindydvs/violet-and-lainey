@@ -39,7 +39,10 @@
   /* keep the home / title / games row clear of the notch and Dynamic Island.
      Needs viewport-fit=cover on the viewport meta for env() to report real
      insets; without both, the title sat underneath the island on iPhone. */
-  .topbar{position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;align-items:center;
+  /* IN FLOW, not absolute — as an overlay it sat on top of the story picture
+     and the game instructions. Now it's a row at the top and the stage starts
+     underneath it. The safe-area padding keeps it clear of the notch/island. */
+  .topbar{position:relative;width:100%;flex:none;display:flex;justify-content:space-between;align-items:center;
     padding:calc(10px + env(safe-area-inset-top,0px)) calc(14px + env(safe-area-inset-right,0px)) 10px calc(14px + env(safe-area-inset-left,0px));z-index:20;}
   .home-btn{background:#fff;color:var(--violet-deep);border:none;border-radius:50%;width:46px;height:46px;font-size:22px;box-shadow:0 3px 0 rgba(0,0,0,.15);cursor:pointer;flex:none;}
   .pill{background:#fff;border-radius:999px;padding:6px 16px;font-weight:bold;color:var(--violet-deep);box-shadow:0 3px 0 rgba(0,0,0,.12);font-size:clamp(13px,3vw,16px);text-align:center;}
@@ -47,7 +50,12 @@
 
   /* ===== adventure stage area (scene / color / game share this) ===== */
   #adventure{padding-top:64px;padding-bottom:74px;}
-  .stageArea{width:min(94vw,560px);flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;min-height:0;width:100%;}
+  /* centred, not top-aligned — content used to hug the top bar and leave a big
+     empty gap above the Back / Next row. The bottom padding reserves the
+     navbar's space (it's still absolutely positioned) so "centre" means
+     centred between the two bars rather than behind the buttons. */
+  .stageArea{width:min(94vw,560px);flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
+    min-height:0;width:100%;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px));box-sizing:border-box;}
   .bookPage{width:min(92vw,520px);background:var(--cream);border-radius:24px;box-shadow:0 10px 28px rgba(0,0,0,.18);overflow-y:auto;display:flex;flex-direction:column;max-height:76vh;}
   .bookPageArt{width:100%;max-height:32vh;overflow:hidden;flex:none;border-radius:24px 24px 0 0;background:#000;display:flex;align-items:center;justify-content:center;}
   .bookPageArt img,.bookPageArt video{width:100%;max-height:32vh;object-fit:contain;display:block;}
@@ -665,7 +673,7 @@
        with ~206px of dead bands each side. A square stage lets her fill it.
        flex:none so the surrounding column can't shrink it (same trap as the
        bubble and wake-up stages). */
-    .awakeStage{flex:none;width:min(96vw,800px);aspect-ratio:1/1;}
+    .awakeStage{flex:none;width:min(84vw,700px);aspect-ratio:1/1;}
     /* butterflybackground.png is square 1254x1254 — the old 1.6:1 box cropped
        ~38% of it away and left ~450px of the screen unused below. Bigger and
        squarer shows more of the art and gives the butterflies room. */
@@ -709,7 +717,7 @@
     /* sized by HEIGHT here (aspect-ratio 1/1 gives the width), so it uses the
        tall iPad screen instead of being pinned by 62vw. There was ~320px of
        dead space under the buttons before. */
-    .wakeStage{flex:none;height:min(64vh,780px);width:auto;max-width:94vw;}
+    .wakeStage{flex:none;height:min(56vh,680px);width:auto;max-width:94vw;}
     /* the two canvases stack one above the other so each can be much larger
        than they were side by side */
     .ccChoose{flex-direction:column;align-items:center;gap:14px;}
