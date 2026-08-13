@@ -55,7 +55,7 @@
      navbar's space (it's still absolutely positioned) so "centre" means
      centred between the two bars rather than behind the buttons. */
   .stageArea{width:min(94vw,560px);flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;
-    min-height:0;width:100%;padding-bottom:calc(72px + env(safe-area-inset-bottom,0px));box-sizing:border-box;}
+    min-height:0;width:100%;padding-bottom:calc(56px + env(safe-area-inset-bottom,0px));box-sizing:border-box;}
   .bookPage{width:min(92vw,520px);background:var(--cream);border-radius:24px;box-shadow:0 10px 28px rgba(0,0,0,.18);overflow-y:auto;display:flex;flex-direction:column;max-height:76vh;}
   .bookPageArt{width:100%;max-height:32vh;overflow:hidden;flex:none;border-radius:24px 24px 0 0;background:#000;display:flex;align-items:center;justify-content:center;}
   .bookPageArt img,.bookPageArt video{width:100%;max-height:32vh;object-fit:contain;display:block;}
@@ -119,7 +119,7 @@
      and the 12 cards go 3 across x 4 down instead of 4x3 — that way `cover`
      shows the whole pond with no crop. align-content:center floats the rows in
      the middle of the taller box. */
-  .pondStage{position:relative;width:min(92vw,480px);aspect-ratio:941/1672;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/lillypadbackground.png') center/cover;display:grid;grid-template-columns:repeat(3,1fr);gap:3%;padding:4%;box-sizing:border-box;align-content:center;}
+  .pondStage{position:relative;height:min(66vh,720px);width:auto;max-width:94vw;aspect-ratio:941/1672;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/lillypadbackground.png') center/cover;display:grid;grid-template-columns:repeat(3,1fr);gap:3%;padding:4%;box-sizing:border-box;align-content:center;}
   .card{position:relative;aspect-ratio:1/1;background:none;border:none;padding:0;cursor:pointer;perspective:600px;}
   .cardInner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;}
   .card.flipped .cardInner{transform:rotateY(180deg);}
@@ -158,7 +158,7 @@
   .captureNet.swoop{bottom:36%;transform:translate(-50%,0) scale(1.15) rotate(6deg);opacity:1;}
 
   /* wake up violet */
-  .wakeStage{position:relative;width:min(88vw,480px);aspect-ratio:1/1;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:#fff;}
+  .wakeStage{position:relative;height:min(40vh,420px);width:auto;max-width:88vw;aspect-ratio:1/1;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:#fff;}
   .wakeStage img{width:100%;height:100%;object-fit:cover;display:block;}
   .wakeStage.shake img{animation:shakeIt .5s;}
   @keyframes shakeIt{0%,100%{transform:translate(0,0) rotate(0)}20%{transform:translate(-6px,2px) rotate(-2deg)}40%{transform:translate(6px,-2px) rotate(2deg)}60%{transform:translate(-4px,2px) rotate(-1deg)}80%{transform:translate(4px,-2px) rotate(1deg)}}
@@ -258,7 +258,7 @@
   .kbPip.done{filter:none;transform:scale(1.15);}
 
   /* down the tree maze */
-  .mazeStage{position:relative;height:min(72vh,660px);aspect-ratio:6/10;width:auto;max-width:96vw;margin:0 auto;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/maze/mazebackground.png') center/cover, linear-gradient(180deg,var(--sky),var(--grass));}
+  .mazeStage{position:relative;height:min(72vh,700px);aspect-ratio:6/8;width:auto;max-width:96vw;margin:0 auto;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/maze/mazebackground.png') center/cover, linear-gradient(180deg,var(--sky),var(--grass));}
   #mazeCanvas{position:relative;width:100%;height:100%;display:block;touch-action:none;cursor:grab;}
   #mazeCanvas:active{cursor:grabbing;}
   /* tap-to-see reward button (a tap lets iOS play the maze video WITH sound) */
@@ -287,7 +287,7 @@
   /* fireflybackground.png is portrait 941x1672 (starry sky on top, meadow
      below), so the stage takes that shape and is sized by HEIGHT — a width-
      driven portrait box would be taller than the screen. */
-  .fireflyStage{position:relative;height:min(58vh,600px);width:auto;max-width:96vw;aspect-ratio:941/1672;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/fireflybackground.png') center/cover, radial-gradient(circle at 50% 20%,#2b2158,#14102c 75%);margin-bottom:10px;}
+  .fireflyStage{position:relative;height:min(66vh,680px);width:auto;max-width:96vw;aspect-ratio:39/50;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/fireflybackground.png') top center/cover, radial-gradient(circle at 50% 20%,#2b2158,#14102c 75%);margin-bottom:10px;}
   /* scattered across the sky rather than lined up along the bottom, so each
      one carries its own top as well as left (see FF_SLOTS) */
   .firefly{position:absolute;border:none;background:transparent;width:26%;max-width:120px;aspect-ratio:1/1;transform:translate(-50%,-50%);cursor:pointer;padding:0;}
@@ -357,7 +357,7 @@
        height:min(58vh,540px);background:url('art/page19video2.png') center/cover;
      and drop the aspect-ratio (that art is landscape 1672x941, so it needed the
      sky-extension trick to keep Violet and Lainey from being sliced in half). */
-  .heartStage{position:relative;width:min(94vw,520px);aspect-ratio:1479/1975;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.18);
+  .heartStage{position:relative;height:min(62vh,700px);width:auto;max-width:94vw;aspect-ratio:1479/1975;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.18);
     background:url('art/end2.jpg') center/cover;}
   .heartProgress{display:flex;gap:8px;justify-content:center;margin:4px 0 8px;min-height:30px;}
   .heartPip{font-size:26px;filter:grayscale(1) opacity(.45);transition:filter .2s,transform .2s;}
@@ -629,7 +629,6 @@
   .modeName{font-weight:bold;color:var(--violet-deep);font-size:clamp(14px,3.6vw,18px);}
   .modeSub{color:#6b5b8a;font-size:clamp(10px,2.6vw,12px);line-height:1.25;}
   .modeHint{color:#fff;opacity:.85;font-size:clamp(11px,2.9vw,13px);margin-top:14px;}
-  .topRight{display:flex;gap:8px;align-items:center;flex:none;}
   .mode-btn{background:#fff;color:var(--violet-deep);border:none;border-radius:50%;width:46px;height:46px;font-size:20px;box-shadow:0 3px 0 rgba(0,0,0,.15);cursor:pointer;flex:none;}
   .mode-btn:active{transform:translateY(3px);}
   /* "starring <name>" under The End */
@@ -798,10 +797,7 @@
     <div class="topbar">
       <button class="home-btn" onclick="goToStart()" title="Back to the beginning">🏠</button>
       <span class="pill" id="advTitle">—</span>
-      <span class="topRight">
-        <button class="mode-btn" id="replayBtn" onclick="replayInstruction()" title="Hear the instructions again" style="visibility:hidden">🔊</button>
-        <button class="mode-btn" id="modeBtn" onclick="toggleMode()" title="Switch between story only and story + games">🎮</button>
-      </span>
+      <button class="mode-btn" id="modeBtn" onclick="toggleMode()" title="Switch between story only and story + games">🎮</button>
     </div>
     <div class="stageArea" id="stageArea"></div>
     <div class="navbar">
@@ -982,21 +978,7 @@ function stopAudio(){
    for whole-page narration to chain real word clips instead of the
    robotic voice). onDuration(ms) is called once we know roughly how long
    the line will take, so callers can pace word-highlighting to match. */
-/* Remembers the spoken instruction for the current game so a child who missed
-   it (or talked over it) can hear it again via the 🔊 button. Feedback noises
-   like "try again" are excluded so they never replace the instruction. */
-let stepIntroAudio = null;
-const NON_INSTRUCTION_SOUNDS = ['tryagain','greatjob','greatjobherecomesanotherone','yesamatch','itsyourturn'];
-let replayAllowed = false;   // story pages have their own "Play to Hear the Story"
-function noteInstruction(id){
-  if(!replayAllowed || NON_INSTRUCTION_SOUNDS.includes(id)) return;
-  stepIntroAudio = id;
-  const b = document.getElementById('replayBtn');
-  if(b) b.style.visibility = 'visible';
-}
-function replayInstruction(){ if(stepIntroAudio) playAudio(stepIntroAudio, '', null, ()=>{}); }
 function playAudio(id, fallbackText, onDuration, onFail){
-  noteInstruction(id);
   stopAudio();
   const myGen = audioGeneration;
   const el = new Audio(`audio/${id}.mp3?v=${Date.now()}`);
@@ -1367,11 +1349,6 @@ function stepBack(){
 function enterStep(){
   const step = activeSteps()[seqIndex];
   saveProgress();          // remember this page so the app can resume here
-  // reset the 🔊 replay button for this step (games only — story pages have their own play button)
-  stepIntroAudio = null;
-  replayAllowed = (step.type !== 'scene');
-  const rb = document.getElementById('replayBtn');
-  if(rb) rb.style.visibility = 'hidden';
   const mb = document.getElementById('modeBtn');
   if(mb){ mb.textContent = STORY_ONLY ? '📖' : '🎮'; mb.title = STORY_ONLY ? 'Story only — tap to add the games' : 'Story + games — tap for story only'; }
   // the very first page is titled "<Name>'s Adventure" so the child sees their
@@ -2004,8 +1981,8 @@ function wakeConfetti(){
    down each side, so renderMazeGame() widens it to 9 columns there and the CSS
    switches to aspect-ratio 9/10 to match. Cell size stays the same; there's
    just more maze across. */
-let MAZE_COLS = 6; const MAZE_ROWS = 10;
-const MAZE_COLS_PHONE = 6, MAZE_COLS_TABLET = 9;
+let MAZE_COLS = 6, MAZE_ROWS = 8;
+const MAZE_PHONE = {cols:6, rows:8}, MAZE_TABLET = {cols:9, rows:10};
 const MAZE_WALL_COLOR = '#3f7a2e';
 const MAZE_FLOWER_COLORS = ['#ff6fa3','#b06fe0','#ffd93d','#ff8c42','#5eb8ff'];
 const MAZE_ASK = 'Drag Violet through the bushes to find Lainey!';
@@ -2031,7 +2008,8 @@ function renderMazeGame(stage){
   `;
   // pick the column count for this screen BEFORE generating — the CSS
   // aspect-ratio for the same breakpoint has to match it
-  MAZE_COLS = isTabletWidth() ? MAZE_COLS_TABLET : MAZE_COLS_PHONE;
+  const mz = isTabletWidth() ? MAZE_TABLET : MAZE_PHONE;
+  MAZE_COLS = mz.cols; MAZE_ROWS = mz.rows;
   const startX = 0, startY = MAZE_ROWS-1;
   mazeGrid = generateMaze(MAZE_COLS, MAZE_ROWS, startX, startY);
   mazeGoal = {x: MAZE_COLS-1, y: 0};
@@ -2245,15 +2223,24 @@ function mazeWin(){
   // still refuses, fall back to the flashing tap button.
   const v = mazeRewardVid;
   if(v && mazeRewardUnlocked){
-    v.style.display = 'block';
+    // Move the (already unlocked) element into a FULL-SCREEN overlay. The clip is
+    // 1108x828 landscape and the maze stage is a tall 6/10 box, so playing it in
+    // place cropped most of it away. Moving the same element rather than making a
+    // new one keeps the sound rights the child's first touch granted.
+    const overlay = document.createElement('div');
+    overlay.className = 'fullScreenReward';
+    v.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+    overlay.appendChild(v);
+    document.body.appendChild(overlay);
     v.muted = false;
     try{ v.currentTime = 0; }catch(_){}
     let handled=false;
-    const finish = ()=>{ if(handled) return; handled=true; if(v.parentNode) v.remove(); mazeCelebrate(); };
+    const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
+    const finish = ()=>{ if(handled) return; handled=true; cleanup(); mazeCelebrate(); };
     v.addEventListener('ended', finish, {once:true});
-    v.addEventListener('error', ()=>{ if(!handled){ handled=true; if(v.parentNode) v.remove(); mazeShowTapReward(); } }, {once:true});
+    v.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); mazeShowTapReward(); } }, {once:true});
     const p = v.play();
-    if(p && p.catch){ p.catch(()=>{ v.style.display='none'; mazeShowTapReward(); }); }
+    if(p && p.catch){ p.catch(()=>{ cleanup(); mazeShowTapReward(); }); }
     return;
   }
   mazeShowTapReward();
@@ -2273,17 +2260,21 @@ function mazeShowTapReward(){
    doesn't exist yet (or fails to load), falls straight to the confetti
    celebration — same pattern as the wake-up game's clips */
 function playMazeWinClip(fallbackFn){
-  const stageEl = document.querySelector('.mazeStage');
+  // FULL SCREEN — mazefound.mp4 is 1108x828 landscape and the maze stage is a
+  // tall portrait box, so playing it in place cropped most of it away.
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
   const vid = document.createElement('video');
   vid.src = 'art/maze/mazefound.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:5;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   // try WITH sound first (the finger-lift is a gesture); if the browser blocks
   // it, fall back to MUTED so the video ALWAYS plays. Never unmute mid-play —
   // that's what froze it on a frame.
@@ -3251,7 +3242,7 @@ function hsCelebrate(){
 const FF_COUNT = 4;
 /* scattered across the starry half of fireflybackground.png (the horizon sits
    at about y=58%), rather than in a row along the bottom */
-const FF_SLOTS = [{x:24,y:19},{x:70,y:13},{x:32,y:44},{x:76,y:38}];
+const FF_SLOTS = [{x:24,y:26},{x:70,y:18},{x:32,y:61},{x:76,y:53}];
 const FF_ROUNDS = 3;      // three chances
 const FF_BASE_LEN = 3;    // round 1 = 3 lights, round 2 = 4, round 3 = 5
 const FF_IMAGES = ['art/firefly1.png','art/firefly2.png','art/firefly3.png','art/firefly4.png'];
