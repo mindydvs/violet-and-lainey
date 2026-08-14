@@ -1880,7 +1880,7 @@ function playWakeClip(clipName, fallbackFn, isWinning, myGen){
   // fresh instead of the browser serving an old cached copy
   vid.src = `art/wake/${clipName}.mp4?v=${Date.now()}`;
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:5;';
+  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:5;';
   let handled=false;
   const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
   vid.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } });
@@ -1938,21 +1938,18 @@ function wakeCelebrate(){
    plays after the wake clip's 'ended' (not a tap), so start muted to
    guarantee autoplay, then unmute once running — same as the other games. */
 function playWakeReward(fallbackFn){
+  const stageEl = document.getElementById('wakeStage');
   const vid = document.createElement('video');
   vid.src = 'art/violetisawake.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
   vid.muted = true;
-  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;';
   let handled=false;
-  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
+  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
   vid.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } });
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
   vid.addEventListener('playing', ()=>{ vid.muted = false; }, {once:true});
-  // FULL SCREEN so the whole frame is seen
-  const overlay = document.createElement('div');
-  overlay.className = 'fullScreenReward';
-  overlay.appendChild(vid);
-  document.body.appendChild(overlay);
+  stageEl.appendChild(vid);
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } }); }
 }
