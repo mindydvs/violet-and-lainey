@@ -1880,7 +1880,7 @@ function playWakeClip(clipName, fallbackFn, isWinning, myGen){
   // fresh instead of the browser serving an old cached copy
   vid.src = `art/wake/${clipName}.mp4?v=${Date.now()}`;
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:5;';
+  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:5;';
   let handled=false;
   const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
   vid.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } });
@@ -1938,18 +1938,21 @@ function wakeCelebrate(){
    plays after the wake clip's 'ended' (not a tap), so start muted to
    guarantee autoplay, then unmute once running — same as the other games. */
 function playWakeReward(fallbackFn){
-  const stageEl = document.getElementById('wakeStage');
   const vid = document.createElement('video');
   vid.src = 'art/violetisawake.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
   vid.muted = true;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   vid.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } });
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
   vid.addEventListener('playing', ()=>{ vid.muted = false; }, {once:true});
-  stageEl.appendChild(vid);
+  // FULL SCREEN so the whole frame is seen
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } }); }
 }
@@ -2027,7 +2030,7 @@ function renderMazeGame(stage){
   // first touch (a real gesture), which is what lets it later auto-play WITH
   // sound at the win — no tap needed at the end.
   mazeRewardVid = document.createElement('video');
-  mazeRewardVid.src = 'art/maze/mazefound.mp4?v='+Date.now();
+  mazeRewardVid.src = 'art/maze/mazefoundreward.mp4?v='+Date.now();
   mazeRewardVid.playsInline = true; mazeRewardVid.preload = 'auto';
   mazeRewardVid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:5;border-radius:22px;display:none;';
   document.querySelector('.mazeStage').appendChild(mazeRewardVid);
@@ -2256,16 +2259,16 @@ function mazeShowTapReward(){
   btn.addEventListener('click', ()=>{ if(done) return; done=true; btn.remove(); playMazeWinClip(mazeCelebrate); });
   stageEl.appendChild(btn);
 }
-/* tries a real "found Lainey!" clip at art/maze/mazefound.mp4; if it
+/* tries a real "found Lainey!" clip at art/maze/mazefoundreward.mp4; if it
    doesn't exist yet (or fails to load), falls straight to the confetti
    celebration — same pattern as the wake-up game's clips */
 function playMazeWinClip(fallbackFn){
-  // FULL SCREEN — mazefound.mp4 is 1108x828 landscape and the maze stage is a
-  // tall portrait box, so playing it in place cropped most of it away.
+  // FULL SCREEN — the clip is portrait 720x1280, so it fills the phone. (In the
+  // maze stage it would be cropped, and the old landscape clip letterboxed.)
   const overlay = document.createElement('div');
   overlay.className = 'fullScreenReward';
   const vid = document.createElement('video');
-  vid.src = 'art/maze/mazefound.mp4?v='+Date.now();
+  vid.src = 'art/maze/mazefoundreward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
   vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
@@ -2734,12 +2737,16 @@ function playKiteMatchReward(){
   const vid=document.createElement('video');
   vid.src='art/violetflykitereward.mp4?v='+Date.now();
   vid.playsInline=true;
-  vid.style.cssText='position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const done=()=>{ if(handled) return; handled=true; if(vid.parentNode) vid.remove(); kmWins=0; kmUpdateProgress(); newKiteMatchRound(); };
+  const done=()=>{ if(handled) return; handled=true; if(overlay.parentNode) overlay.remove(); kmWins=0; kmUpdateProgress(); newKiteMatchRound(); };
   vid.addEventListener('error', done);
   vid.addEventListener('ended', done);
-  sky.appendChild(vid);
+  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   vid.muted=false;
   const p=vid.play();
   if(p&&p.catch){ p.catch(()=>{ vid.muted=true; const p2=vid.play(); if(p2&&p2.catch) p2.catch(done); }); }
@@ -4152,18 +4159,22 @@ function owlPlayBack(){
 /* reward video over the owl scene; on end (or if it can't load) we offer to
    play another song, and Next Scene is always there to move on */
 function playOwlReward(){
-  const stageEl = document.getElementById('owlScene');
-  if(!stageEl){ owlAfterReward(); return; }
+  // FULL SCREEN like the other rewards — art/owlreward.mp4 is portrait 720x1280
+  // and the owl scene is a wide 2821/1751 box, so playing it in place would crop
+  // most of the frame away.
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
   const vid = document.createElement('video');
-  vid.src = 'art/owlreward1.mp4?v='+Date.now();
+  vid.src = 'art/owlreward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:20px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   const done = ()=>{ if(!handled){ handled=true; cleanup(); owlAfterReward(); } };
   vid.addEventListener('error', done);
   vid.addEventListener('ended', done);
-  stageEl.appendChild(vid);
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   // the child tapped Play, so the page has user activation — play with sound,
   // retry muted (then unmute) if the browser blocks it
   vid.muted = false;
@@ -4271,13 +4282,17 @@ function playFountainReward(fallbackFn){
   const vid = document.createElement('video');
   vid.src = 'art/fountainreward1.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   // try WITH sound first; if blocked, play muted and leave it muted so it
   // never freezes mid-play (unmuting a non-gesture play pauses it)
   vid.muted = false;
@@ -4471,13 +4486,17 @@ function playAppleReward(fallbackFn){
   const vid = document.createElement('video');
   vid.src = 'art/applereward.mp4?v='+Date.now();
   vid.playsInline = true;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   vid.muted = false;                 // played from the bucket tap -> sound
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ vid.muted=true; const p2=vid.play(); if(p2&&p2.catch){ p2.catch(fail); } }); }
@@ -4594,12 +4613,16 @@ function playAwakeReward(fallbackFn){
   const vid = document.createElement('video');
   vid.src = 'art/stayawakereward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   vid.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } });
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } }); }
 }
@@ -4938,12 +4961,16 @@ function playSeesawReward(fallbackFn){
   const vid = document.createElement('video');
   vid.src = 'art/seesawreward.mp4';
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   vid.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } });
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } }); }
 }
@@ -5186,13 +5213,17 @@ function playSheepReward(fallbackFn){
   vid.src = 'art/sheepreward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
   vid.muted = true;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   vid.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } });
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
   vid.addEventListener('playing', ()=>{ vid.muted = false; }, {once:true});
-  stageEl.appendChild(vid);
+  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } }); }
 }
@@ -5535,13 +5566,17 @@ function playTreasureReward(fallbackFn){
   const vid = document.createElement('video');
   vid.src = 'art/treasurereward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:20px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   // played from the "tap the chest" tap -> sound; muted fallback only if blocked
   vid.muted = false;
   const p = vid.play();
@@ -5672,13 +5707,17 @@ function playFdReward(fallbackFn){
   const vid = document.createElement('video');
   vid.src = 'art/differencesreward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:14px;';
+  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
   let handled=false;
-  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
+  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  stageEl.appendChild(vid);
+  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
+  const overlay = document.createElement('div');
+  overlay.className = 'fullScreenReward';
+  overlay.appendChild(vid);
+  document.body.appendChild(overlay);
   vid.muted = false;
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ vid.muted = true; const p2 = vid.play(); if(p2 && p2.catch){ p2.catch(fail); } }); }
