@@ -4282,17 +4282,13 @@ function playFountainReward(fallbackFn){
   const vid = document.createElement('video');
   vid.src = 'art/fountainreward1.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
   let handled=false;
-  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
+  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
-  const overlay = document.createElement('div');
-  overlay.className = 'fullScreenReward';
-  overlay.appendChild(vid);
-  document.body.appendChild(overlay);
+  stageEl.appendChild(vid);
   // try WITH sound first; if blocked, play muted and leave it muted so it
   // never freezes mid-play (unmuting a non-gesture play pauses it)
   vid.muted = false;
@@ -4486,17 +4482,13 @@ function playAppleReward(fallbackFn){
   const vid = document.createElement('video');
   vid.src = 'art/applereward.mp4?v='+Date.now();
   vid.playsInline = true;
-  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
   let handled=false;
-  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
+  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
-  const overlay = document.createElement('div');
-  overlay.className = 'fullScreenReward';
-  overlay.appendChild(vid);
-  document.body.appendChild(overlay);
+  stageEl.appendChild(vid);
   vid.muted = false;                 // played from the bucket tap -> sound
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ vid.muted=true; const p2=vid.play(); if(p2&&p2.catch){ p2.catch(fail); } }); }
@@ -4613,16 +4605,12 @@ function playAwakeReward(fallbackFn){
   const vid = document.createElement('video');
   vid.src = 'art/stayawakereward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:22px;';
   let handled=false;
-  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
+  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
   vid.addEventListener('error', ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } });
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
-  const overlay = document.createElement('div');
-  overlay.className = 'fullScreenReward';
-  overlay.appendChild(vid);
-  document.body.appendChild(overlay);
+  stageEl.appendChild(vid);
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } }); }
 }
@@ -5566,17 +5554,13 @@ function playTreasureReward(fallbackFn){
   const vid = document.createElement('video');
   vid.src = 'art/treasurereward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:20px;';
   let handled=false;
-  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
+  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
-  const overlay = document.createElement('div');
-  overlay.className = 'fullScreenReward';
-  overlay.appendChild(vid);
-  document.body.appendChild(overlay);
+  stageEl.appendChild(vid);
   // played from the "tap the chest" tap -> sound; muted fallback only if blocked
   vid.muted = false;
   const p = vid.play();
@@ -5707,17 +5691,13 @@ function playFdReward(fallbackFn){
   const vid = document.createElement('video');
   vid.src = 'art/differencesreward.mp4?v='+Date.now();
   vid.playsInline = true; vid.autoplay = false;
-  vid.style.cssText = 'width:100%;height:100%;object-fit:contain;display:block;';
+  vid.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:8;border-radius:14px;';
   let handled=false;
-  const cleanup = ()=>{ if(overlay.parentNode) overlay.remove(); };
+  const cleanup = ()=>{ if(vid.parentNode) vid.remove(); };
   const fail = ()=>{ if(!handled){ handled=true; cleanup(); fallbackFn(); } };
   vid.addEventListener('error', fail);
   vid.addEventListener('ended', ()=>{ cleanup(); fallbackFn(); });
-  // FULL SCREEN so the whole frame is seen (see .fullScreenReward)
-  const overlay = document.createElement('div');
-  overlay.className = 'fullScreenReward';
-  overlay.appendChild(vid);
-  document.body.appendChild(overlay);
+  stageEl.appendChild(vid);
   vid.muted = false;
   const p = vid.play();
   if(p && p.catch){ p.catch(()=>{ vid.muted = true; const p2 = vid.play(); if(p2 && p2.catch){ p2.catch(fail); } }); }
