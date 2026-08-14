@@ -47,6 +47,13 @@
     border-radius:8px; padding:.8rem 1rem; text-align:left; margin:1.4rem 0 0;
     font-size:.95rem;
   }
+  .price{color:var(--muted); font-size:.95rem; margin:.7rem 0 0;}
+  details{margin:1.5rem 0 0; text-align:left;}
+  summary{
+    cursor:pointer; color:var(--violet-deep); font-weight:700;
+    font-size:.95rem; padding:.35rem 0;
+  }
+  details ol{margin:.5rem 0 0;}
   footer{
     max-width:31rem; margin:1.4rem auto 0; text-align:center;
     color:rgba(255,255,255,.85); font-size:.88rem;
@@ -75,19 +82,23 @@
     <li>No ads, no data collected, works offline</li>
   </ul>
 
-  <h2>Bought the book?</h2>
-  <p style="text-align:left;margin:.3rem 0 0;">Your copy comes with a code for the app, free.</p>
-  <ol>
-    <li>Find the code printed inside your book.</li>
-    <li>Open the <strong>App Store</strong> on your iPhone or iPad.</li>
-    <li>Tap your picture in the top corner, then <strong>Redeem Gift Card or Code</strong>.</li>
-    <li>Enter the code — the app downloads free.</li>
-  </ol>
+  <p class="price">A one-time purchase. No subscriptions, no in-app extras.</p>
+
+  <!-- Kept deliberately small: most people are here to buy, but anyone given a
+       promo code (reviewers, signings, gifts) still needs to know what to do. -->
+  <details>
+    <summary>Have a code?</summary>
+    <ol>
+      <li>Open the <strong>App Store</strong> on your iPhone or iPad.</li>
+      <li>Tap your picture in the top corner, then <strong>Redeem Gift Card or Code</strong>.</li>
+      <li>Enter your code — the app downloads free.</li>
+    </ol>
+  </details>
 
   <div class="note">
-    Trouble with a code? Email
+    Questions, or trouble with the app? Email
     <a href="mailto:Sivadbooks@gmail.com">Sivadbooks@gmail.com</a>
-    and we’ll sort it out.
+    — I read every message.
   </div>
 
 </div>
