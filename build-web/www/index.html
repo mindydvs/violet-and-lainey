@@ -1800,18 +1800,15 @@ const WAKE_METHODS = [
   {id:'guitar',  emoji:'🎸', clip:'guitar',  sfx:'Twang!'},
   {id:'gong',    emoji:'<svg viewBox="0 0 40 40" style="width:1.2em;height:1.2em;vertical-align:-0.15em" xmlns="http://www.w3.org/2000/svg"><path d="M7 6 L7 12 M33 6 L33 12" stroke="#7a5c3a" stroke-width="3" stroke-linecap="round"/><line x1="7" y1="6" x2="33" y2="6" stroke="#7a5c3a" stroke-width="3" stroke-linecap="round"/><line x1="20" y1="12" x2="20" y2="16" stroke="#7a5c3a" stroke-width="2" stroke-linecap="round"/><circle cx="20" cy="26" r="13" fill="#e8b64a" stroke="#a8781f" stroke-width="2"/><circle cx="20" cy="26" r="8.5" fill="none" stroke="#a8781f" stroke-width="1.4" opacity=".65"/><circle cx="17" cy="21" r="2.2" fill="#fff" opacity=".55"/></svg>', clip:'gong',    sfx:'GONNNG!'}
 ];
-/* Winning wake-up combinations. Any single sound tapped THREE times in a row
-   wakes Violet — auto-generated for every method below — plus a couple of fun
-   mixed combos. Edit this list to add/remove patterns. */
-const WAKE_WINNING_SEQUENCES = [
-  ...WAKE_METHODS.map(m => [m.id, m.id, m.id]),   // any sound x3 in a row wins
-  ['drum','horn','feather'],
-  ['guitar','feather','horn']
-];
-let wakeSequence=[], wakeGen=0, wakeResetTimer=null;
+/* Violet wakes up when the child has either TRIED ALL SIX instruments, or
+   played any one of them TWICE. A tap counts the instant it happens — the clip
+   does not have to finish — and nothing is ever forgotten, so she always wakes
+   up within six taps and no one can get stuck.
+   (This replaced a set of exact winning sequences, which meant a child could
+   tap forever without ever landing on one.) */
+let wakeTried = new Set(), wakeGen = 0;
 function renderWakeGame(stage){
-  wakeSequence=[]; wakeGen++;
-  if(wakeResetTimer){ clearTimeout(wakeResetTimer); wakeResetTimer=null; }
+  wakeTried = new Set(); wakeGen++;
   stage.innerHTML = `
     <p class="ask">Help Lainey wake up Violet!</p>
     <div class="wakeStage" id="wakeStage"><img src="art/wakeupviolet.png" alt="sleepy Violet"></div>
@@ -1832,39 +1829,25 @@ function updateWakeDial(progress, label){
   if(fill) fill.style.width = Math.round(progress*100)+'%';
   if(lbl && label) lbl.textContent = label;
 }
-/* best progress (0-1) toward any winning sequence, given taps so far are
-   a valid start of it; 0 if the current taps can't lead anywhere */
-function wakeBestProgress(seq){
-  let best = 0;
-  for(const w of WAKE_WINNING_SEQUENCES){
-    if(seq.length > w.length) continue;
-    if(w.slice(0, seq.length).every((v,i)=>v===seq[i])) best = Math.max(best, seq.length/w.length);
-  }
-  return best;
-}
-function wakeExactMatch(seq){
-  return WAKE_WINNING_SEQUENCES.some(w => w.length===seq.length && w.every((v,i)=>v===seq[i]));
-}
 function wakeTap(i){
   const stageEl = document.getElementById('wakeStage');
   /* let a new tap interrupt whatever's currently playing instead of
      waiting for it to finish: bump the generation so any pending
-     'ended'/timeout callback from the old tap becomes a no-op, cancel
-     a pending dead-end reset, and clear out the old clip immediately. */
+     'ended'/timeout callback from the old tap becomes a no-op, and clear
+     out the old clip immediately. */
   wakeGen++;
   const myGen = wakeGen;
-  if(wakeResetTimer){ clearTimeout(wakeResetTimer); wakeResetTimer=null; wakeSequence=[]; }
   const oldVid = stageEl.querySelector('video');
   if(oldVid){ try{ oldVid.pause(); }catch(e){} oldVid.remove(); }
   const method = WAKE_METHODS[i];
-  wakeSequence.push(method.id);
-  /* check BEFORE playing anything whether this exact tap completes a
-     winning sequence, so we know which of the two clips to show: the
-     "...awake" version if she wakes up on this tap, or the regular
-     reaction clip if not. After 4 tries (taps 1-4) with no win, the 5th
-     tap always wakes her up with whichever icon was just tapped, so no
-     one gets stuck failing forever. */
-  const isWinning = wakeExactMatch(wakeSequence) || wakeSequence.length >= 5;
+  /* The tap counts NOW, before anything plays — so cutting a clip short by
+     tapping again still counts as having tried that instrument. */
+  const alreadyTried = wakeTried.has(method.id);
+  wakeTried.add(method.id);
+  /* She wakes up on a repeat, or once all six have been tried. Decided before
+     playing so we know which clip to show: the "...awake" version if this tap
+     wakes her, otherwise the ordinary reaction. */
+  const isWinning = alreadyTried || wakeTried.size >= WAKE_METHODS.length;
   if(isWinning){
     // lock input once she's won so a fast extra tap can't cut off the celebration
     document.querySelectorAll('.method').forEach(b=>b.disabled=true);
@@ -1909,22 +1892,10 @@ function wakeAfterTap(isWinning){
     wakeCelebrate();
     return;
   }
-  const progress = wakeBestProgress(wakeSequence);
-  if(progress > 0){
-    updateWakeDial(progress, progress > 0.6 ? "Getting warmer!" : "Keep trying...");
-    fb.textContent = '';
-  } else {
-    updateWakeDial(0.12, "Not quite...");
-    fb.textContent = 'Hmm, try a different combination!';
-    const myGen = wakeGen;
-    wakeResetTimer = setTimeout(()=>{
-      if(myGen!==wakeGen) return;
-      wakeSequence = [];
-      updateWakeDial(0, "Try to wake up Violet with a sound!");
-      fb.textContent = '';
-      wakeResetTimer = null;
-    }, 900);
-  }
+  // the dial simply fills as more instruments get tried — it never resets
+  const tried = wakeTried.size, total = WAKE_METHODS.length;
+  updateWakeDial(tried/total, tried >= total-2 ? "Almost there!" : "Keep trying...");
+  fb.textContent = '';
 }
 /* the instrument wake clip has just finished (she's shown waking up to
    that sound), so now play the shared "Violet is awake!" reward clip,
