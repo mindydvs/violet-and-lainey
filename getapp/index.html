@@ -48,6 +48,13 @@
     background:#fff; color:var(--violet-deep); box-shadow:0 5px 0 rgba(0,0,0,.28);
   }
   .btn:active{transform:translateY(3px); box-shadow:0 2px 0 rgba(0,0,0,.28);}
+  /* Not a link while the app is unreleased — reads as a status, not a dead button. */
+  .btn-soon{
+    background:rgba(255,255,255,.16); color:#fff; box-shadow:none; cursor:default;
+    border:2px solid rgba(255,255,255,.55);
+  }
+  .soon-note{color:rgba(255,255,255,.9); font-size:.97rem; margin:1rem 0 0;}
+  .soon-note a{color:#fff; text-decoration:underline;}
   .price{color:rgba(255,255,255,.8); font-size:.93rem; margin:.9rem 0 0;}
 
   /* ---------- sections ---------- */
@@ -119,9 +126,15 @@
     <h1>Adventures of Violet &amp; Lainey</h1>
     <p class="byline">The picture book, now an app for iPhone&nbsp;and&nbsp;iPad</p>
 
-    <!-- App Store ID 6798822460. Live only once the app is released;
-         until then Apple shows a "not available" page. -->
-    <a class="btn" href="https://apps.apple.com/app/id6798822460">Get it on the App&nbsp;Store</a>
+    <!-- App Store ID 6798822460. While the app is unreleased that link returns
+         Apple's "not available" error, so this is a label rather than a button.
+         To go live: swap the span below for
+         <a class="btn" href="https://apps.apple.com/app/id6798822460">Get it on the App&nbsp;Store</a>
+         and delete the .soon-note paragraph. -->
+    <span class="btn btn-soon">Coming soon to the App&nbsp;Store</span>
+    <p class="soon-note">Want to know the moment it's out?
+      <a href="mailto:Sivadbooks@gmail.com?subject=Tell%20me%20when%20the%20app%20is%20out">Email me</a>
+      and I'll tell you.</p>
     <p class="price">A one-time purchase. No ads, no subscriptions, no in-app extras.</p>
   </div>
 </header>
