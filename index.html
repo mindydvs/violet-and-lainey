@@ -3,91 +3,226 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Privacy Policy — Adventures of Violet &amp; Lainey</title>
+<title>Adventures of Violet &amp; Lainey — the App</title>
+<meta name="description" content="The picture book by Mindy Jenkins, now an app for iPhone and iPad. Every page read aloud, tap any word, and eighteen games woven through the story.">
+
+<meta property="og:title" content="Adventures of Violet &amp; Lainey">
+<meta property="og:description" content="The picture book, now an app for iPhone and iPad. Read aloud, tap any word, and play along.">
+<meta property="og:image" content="https://violetandlainey.com/getapp/book-cover.webp">
+<meta property="og:url" content="https://violetandlainey.com/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
 <style>
-  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-       line-height:1.65;color:#2b2440;max-width:44rem;margin:0 auto;padding:2.5rem 1.25rem 4rem;}
-  h1{font-size:1.8rem;margin-bottom:.25rem;color:#5b3fa8;}
-  h2{font-size:1.15rem;margin-top:2rem;color:#5b3fa8;}
-  .updated{color:#6b6480;font-size:.9rem;margin-top:0;}
-  ul{padding-left:1.2rem;}
-  li{margin:.35rem 0;}
-  code{background:#f2eefb;padding:.1rem .35rem;border-radius:4px;font-size:.9em;}
-  .callout{background:#f2eefb;border-left:4px solid #7b5bd6;padding:.9rem 1.1rem;border-radius:6px;margin:1.5rem 0;}
-  footer{margin-top:3rem;padding-top:1.25rem;border-top:1px solid #e4dff0;color:#6b6480;font-size:.9rem;}
+  :root{
+    --violet:#7b5bd6; --violet-deep:#4a3183; --cream:#fdf8ee;
+    --ink:#2b2440; --muted:#6b6480; --lilac:#f2eefb;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0; color:var(--ink); line-height:1.6;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--cream);
+  }
+  /* height:auto matters — without it the width/height attributes act as CSS
+     hints and the images stretch to their literal pixel height. */
+  img,video{max-width:100%; height:auto; display:block;}
+  .wrap{max-width:56rem; margin:0 auto; padding:0 1.15rem;}
+  a{color:var(--violet-deep);}
+  a:hover{color:var(--violet);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:linear-gradient(180deg,#1b1450 0%,#3a2f7a 45%,#7b5bd6 100%);
+    color:#fff; padding:3rem 0 3.5rem; text-align:center;
+  }
+  .hero .cover{
+    width:min(58%,240px); margin:0 auto 1.5rem; border-radius:18px;
+    box-shadow:0 16px 40px rgba(0,0,0,.42);
+  }
+  .hero h1{font-size:clamp(1.7rem,5.5vw,2.6rem); line-height:1.15; margin:0 0 .35rem;}
+  .hero .byline{color:rgba(255,255,255,.85); margin:0 0 1.8rem; font-size:1.02rem;}
+  .btn{
+    display:inline-block; padding:.95rem 2.2rem; border-radius:999px;
+    font-size:1.08rem; font-weight:700; text-decoration:none;
+    background:#fff; color:var(--violet-deep); box-shadow:0 5px 0 rgba(0,0,0,.28);
+  }
+  .btn:active{transform:translateY(3px); box-shadow:0 2px 0 rgba(0,0,0,.28);}
+  /* Not a link while the app is unreleased — reads as a status, not a dead button. */
+  .btn-soon{
+    background:rgba(255,255,255,.16); color:#fff; box-shadow:none; cursor:default;
+    border:2px solid rgba(255,255,255,.55);
+  }
+  .soon-note{color:rgba(255,255,255,.9); font-size:.97rem; margin:1rem 0 0;}
+  .soon-note a{color:#fff; text-decoration:underline;}
+  .price{color:rgba(255,255,255,.8); font-size:.93rem; margin:.9rem 0 0;}
+
+  /* ---------- sections ---------- */
+  section{padding:3rem 0;}
+  h2{
+    font-size:clamp(1.25rem,3.6vw,1.65rem); color:var(--violet-deep);
+    text-align:center; margin:0 0 .4rem;
+  }
+  .lede{text-align:center; color:var(--muted); max-width:34rem; margin:0 auto 2rem;}
+
+  /* trailer, shown in a phone-ish frame */
+  .trailer{background:var(--lilac);}
+  .phone{
+    width:min(72%,300px); margin:0 auto; border-radius:30px; overflow:hidden;
+    border:9px solid #262430; background:#262430;
+    box-shadow:0 18px 44px rgba(60,45,100,.32);
+  }
+  .phone video{width:100%; height:auto; display:block; border-radius:21px;}
+
+  /* feature list */
+  .features{list-style:none; padding:0; margin:0 auto; max-width:34rem;}
+  .features li{
+    position:relative; padding:.55rem 0 .55rem 2.1rem;
+    border-bottom:1px solid #ece6f7;
+  }
+  .features li:last-child{border-bottom:none;}
+  .features li::before{content:"💜"; position:absolute; left:.2rem; top:.55rem;}
+
+  /* sample pages */
+  .pages{background:var(--lilac);}
+  .grid{
+    /* 300px minimum keeps this at 2x2 on desktop rather than an orphaned 3+1 */
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:1rem; margin-top:.5rem;
+  }
+  .grid img{border-radius:14px; box-shadow:0 8px 22px rgba(60,45,100,.18);}
+
+  /* the book */
+  .book-row{
+    display:flex; gap:1.8rem; align-items:center; justify-content:center;
+    flex-wrap:wrap; text-align:left;
+  }
+  .book-row img{width:min(42%,190px); border-radius:12px; box-shadow:0 10px 26px rgba(60,45,100,.25);}
+  .book-row div{flex:1 1 16rem; min-width:14rem;}
+
+  .note{
+    background:var(--lilac); border-left:4px solid var(--violet);
+    border-radius:10px; padding:1rem 1.15rem; margin:1.6rem auto 0;
+    max-width:34rem; font-size:.96rem;
+  }
+  details{max-width:34rem; margin:1.4rem auto 0;}
+  summary{cursor:pointer; color:var(--violet-deep); font-weight:700; padding:.4rem 0;}
+  details ol{margin:.5rem 0 0; padding-left:1.3rem;}
+  details li{margin:.4rem 0;}
+
+  footer{
+    background:#241c4a; color:rgba(255,255,255,.8);
+    text-align:center; padding:2rem 1rem; font-size:.9rem;
+  }
+  footer a{color:#cbb8ff;}
 </style>
 </head>
 <body>
 
-<h1>Privacy Policy</h1>
-<p class="updated">Adventures of Violet &amp; Lainey — last updated 11 August 2026</p>
+<header class="hero">
+  <div class="wrap">
+    <img class="cover" src="getapp/book-cover.webp" width="700" height="700"
+         alt="Adventures of Violet and Lainey book cover">
+    <h1>Adventures of Violet &amp; Lainey</h1>
+    <p class="byline">The picture book, now an app for iPhone&nbsp;and&nbsp;iPad</p>
 
-<div class="callout">
-  <strong>Short version:</strong> This app collects nothing. It has no ads, no analytics,
-  no accounts, and no internet connection of any kind. The few things it remembers are
-  stored only on your own device and are never sent anywhere.
-</div>
+    <!-- App Store ID 6798822460. While the app is unreleased that link returns
+         Apple's "not available" error, so this is a label rather than a button.
+         To go live: swap the span below for
+         <a class="btn" href="https://apps.apple.com/app/id6798822460">Get it on the App&nbsp;Store</a>
+         and delete the .soon-note paragraph. -->
+    <span class="btn btn-soon">Coming soon to the App&nbsp;Store</span>
+    <p class="soon-note">Want to know the moment it's out?
+      <a href="mailto:Sivadbooks@gmail.com?subject=Tell%20me%20when%20the%20app%20is%20out">Email me</a>
+      and I'll tell you.</p>
+    <p class="price">A one-time purchase. No ads, no subscriptions, no in-app extras.</p>
+  </div>
+</header>
 
-<h2>Who this policy is from</h2>
-<p>Adventures of Violet &amp; Lainey is made by Mindy Jenkins, an independent developer.
-This policy explains how the app handles information. It applies to the iPhone and iPad app
-and nothing else.</p>
+<section class="trailer">
+  <div class="wrap">
+    <h2>See it in action</h2>
+    <p class="lede">Violet the bat sleeps through the day. Lainey the ladybug sleeps
+      through the night. This is the story of the day they spent together.</p>
+    <!-- preload="none" so the 16MB file costs nothing until someone presses play -->
+    <div class="phone">
+      <video controls playsinline preload="none" poster="getapp/trailer-poster.webp">
+        <source src="getapp/trailer.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
 
-<h2>Information we collect</h2>
-<p><strong>None.</strong> We do not collect, transmit, sell, share, or store any personal
-information about you or your child on any server. We have no way to identify you, and no
-information ever reaches us or anyone else.</p>
+<section>
+  <div class="wrap">
+    <h2>What's inside</h2>
+    <p class="lede">Made for the age where a child wants to touch everything on the page.</p>
+    <ul class="features">
+      <li><strong>Every page read aloud</strong>, in the same voice all the way through</li>
+      <li><strong>Tap any word</strong> to hear it on its own — for children just starting to read</li>
+      <li><strong>Your child's name</strong> on the title page</li>
+      <li><strong>Eighteen games</strong> woven into the story, not bolted on the end</li>
+      <li><strong>Story only, or story with games</strong> — switch whenever you like</li>
+      <li><strong>Works offline</strong>, on a plane or in the car</li>
+      <li><strong>No ads, no data collected, nothing to buy</strong> once you own it</li>
+    </ul>
+    <div class="note">
+      Everything stays on your device. The app has no internet connection at all —
+      no accounts, no tracking, no analytics. <a href="privacy-policy.html">Read the privacy policy</a>.
+    </div>
+  </div>
+</section>
 
-<h2>What the app saves on your device</h2>
-<p>So the story feels personal and can be picked up where it was left off, the app saves three
-small pieces of information in your device's local app storage:</p>
-<ul>
-  <li><code>vl_childName</code> — the first name typed on the welcome screen, so the story can
-      show it on the title page.</li>
-  <li><code>vl_progress</code> — which page of the story you last reached.</li>
-  <li><code>vl_storyOnly</code> — whether you chose story-only mode or story-with-games.</li>
-</ul>
-<p>These never leave the device. They are not backed up to us, not shared with anyone, and not
-used for advertising or profiling. The name is displayed on screen only — it is never spoken
-aloud, and it is not used anywhere else in the app.</p>
+<section class="pages">
+  <div class="wrap">
+    <h2>A look at the pages</h2>
+    <p class="lede">The same artwork and the same words in both the book and the app.</p>
+    <div class="grid">
+      <img src="getapp/page1.webp" width="840" height="840" loading="lazy" alt="Meet Violet, the bat with wings soft and wide">
+      <img src="getapp/page2.webp" width="840" height="840" loading="lazy" alt="First stop, the Butterfly Grove">
+      <img src="getapp/page3.webp" width="840" height="840" loading="lazy" alt="They flew past the fireflies, all twinkling and bright">
+      <img src="getapp/page4.webp" width="840" height="840" loading="lazy" alt="Violet carried her softly over the hill">
+    </div>
+  </div>
+</section>
 
-<h2>No internet connection</h2>
-<p>All artwork, audio, and video is bundled inside the app itself. The app makes no network
-requests whatsoever — it works entirely offline and will function with the device in airplane
-mode. There are no third-party services, software development kits, trackers, or embedded
-content of any kind.</p>
+<section>
+  <div class="wrap">
+    <h2>There's a book, too</h2>
+    <div class="book-row">
+      <img src="getapp/book-cover.webp" width="700" height="700" loading="lazy"
+           alt="The Adventures of Violet and Lainey picture book">
+      <div>
+        <p>A square picture book, written and illustrated by Mindy Jenkins.
+           The app follows it page for page, so a child can hear the story read aloud
+           and then find the very same pictures in their own hands.</p>
+        <!-- TODO: add the retail link once the book is listed, e.g.
+             <p><a class="btn" href="AMAZON-URL">Get the book</a></p> -->
+        <p style="color:var(--muted);font-size:.95rem;">
+          Ask about the paperback at
+          <a href="mailto:Sivadbooks@gmail.com">Sivadbooks@gmail.com</a>.</p>
+      </div>
+    </div>
 
-<h2>No advertising or analytics</h2>
-<p>The app contains no advertising, no third-party analytics, no tracking pixels, and no
-behavioural profiling. Nothing about how your child plays is measured or reported.</p>
+    <details>
+      <summary>Have a code?</summary>
+      <ol>
+        <li>Open the <strong>App Store</strong> on your iPhone or iPad.</li>
+        <li>Tap your picture in the top corner, then <strong>Redeem Gift Card or Code</strong>.</li>
+        <li>Enter your code and the app will download.</li>
+      </ol>
+    </details>
 
-<h2>Children's privacy</h2>
-<p>This app is designed for young children and is offered in Apple's Kids Category. Because the
-app collects no personal information at all and never transmits data, it does not gather
-information from children within the meaning of the Children's Online Privacy Protection Act
-(COPPA) or similar laws. There are no in-app purchases, no external links, no social features,
-no chat, and no way for a child to contact anyone through the app.</p>
-
-<h2>Deleting the information</h2>
-<p>Because everything is stored on the device only, deleting the app removes all of it
-immediately and permanently. There is nothing stored elsewhere for us to delete, and no account
-to close.</p>
-
-<h2>Purchases</h2>
-<p>The app is a one-time paid purchase from the App Store. Any payment is handled entirely by
-Apple — we never see or receive your payment details. Apple's own privacy policy covers that
-transaction.</p>
-
-<h2>Changes to this policy</h2>
-<p>If this policy changes, the updated version will be posted at this address with a new date at
-the top. If a future version of the app ever collects anything, this policy will be updated
-before that version is released.</p>
-
-<h2>Contact</h2>
-<p>Questions about this policy or the app: <a href="mailto:Sivadbooks@gmail.com">Sivadbooks@gmail.com</a></p>
+    <div class="note">
+      Questions, or trouble with the app? Email
+      <a href="mailto:Sivadbooks@gmail.com">Sivadbooks@gmail.com</a> — I read every message.
+    </div>
+  </div>
+</section>
 
 <footer>
-  Adventures of Violet &amp; Lainey · © 2026 Mindy Jenkins
+  © 2026 Mindy Jenkins · <a href="privacy-policy.html">Privacy Policy</a>
 </footer>
 
 </body>
