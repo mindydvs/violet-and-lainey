@@ -4,108 +4,211 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Adventures of Violet &amp; Lainey — the App</title>
-<meta name="description" content="The picture book by Mindy Jenkins, now an app for iPhone and iPad. Read along, tap any word, and play the games.">
+<meta name="description" content="The picture book by Mindy Jenkins, now an app for iPhone and iPad. Every page read aloud, tap any word, and eighteen games woven through the story.">
+
+<meta property="og:title" content="Adventures of Violet &amp; Lainey">
+<meta property="og:description" content="The picture book, now an app for iPhone and iPad. Read aloud, tap any word, and play along.">
+<meta property="og:image" content="https://mindydvs.github.io/violet-and-lainey/getapp/book-cover.webp">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
 <style>
   :root{
-    --violet:#7b5bd6; --violet-deep:#5b3fa8; --cream:#fdf8ee;
-    --ink:#2b2440; --muted:#6b6480;
+    --violet:#7b5bd6; --violet-deep:#4a3183; --cream:#fdf8ee;
+    --ink:#2b2440; --muted:#6b6480; --lilac:#f2eefb;
   }
   *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
   body{
-    margin:0; font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
-    color:var(--ink); line-height:1.6;
-    background:linear-gradient(180deg,#1b1450 0%,#3a2f7a 42%,#7b5bd6 78%,#c9b6f0 100%);
-    min-height:100vh; padding:2rem 1.1rem 3rem;
+    margin:0; color:var(--ink); line-height:1.6;
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--cream);
   }
-  .card{
-    max-width:31rem; margin:0 auto; background:var(--cream);
-    border-radius:26px; padding:1.9rem 1.5rem 2.2rem; text-align:center;
-    box-shadow:0 18px 50px rgba(0,0,0,.35);
+  /* height:auto matters — without it the width/height attributes act as CSS
+     hints and the images stretch to their literal pixel height. */
+  img,video{max-width:100%; height:auto; display:block;}
+  .wrap{max-width:56rem; margin:0 auto; padding:0 1.15rem;}
+  a{color:var(--violet-deep);}
+  a:hover{color:var(--violet);}
+
+  /* ---------- hero ---------- */
+  .hero{
+    background:linear-gradient(180deg,#1b1450 0%,#3a2f7a 45%,#7b5bd6 100%);
+    color:#fff; padding:3rem 0 3.5rem; text-align:center;
   }
-  .cover{
-    width:min(62%,230px); border-radius:16px; display:block; margin:0 auto 1.3rem;
-    box-shadow:0 10px 26px rgba(0,0,0,.3);
+  .hero .cover{
+    width:min(58%,240px); margin:0 auto 1.5rem; border-radius:18px;
+    box-shadow:0 16px 40px rgba(0,0,0,.42);
   }
-  h1{font-size:1.6rem; line-height:1.25; margin:0 0 .3rem; color:var(--violet-deep);}
-  .byline{color:var(--muted); margin:0 0 1.5rem; font-size:.98rem;}
+  .hero h1{font-size:clamp(1.7rem,5.5vw,2.6rem); line-height:1.15; margin:0 0 .35rem;}
+  .hero .byline{color:rgba(255,255,255,.85); margin:0 0 1.8rem; font-size:1.02rem;}
   .btn{
-    display:block; width:100%; padding:.95rem 1rem; margin:.6rem 0;
-    border-radius:999px; font-size:1.08rem; font-weight:700; text-decoration:none;
-    border:none; cursor:pointer;
+    display:inline-block; padding:.95rem 2.2rem; border-radius:999px;
+    font-size:1.08rem; font-weight:700; text-decoration:none;
+    background:#fff; color:var(--violet-deep); box-shadow:0 5px 0 rgba(0,0,0,.28);
   }
-  .btn-main{background:var(--violet); color:#fff; box-shadow:0 5px 0 #4a2f96;}
-  .btn-main:active{transform:translateY(3px); box-shadow:0 2px 0 #4a2f96;}
-  .soon{background:#e7e0f5; color:var(--violet-deep); box-shadow:none; cursor:default;}
-  h2{font-size:1.05rem; margin:1.9rem 0 .5rem; color:var(--violet-deep);}
-  ol{text-align:left; padding-left:1.25rem; margin:.4rem 0 0;}
-  li{margin:.45rem 0;}
-  .features{text-align:left; margin:1.4rem 0 0; padding:0; list-style:none;}
-  .features li{margin:.5rem 0; padding-left:1.6rem; position:relative;}
-  .features li::before{content:"💜"; position:absolute; left:0;}
+  .btn:active{transform:translateY(3px); box-shadow:0 2px 0 rgba(0,0,0,.28);}
+  .price{color:rgba(255,255,255,.8); font-size:.93rem; margin:.9rem 0 0;}
+
+  /* ---------- sections ---------- */
+  section{padding:3rem 0;}
+  h2{
+    font-size:clamp(1.25rem,3.6vw,1.65rem); color:var(--violet-deep);
+    text-align:center; margin:0 0 .4rem;
+  }
+  .lede{text-align:center; color:var(--muted); max-width:34rem; margin:0 auto 2rem;}
+
+  /* trailer, shown in a phone-ish frame */
+  .trailer{background:var(--lilac);}
+  .phone{
+    width:min(72%,300px); margin:0 auto; border-radius:30px; overflow:hidden;
+    border:9px solid #262430; background:#262430;
+    box-shadow:0 18px 44px rgba(60,45,100,.32);
+  }
+  .phone video{width:100%; height:auto; display:block; border-radius:21px;}
+
+  /* feature list */
+  .features{list-style:none; padding:0; margin:0 auto; max-width:34rem;}
+  .features li{
+    position:relative; padding:.55rem 0 .55rem 2.1rem;
+    border-bottom:1px solid #ece6f7;
+  }
+  .features li:last-child{border-bottom:none;}
+  .features li::before{content:"💜"; position:absolute; left:.2rem; top:.55rem;}
+
+  /* sample pages */
+  .pages{background:var(--lilac);}
+  .grid{
+    /* 300px minimum keeps this at 2x2 on desktop rather than an orphaned 3+1 */
+    display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+    gap:1rem; margin-top:.5rem;
+  }
+  .grid img{border-radius:14px; box-shadow:0 8px 22px rgba(60,45,100,.18);}
+
+  /* the book */
+  .book-row{
+    display:flex; gap:1.8rem; align-items:center; justify-content:center;
+    flex-wrap:wrap; text-align:left;
+  }
+  .book-row img{width:min(42%,190px); border-radius:12px; box-shadow:0 10px 26px rgba(60,45,100,.25);}
+  .book-row div{flex:1 1 16rem; min-width:14rem;}
+
   .note{
-    background:#f2eefb; border-left:4px solid var(--violet);
-    border-radius:8px; padding:.8rem 1rem; text-align:left; margin:1.4rem 0 0;
-    font-size:.95rem;
+    background:var(--lilac); border-left:4px solid var(--violet);
+    border-radius:10px; padding:1rem 1.15rem; margin:1.6rem auto 0;
+    max-width:34rem; font-size:.96rem;
   }
-  .price{color:var(--muted); font-size:.95rem; margin:.7rem 0 0;}
-  details{margin:1.5rem 0 0; text-align:left;}
-  summary{
-    cursor:pointer; color:var(--violet-deep); font-weight:700;
-    font-size:.95rem; padding:.35rem 0;
-  }
-  details ol{margin:.5rem 0 0;}
+  details{max-width:34rem; margin:1.4rem auto 0;}
+  summary{cursor:pointer; color:var(--violet-deep); font-weight:700; padding:.4rem 0;}
+  details ol{margin:.5rem 0 0; padding-left:1.3rem;}
+  details li{margin:.4rem 0;}
+
   footer{
-    max-width:31rem; margin:1.4rem auto 0; text-align:center;
-    color:rgba(255,255,255,.85); font-size:.88rem;
+    background:#241c4a; color:rgba(255,255,255,.8);
+    text-align:center; padding:2rem 1rem; font-size:.9rem;
   }
-  footer a{color:#fff;}
+  footer a{color:#cbb8ff;}
 </style>
 </head>
 <body>
 
-<div class="card">
+<header class="hero">
+  <div class="wrap">
+    <img class="cover" src="book-cover.webp" width="700" height="700"
+         alt="Adventures of Violet and Lainey book cover">
+    <h1>Adventures of Violet &amp; Lainey</h1>
+    <p class="byline">The picture book, now an app for iPhone&nbsp;and&nbsp;iPad</p>
 
-  <img class="cover" src="book-cover.png" alt="Adventures of Violet and Lainey book cover">
-
-  <h1>Adventures of Violet &amp; Lainey</h1>
-  <p class="byline">The picture book, now an app for iPhone&nbsp;and&nbsp;iPad</p>
-
-  <!-- App Store ID 6798822460. This link works only once the app is released;
-       until then Apple shows a "not available" page. -->
-  <a class="btn btn-main" href="https://apps.apple.com/app/id6798822460">Get it on the App&nbsp;Store</a>
-
-  <ul class="features">
-    <li>Every page read aloud</li>
-    <li>Tap any word to hear it on its own</li>
-    <li>Your child’s name on the title page</li>
-    <li>Eighteen games woven through the story</li>
-    <li>No ads, no data collected, works offline</li>
-  </ul>
-
-  <p class="price">A one-time purchase. No subscriptions, no in-app extras.</p>
-
-  <!-- Kept deliberately small: most people are here to buy, but anyone given a
-       promo code (reviewers, signings, gifts) still needs to know what to do. -->
-  <details>
-    <summary>Have a code?</summary>
-    <ol>
-      <li>Open the <strong>App Store</strong> on your iPhone or iPad.</li>
-      <li>Tap your picture in the top corner, then <strong>Redeem Gift Card or Code</strong>.</li>
-      <li>Enter your code and the app will download.</li>
-    </ol>
-  </details>
-
-  <div class="note">
-    Questions, or trouble with the app? Email
-    <a href="mailto:Sivadbooks@gmail.com">Sivadbooks@gmail.com</a>
-    — I read every message.
+    <!-- App Store ID 6798822460. Live only once the app is released;
+         until then Apple shows a "not available" page. -->
+    <a class="btn" href="https://apps.apple.com/app/id6798822460">Get it on the App&nbsp;Store</a>
+    <p class="price">A one-time purchase. No ads, no subscriptions, no in-app extras.</p>
   </div>
+</header>
 
-</div>
+<section class="trailer">
+  <div class="wrap">
+    <h2>See it in action</h2>
+    <p class="lede">Violet the bat sleeps through the day. Lainey the ladybug sleeps
+      through the night. This is the story of the day they spent together.</p>
+    <!-- preload="none" so the 16MB file costs nothing until someone presses play -->
+    <div class="phone">
+      <video controls playsinline preload="none" poster="trailer-poster.webp">
+        <source src="trailer.mp4" type="video/mp4">
+      </video>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>What's inside</h2>
+    <p class="lede">Made for the age where a child wants to touch everything on the page.</p>
+    <ul class="features">
+      <li><strong>Every page read aloud</strong>, in the same voice all the way through</li>
+      <li><strong>Tap any word</strong> to hear it on its own — for children just starting to read</li>
+      <li><strong>Your child's name</strong> on the title page</li>
+      <li><strong>Eighteen games</strong> woven into the story, not bolted on the end</li>
+      <li><strong>Story only, or story with games</strong> — switch whenever you like</li>
+      <li><strong>Works offline</strong>, on a plane or in the car</li>
+      <li><strong>No ads, no data collected, nothing to buy</strong> once you own it</li>
+    </ul>
+    <div class="note">
+      Everything stays on your device. The app has no internet connection at all —
+      no accounts, no tracking, no analytics. <a href="../privacy-policy.html">Read the privacy policy</a>.
+    </div>
+  </div>
+</section>
+
+<section class="pages">
+  <div class="wrap">
+    <h2>A look at the pages</h2>
+    <p class="lede">The same artwork and the same words in both the book and the app.</p>
+    <div class="grid">
+      <img src="page1.webp" width="840" height="840" loading="lazy" alt="Meet Violet, the bat with wings soft and wide">
+      <img src="page2.webp" width="840" height="840" loading="lazy" alt="First stop, the Butterfly Grove">
+      <img src="page3.webp" width="840" height="840" loading="lazy" alt="They flew past the fireflies, all twinkling and bright">
+      <img src="page4.webp" width="840" height="840" loading="lazy" alt="Violet carried her softly over the hill">
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <h2>There's a book, too</h2>
+    <div class="book-row">
+      <img src="book-cover.webp" width="700" height="700" loading="lazy"
+           alt="The Adventures of Violet and Lainey picture book">
+      <div>
+        <p>A square picture book, written and illustrated by Mindy Jenkins.
+           The app follows it page for page, so a child can hear the story read aloud
+           and then find the very same pictures in their own hands.</p>
+        <!-- TODO: add the retail link once the book is listed, e.g.
+             <p><a class="btn" href="AMAZON-URL">Get the book</a></p> -->
+        <p style="color:var(--muted);font-size:.95rem;">
+          Ask about the paperback at
+          <a href="mailto:Sivadbooks@gmail.com">Sivadbooks@gmail.com</a>.</p>
+      </div>
+    </div>
+
+    <details>
+      <summary>Have a code?</summary>
+      <ol>
+        <li>Open the <strong>App Store</strong> on your iPhone or iPad.</li>
+        <li>Tap your picture in the top corner, then <strong>Redeem Gift Card or Code</strong>.</li>
+        <li>Enter your code and the app will download.</li>
+      </ol>
+    </details>
+
+    <div class="note">
+      Questions, or trouble with the app? Email
+      <a href="mailto:Sivadbooks@gmail.com">Sivadbooks@gmail.com</a> — I read every message.
+    </div>
+  </div>
+</section>
 
 <footer>
-  © 2026 Mindy Jenkins ·
-  <a href="../privacy-policy.html">Privacy Policy</a>
+  © 2026 Mindy Jenkins · <a href="../privacy-policy.html">Privacy Policy</a>
 </footer>
 
 </body>
