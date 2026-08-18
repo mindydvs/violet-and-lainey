@@ -2,6 +2,7 @@
 node_modules/
 build-web/node_modules/
 build-web/ios/
+build-web/android/
 build-web/package-lock.json
 
 # --- working files: too big for GitHub (kites2.psd alone is 115MB, limit is 100MB) ---
