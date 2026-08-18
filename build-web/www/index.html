@@ -578,7 +578,17 @@
 
   /* ===== opening video splash ===== */
   #splash{padding:0;background:#000;}
-  #splashVideo{position:fixed;inset:0;width:100vw;height:100vh;object-fit:contain;background:#000;}
+  /* The opening film is 9:16, so on anything wider — every iPad, or a phone
+     turned sideways — `contain` leaves black bars down the sides. Fill them
+     with a blurred, over-scaled copy of the poster frame so the screen reads
+     as one continuous scene. Cropping the video to fill instead would cut the
+     title off the top and fall apart completely in landscape.
+     No z-index needed: this paints behind the video (later in DOM) and behind
+     every overlay (all z-index >= 10). */
+  #splash::before{content:"";position:fixed;inset:0;pointer-events:none;
+    background:url('openingscene-poster.jpg?v=2') center/cover no-repeat;
+    filter:blur(42px) saturate(1.2) brightness(.6);transform:scale(1.15);}
+  #splashVideo{position:fixed;inset:0;width:100vw;height:100vh;object-fit:contain;background:transparent;}
   #startOverlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;
     background:linear-gradient(180deg,rgba(0,0,0,0) 55%,rgba(0,0,0,.5) 100%);z-index:10;cursor:pointer;
     padding-bottom:calc(44px + env(safe-area-inset-bottom,0px));}
@@ -605,8 +615,13 @@
   #skipBtn{position:absolute;bottom:18px;right:18px;z-index:11;background:rgba(0,0,0,.55);color:#fff;border:none;
     border-radius:999px;padding:10px 20px;font-family:inherit;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.3);}
   #skipBtn:active{transform:translateY(3px);}
-  #welcomeVideo{position:fixed;inset:0;width:100vw;height:100vh;object-fit:contain;background:#000;z-index:13;display:none;}
-  #welcomeSkipBtn{position:absolute;bottom:18px;right:18px;z-index:14;background:rgba(0,0,0,.55);color:#fff;border:none;
+  /* Same letterbox fill as the opening splash — see #splash::before. A video
+     element can't carry a ::before, so this is a sibling shown alongside it. */
+  #welcomeBackdrop{position:fixed;inset:0;pointer-events:none;display:none;z-index:13;
+    background:url('welcomescene-poster.jpg') center/cover no-repeat;
+    filter:blur(42px) saturate(1.2) brightness(.6);transform:scale(1.15);}
+  #welcomeVideo{position:fixed;inset:0;width:100vw;height:100vh;object-fit:contain;background:transparent;z-index:14;display:none;}
+  #welcomeSkipBtn{position:absolute;bottom:18px;right:18px;z-index:15;background:rgba(0,0,0,.55);color:#fff;border:none;
     border-radius:999px;padding:10px 20px;font-family:inherit;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 3px 0 rgba(0,0,0,.3);display:none;}
   #welcomeSkipBtn:active{transform:translateY(3px);}
   #nameOverlay{position:absolute;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;
@@ -788,6 +803,7 @@
       </div>
       <p class="modeHint">You can switch anytime with the 📖 / 🎮 button.</p>
     </div>
+    <div id="welcomeBackdrop"></div>
     <video id="welcomeVideo" playsinline preload="auto" src="welcomescene.mp4?v=2"></video>
     <button id="welcomeSkipBtn" onclick="endWelcome()">Skip ⏭️</button>
   </section>
@@ -1193,6 +1209,7 @@ const welcomeVideo = document.getElementById('welcomeVideo');
 welcomeVideo.addEventListener('ended', endWelcome);
 function startWelcomeVideo(){
   const vid = welcomeVideo, btn = document.getElementById('welcomeSkipBtn');
+  document.getElementById('welcomeBackdrop').style.display = 'block';
   vid.style.display = 'block';
   btn.style.display = 'block';
   vid.currentTime = 0;
@@ -1206,6 +1223,7 @@ function endWelcome(){
   stopVideo();
   if(vid._playPromise && vid._playPromise.then){ vid._playPromise.then(stopVideo).catch(()=>{}); }
   vid.style.display = 'none';
+  document.getElementById('welcomeBackdrop').style.display = 'none';
   document.getElementById('welcomeSkipBtn').style.display = 'none';
   startAdventure();
 }
