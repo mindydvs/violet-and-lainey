@@ -115,11 +115,11 @@
 
   /* fish counting */
   /* fish memory match */
-  /* lillypadbackground.png is portrait 941x1672, so the stage takes that shape
+  /* lillypadbackground.webp is portrait 941x1672, so the stage takes that shape
      and the 12 cards go 3 across x 4 down instead of 4x3 — that way `cover`
      shows the whole pond with no crop. align-content:center floats the rows in
      the middle of the taller box. */
-  .pondStage{position:relative;height:min(66vh,720px);width:auto;max-width:94vw;aspect-ratio:941/1672;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/lillypadbackground.png') center/cover;display:grid;grid-template-columns:repeat(3,1fr);gap:3%;padding:4%;box-sizing:border-box;align-content:center;}
+  .pondStage{position:relative;height:min(66vh,720px);width:auto;max-width:94vw;aspect-ratio:941/1672;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/lillypadbackground.webp') center/cover;display:grid;grid-template-columns:repeat(3,1fr);gap:3%;padding:4%;box-sizing:border-box;align-content:center;}
   .card{position:relative;aspect-ratio:1/1;background:none;border:none;padding:0;cursor:pointer;perspective:600px;}
   .cardInner{position:relative;width:100%;height:100%;transition:transform .5s;transform-style:preserve-3d;}
   .card.flipped .cardInner{transform:rotateY(180deg);}
@@ -135,7 +135,7 @@
   .choice:active{transform:translateY(4px);box-shadow:0 1px 0 rgba(0,0,0,.15);}
 
   /* butterfly match */
-  .skyBox{position:relative;width:min(88vw,480px);height:min(60vw,320px);background:url('art/butterflybackground.png') center/cover, linear-gradient(180deg,#e9d5ff,#c9f0ff);border-radius:20px;overflow:hidden;box-shadow:inset 0 -6px 14px rgba(0,0,0,.08);}
+  .skyBox{position:relative;width:min(88vw,480px);height:min(60vw,320px);background:url('art/butterflybackground.webp') center/cover, linear-gradient(180deg,#e9d5ff,#c9f0ff);border-radius:20px;overflow:hidden;box-shadow:inset 0 -6px 14px rgba(0,0,0,.08);}
   .targetSwatch{width:44px;height:44px;border-radius:50%;border:4px solid #fff;box-shadow:0 3px 8px rgba(0,0,0,.25);display:inline-block;vertical-align:middle;margin-left:8px;}
   .butterfly{position:absolute;width:58px;height:44px;cursor:pointer;transition:transform .15s;}
   .butterfly.flutterA{animation:flutterA 5s ease-in-out infinite;}
@@ -182,7 +182,7 @@
   @keyframes confettiFall{0%{transform:translateY(-10px) rotate(0deg);opacity:1}100%{transform:translateY(140px) rotate(300deg);opacity:0}}
 
   /* kite: pick a box, build the kite, then fly it to catch stars */
-  .kiteStage{position:relative;width:min(92vw,480px);aspect-ratio:3/4;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/kitebackground.png') center/cover;touch-action:none;}
+  .kiteStage{position:relative;width:min(92vw,480px);aspect-ratio:3/4;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/kitebackground.webp') center/cover;touch-action:none;}
   .kbHint{position:absolute;top:2.5%;left:0;width:100%;text-align:center;color:#fff;font-weight:bold;text-shadow:0 2px 4px rgba(0,0,0,.55);font-size:clamp(14px,3.6vw,18px);z-index:8;padding:0 6%;}
   .kbChoose{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:5%;}
   .kbChooseTitle{color:#15efd6!important;text-shadow:0 2px 5px rgba(0,0,0,.6);font-size:clamp(17px,4.6vw,24px)!important;}
@@ -247,7 +247,7 @@
   @keyframes kbCaughtA{to{transform:scale(1.8);opacity:0;}}
   /* Kite Color Match */
   #kmAsk span{font-weight:900;}
-  .kmSky{position:relative;width:min(94vw,520px);height:min(56vh,410px);margin:0 auto;border-radius:22px;overflow:hidden;background:#bfe3ff center/cover no-repeat;background-image:url('art/kitebackground.png');box-shadow:0 8px 24px rgba(0,0,0,.15);}
+  .kmSky{position:relative;width:min(94vw,520px);height:min(56vh,410px);margin:0 auto;border-radius:22px;overflow:hidden;background:#bfe3ff center/cover no-repeat;background-image:url('art/kitebackground.webp');box-shadow:0 8px 24px rgba(0,0,0,.15);}
   .kmKite{position:absolute;width:22%;max-width:120px;border:none;background:transparent;cursor:pointer;padding:0;-webkit-tap-highlight-color:transparent;animation:kmSway 3.4s ease-in-out infinite;}
   .kmKite img{width:100%;height:auto;display:block;filter:drop-shadow(0 5px 8px rgba(0,0,0,.35));pointer-events:none;}
   .kmKite:active{filter:brightness(1.05);}
@@ -263,7 +263,7 @@
   .kbPip.done{filter:none;transform:scale(1.15);}
 
   /* down the tree maze */
-  .mazeStage{position:relative;height:min(72vh,700px);aspect-ratio:6/8;width:auto;max-width:96vw;margin:0 auto;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/maze/mazebackground.png') center/cover, linear-gradient(180deg,var(--sky),var(--grass));}
+  .mazeStage{position:relative;height:min(72vh,700px);aspect-ratio:6/8;width:auto;max-width:96vw;margin:0 auto;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/maze/mazebackground.webp') center/cover, linear-gradient(180deg,var(--sky),var(--grass));}
   #mazeCanvas{position:relative;width:100%;height:100%;display:block;touch-action:none;cursor:grab;}
   #mazeCanvas:active{cursor:grabbing;}
   /* tap-to-see reward button (a tap lets iOS play the maze video WITH sound) */
@@ -289,10 +289,10 @@
   .colorPickBtn:active{transform:translateY(3px);box-shadow:0 1px 0 rgba(0,0,0,.15);}
 
   /* firefly pattern game */
-  /* fireflybackground.png is portrait 941x1672 (starry sky on top, meadow
+  /* fireflybackground.webp is portrait 941x1672 (starry sky on top, meadow
      below), so the stage takes that shape and is sized by HEIGHT — a width-
      driven portrait box would be taller than the screen. */
-  .fireflyStage{position:relative;height:min(66vh,680px);width:auto;max-width:96vw;aspect-ratio:39/50;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/fireflybackground.png') top center/cover, radial-gradient(circle at 50% 20%,#2b2158,#14102c 75%);margin-bottom:10px;}
+  .fireflyStage{position:relative;height:min(66vh,680px);width:auto;max-width:96vw;aspect-ratio:39/50;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/fireflybackground.webp') top center/cover, radial-gradient(circle at 50% 20%,#2b2158,#14102c 75%);margin-bottom:10px;}
   /* scattered across the sky rather than lined up along the bottom, so each
      one carries its own top as well as left (see FF_SLOTS) */
   .firefly{position:absolute;border:none;background:transparent;width:26%;max-width:120px;aspect-ratio:1/1;transform:translate(-50%,-50%);cursor:pointer;padding:0;}
@@ -359,7 +359,7 @@
      so the stage just takes the picture's own shape and `cover` shows all of it
      — no crop, and the hearts still get a tall column to rise through.
      TO GO BACK to the old closing art, swap the two lines below for:
-       height:min(58vh,540px);background:url('art/page19video2.png') center/cover;
+       height:min(58vh,540px);background:url('art/page19video2.webp') center/cover;
      and drop the aspect-ratio (that art is landscape 1672x941, so it needed the
      sky-extension trick to keep Violet and Lainey from being sliced in half). */
   .heartStage{position:relative;height:min(62vh,700px);width:auto;max-width:94vw;aspect-ratio:1479/1975;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.18);
@@ -383,7 +383,7 @@
   .rockSpot .rockEmoji{font-size:clamp(58px,17vw,88px);display:block;line-height:1;filter:drop-shadow(0 6px 6px rgba(0,0,0,.4));position:relative;z-index:2;}
   .rockSpot .rockImg{width:100%;display:block;filter:drop-shadow(0 8px 6px rgba(0,0,0,.5));position:relative;z-index:2;}
   .rockSpot.bounce .rockEmoji,.rockSpot.bounce .rockImg{animation:flowerBounce .26s ease;}
-  .rockBoard{background:url('art/rockbackground.png') center/cover;}
+  .rockBoard{background:url('art/rockbackground.webp') center/cover;}
   /* Lainey is a direct child of the rock stage now: she stands on the
      background, walks (left transition) to her rock, then ducks behind it */
   .rockLainey{position:absolute;left:50%;bottom:7%;transform:translateX(-50%);width:25%;max-width:132px;z-index:4;filter:drop-shadow(0 5px 6px rgba(0,0,0,.4));transition:left .9s ease,opacity .5s ease,bottom .5s ease;pointer-events:none;}
@@ -395,7 +395,7 @@
   .beatDot.filled{opacity:1;transform:scale(1.2);}
 
   /* fountain splash reaction game */
-  .fountainStage{position:relative;width:min(92vw,480px);height:280px;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/nowaterfountain.png') center/cover;}
+  .fountainStage{position:relative;width:min(92vw,480px);height:280px;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/nowaterfountain.webp') center/cover;}
   .droplet{position:absolute;transform:translate(-50%,-50%);border:none;background:transparent;font-size:44px;cursor:pointer;padding:0;animation:dropletIn .2s ease;}
   .droplet img{width:38px;height:auto;display:block;filter:drop-shadow(0 2px 3px rgba(0,0,0,.2));}
   .droplet.popped{animation:dropletPop .2s ease forwards;}
@@ -405,7 +405,7 @@
   @keyframes dropletFade{0%{transform:translate(-50%,-50%) scale(1);opacity:1}100%{transform:translate(-50%,-50%) scale(.6);opacity:0}}
 
   /* catch the apples drag game */
-  .appleStage{position:relative;width:min(94vw,640px);height:440px;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/appletree.png') center/cover;touch-action:none;cursor:grab;}
+  .appleStage{position:relative;width:min(94vw,640px);height:440px;border-radius:22px;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,.15);background:url('art/appletree.webp') center/cover;touch-action:none;cursor:grab;}
   /* apple bucket: sits in the bottom-LEFT corner (as big as the character), caught apples pile into it, then it flashes (tappable) once all 10 are caught */
   .apBucket{position:absolute;left:0.5%;bottom:2%;width:20%;z-index:7;pointer-events:none;border:none;background:transparent;padding:0;appearance:none;-webkit-appearance:none;-webkit-tap-highlight-color:transparent;animation:apBucketPop .4s ease;}
   .apBucket img{width:100%;height:auto;display:block;filter:drop-shadow(0 5px 10px rgba(0,0,0,.4));}
@@ -542,9 +542,9 @@
   .treasureItem{position:absolute;width:11%;cursor:grab;touch-action:none;-webkit-user-select:none;user-select:none;-webkit-user-drag:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5));z-index:4;}
   .treasureItem.dragging{cursor:grabbing;z-index:9999;filter:drop-shadow(0 5px 9px rgba(0,0,0,.55));}
   /* invisible drop zone sitting over the open chest painted into the
-     background art (it's on the lower-left of moonlitscene.png) */
+     background art (it's on the lower-left of moonlitscene.webp) */
   .treasureChest{position:absolute;left:27%;top:46%;width:23%;height:31%;z-index:2;pointer-events:none;}
-  /* all-items-in: the chest (cropped from taptreasure.png) sits exactly over the
+  /* all-items-in: the chest (cropped from taptreasure.webp) sits exactly over the
      scene's chest and PULSATES like the kite; tapping it plays the reward */
   .treasureTap{position:absolute;left:26.06%;top:46.26%;width:23.85%;border:none;background:transparent;padding:0;cursor:pointer;z-index:9;-webkit-tap-highlight-color:transparent;transform-origin:50% 100%;animation:treasurePulse 1s ease-in-out infinite;}
   .treasureTap img{width:100%;height:auto;display:block;filter:drop-shadow(0 0 12px rgba(255,220,90,.9));}
@@ -693,7 +693,7 @@
        flex:none so the surrounding column can't shrink it (same trap as the
        bubble and wake-up stages). */
     .awakeStage{flex:none;width:min(84vw,700px);aspect-ratio:1/1;}
-    /* butterflybackground.png is square 1254x1254 — the old 1.6:1 box cropped
+    /* butterflybackground.webp is square 1254x1254 — the old 1.6:1 box cropped
        ~38% of it away and left ~450px of the screen unused below. Bigger and
        squarer shows more of the art and gives the butterflies room. */
     .skyBox{width:min(92vw,780px);height:min(70vw,640px);}
@@ -716,7 +716,7 @@
     .fireflyStage{height:min(74vh,880px);width:auto;max-width:96vw;}
     /* rock game — background is a CSS gradient, so it resizes freely */
     .rockStage{width:min(92vw,780px);height:min(44vh,500px);}
-    /* owl song — had NO tablet rule either. aspect matches owlsinging.png
+    /* owl song — had NO tablet rule either. aspect matches owlsinging.webp
        (2821x1751) exactly, so widening is all that's needed; notes are placed
        in percentages and follow. */
     .owlScene{width:min(94vw,800px);}
@@ -724,7 +724,7 @@
        game does not use (that class belongs to an unreachable older version),
        so it had no tablet sizing at all. */
     .tuckScene{width:min(92vw,780px);}
-    /* Violet's art (violetmaze.png) is 1536x1024 and her visible pixels are a
+    /* Violet's art (violetmaze.webp) is 1536x1024 and her visible pixels are a
        wide 1.374 aspect, so her on-screen width is roughly 0.73 x her height%.
        The pajamas hang between x 36% and 62%, so she has to stay under 36% wide
        and sit to their left: 48% height -> ~35% wide, spanning about 1%-36%.
@@ -766,7 +766,7 @@
       <p class="subtitle">Tap to begin! 💜🐞</p>
       <div class="play-circle"><div class="tri"></div></div>
       <div class="bookCredit">
-        <img src="art/cover.png" alt="">
+        <img src="art/cover.webp" alt="">
         <span>Based on the picture book<br>by Mindy Jenkins</span>
       </div>
     </div>
@@ -1298,8 +1298,8 @@ const NUMBERED_PALETTE=[
    Walks: scene -> color -> game -> scene -> color -> game -> home
    ============================================================ */
 const SEQUENCE = [
-  {type:'scene', page:1, art:'art/page1video2.png', video:'art/page1video3.mp4', title:'Meet Violet & Lainey'},
-  {type:'color', page:1, art:'art/scene1-color.png', artTablet:'art/scene1-color-ipad.png', bgTablet:'art/paintbackground-ipad.jpg', title:'Paint: Meet Violet & Lainey', ask:'Pick a paint bucket, then tap the picture to fill it in!', audio:'paint', buckets:[
+  {type:'scene', page:1, art:'art/page1video2.webp', video:'art/page1video3.mp4', title:'Meet Violet & Lainey'},
+  {type:'color', page:1, art:'art/scene1-color.webp', artTablet:'art/scene1-color-ipad.webp', bgTablet:'art/paintbackground-ipad.jpg', title:'Paint: Meet Violet & Lainey', ask:'Pick a paint bucket, then tap the picture to fill it in!', audio:'paint', buckets:[
     {name:'purple', hex:'#8e3bbf', style:'left:10%;top:8%;width:10%;height:11%'},
     {name:'orange', hex:'#e8892b', style:'left:19%;top:8%;width:10%;height:11%'},
     {name:'yellow', hex:'#f4d13f', style:'left:27%;top:8%;width:10%;height:11%'},
@@ -1310,41 +1310,41 @@ const SEQUENCE = [
     {name:'black',  hex:'#2a2a2a', style:'left:69%;top:8%;width:10%;height:11%'},
     {name:'red',    hex:'#e23b3b', style:'left:78%;top:8%;width:10%;height:11%'}
   ]},
-  {type:'scene', page:2, art:'art/page2video2.png', video:'art/page2video.mp4',       title:'Wake Up Time'},
+  {type:'scene', page:2, art:'art/page2video2.webp', video:'art/page2video.mp4',       title:'Wake Up Time'},
   {type:'game',  id:'wake',      title:'Wake Up Violet!'},
-  {type:'scene', page:8, art:'art/page3video2.png', video:'art/page3video.mp4',       title:'Sleepy Yawn'},
+  {type:'scene', page:8, art:'art/page3video2.webp', video:'art/page3video.mp4',       title:'Sleepy Yawn'},
   {type:'game',  id:'maze',      title:'Through the Bushes'},
-  {type:'scene', page:10, art:'art/page4video2.png', video:'art/page4video.mp4',      title:'Flying Through the Sky'},
+  {type:'scene', page:10, art:'art/page4video2.webp', video:'art/page4video.mp4',      title:'Flying Through the Sky'},
   {type:'game',  id:'kite',      title:'Build & Fly a Kite'},
-  {type:'scene', page:5, art:'art/page5video2.png', video:'art/page5video.mp4', title:'Butterfly Grove'},
+  {type:'scene', page:5, art:'art/page5video2.webp', video:'art/page5video.mp4', title:'Butterfly Grove'},
   {type:'game',  id:'butterfly', title:'Butterfly Counting'},
-  {type:'scene', page:6, art:'art/page6video2.png', video:'art/page6video.mp4', title:'The Pond'},
+  {type:'scene', page:6, art:'art/page6video2.webp', video:'art/page6video.mp4', title:'The Pond'},
   {type:'game',  id:'fish',      title:'Fish Memory Match'},
-  {type:'scene', page:16, art:'art/page7video2.png', video:'art/page7video.mp4',      title:'Fountain Splash'},
+  {type:'scene', page:16, art:'art/page7video2.webp', video:'art/page7video.mp4',      title:'Fountain Splash'},
   {type:'game',  id:'fountain', title:'Fountain Splash'},
-  {type:'scene', page:18, art:'art/page8video2.png', video:'art/page8video.mp4',      title:'Apple Tree Nectar'},
+  {type:'scene', page:18, art:'art/page8video2.webp', video:'art/page8video.mp4',      title:'Apple Tree Nectar'},
   {type:'game',  id:'apple', title:'Catch the Apples'},
-  {type:'scene', page:20, art:'art/page9video2.png', video:'art/page9video.mp4',      title:'Getting Sleepy'},
+  {type:'scene', page:20, art:'art/page9video2.webp', video:'art/page9video.mp4',      title:'Getting Sleepy'},
   {type:'game',  id:'stayAwake', title:'Stay Awake!'},
-  {type:'scene', page:22, art:'art/page10video2.png', video:'art/page10video.mp4',      title:'Time for a Nap'},
+  {type:'scene', page:22, art:'art/page10video2.webp', video:'art/page10video.mp4',      title:'Time for a Nap'},
   {type:'game',  id:'napTuck', title:'Tuck Them In'},
-  {type:'scene', page:24, art:'art/page11video2.png', video:'art/page11video.mp4',      title:"Violet's Turn"},
+  {type:'scene', page:24, art:'art/page11video2.webp', video:'art/page11video.mp4',      title:"Violet's Turn"},
   {type:'game',  id:'findDiff', title:'Find the Differences'},
-  {type:'scene', page:26, art:'art/page12video2.png', video:'art/page12video.mp4',      title:'Playground at Dusk'},
+  {type:'scene', page:26, art:'art/page12video2.webp', video:'art/page12video.mp4',      title:'Playground at Dusk'},
   {type:'game',  id:'bubble', title:'Bubble Pop'},
-  {type:'scene', page:28, art:'art/page13video2.png', video:'art/page13video.mp4',      title:'Fireflies at Night'},
+  {type:'scene', page:28, art:'art/page13video2.webp', video:'art/page13video.mp4',      title:'Fireflies at Night'},
   {type:'game',  id:'firefly', title:'Firefly Pattern'},
-  {type:'scene', page:30, art:'art/page14video2.png', video:'art/page14video.mp4',      title:'Moonlit Lake'},
+  {type:'scene', page:30, art:'art/page14video2.webp', video:'art/page14video.mp4',      title:'Moonlit Lake'},
   {type:'game',  id:'treasure', title:'Fill the Treasure Chest'},
-  {type:'scene', page:32, art:'art/page15video2.png', video:'art/page15video.mp4',      title:'Cricket Orchestra'},
+  {type:'scene', page:32, art:'art/page15video2.webp', video:'art/page15video.mp4',      title:'Cricket Orchestra'},
   {type:'game',  id:'cricket', title:"Where's Lainey Napping?"},
-  {type:'scene', page:34, art:'art/page16video2.png', video:'art/page16video.mp4',      title:"The Owl's Lullaby"},
+  {type:'scene', page:34, art:'art/page16video2.webp', video:'art/page16video.mp4',      title:"The Owl's Lullaby"},
   {type:'game',  id:'owlSong', title:'Make a Song with the Owl'},
-  {type:'scene', page:36, art:'art/page17video2.png', video:'art/page17video.mp4',      title:'Sweet Dreams'},
+  {type:'scene', page:36, art:'art/page17video2.webp', video:'art/page17video.mp4',      title:'Sweet Dreams'},
   {type:'create', title:'Create Your Own!'},
-  {type:'scene', page:38, art:'art/page18video2.png', video:'art/page18video.mp4',      title:'Morning Arrives'},
+  {type:'scene', page:38, art:'art/page18video2.webp', video:'art/page18video.mp4',      title:'Morning Arrives'},
   {type:'game',  id:'ttt', title:'Tic-Tac-Toe'},
-  {type:'scene', page:40, art:'art/page19video2.png', video:'art/page19video.mp4',      title:'The End'},
+  {type:'scene', page:40, art:'art/page19video2.webp', video:'art/page19video.mp4',      title:'The End'},
   {type:'game',  id:'heartCatch', title:'Catch the Hearts'},
 ];
 let seqIndex = 0;
@@ -1617,7 +1617,7 @@ function playPaintRewardVideo(src, onEnd){
 /* ===== Create Your Own — pick a white or black canvas, then free-draw with
    the paint-palette colours. No coloring page; the child makes their own
    picture and taps Done to play the reward. ===== */
-// paint.png blob colours + their centre position (% of the palette image)
+// paint.webp blob colours + their centre position (% of the palette image)
 const CC_PAINTS = [
   {hex:'#f21414', x:24, y:27}, // red
   {hex:'#f213b5', x:39, y:17}, // magenta
@@ -1633,8 +1633,8 @@ const CC_PAINTS = [
 ];
 // inner drawable rectangle of each easel image (% of the image)
 const CC_INNER = {
-  white: {l:13, t:12, w:75, h:66, bg:'art/whitecanvaslarge.png', reward:'art/whitecanvasreward.mp4'},
-  black: {l:15, t:12, w:70, h:66, bg:'art/blackcanvaslarge.png', reward:'art/blackcanvasreward.mp4'}
+  white: {l:13, t:12, w:75, h:66, bg:'art/whitecanvaslarge.webp', reward:'art/whitecanvasreward.mp4'},
+  black: {l:15, t:12, w:70, h:66, bg:'art/blackcanvaslarge.webp', reward:'art/blackcanvasreward.mp4'}
 };
 let ccCtx=null, ccDrawing=false, ccColor='#e11e1e', ccBrush=14, ccWhich='white';
 /* `silent` is used when coming back from a reward — the child has already heard
@@ -1645,8 +1645,8 @@ function renderCreateCanvas(stage, silent){
   stage.innerHTML = `
     <p class="ask" id="ccAsk">${silent ? '🎨 Paint again? Pick a canvas — or tap “Next Scene” below.' : 'Pick a canvas to draw on!'}</p>
     <div class="ccChoose">
-      <button class="ccPick" onclick="ccStart('white')" disabled><img src="art/whitecanvaslarge.png" alt="White canvas"><span>White Canvas</span></button>
-      <button class="ccPick" onclick="ccStart('black')" disabled><img src="art/blackcanvaslarge.png" alt="Black canvas"><span>Black Canvas</span></button>
+      <button class="ccPick" onclick="ccStart('white')" disabled><img src="art/whitecanvaslarge.webp" alt="White canvas"><span>White Canvas</span></button>
+      <button class="ccPick" onclick="ccStart('black')" disabled><img src="art/blackcanvaslarge.webp" alt="Black canvas"><span>Black Canvas</span></button>
     </div>`;
   // the canvases can't be picked until the "choose a canvas" instructions finish
   const enable = ()=>document.querySelectorAll('.ccPick').forEach(b=>b.disabled=false);
@@ -1671,7 +1671,7 @@ function ccStart(which){
         <canvas id="ccCanvas" class="ccCanvas" style="left:${inner.l}%;top:${inner.t}%;width:${inner.w}%;height:${inner.h}%"></canvas>
       </div>
       <div class="ccPalette" id="ccPalette">
-        <img src="art/colorpallet.png" alt="paints">
+        <img src="art/colorpallet.webp" alt="paints">
         ${CC_PAINTS.map((p,i)=>`<button class="ccColor${i===0?' sel':''}" data-i="${i}" style="left:${p.x}%;top:${p.y}%" onclick="ccPick(${i},this)" aria-label="paint color"></button>`).join('')}
       </div>
       <div class="ccTools">
@@ -1834,7 +1834,7 @@ function renderWakeGame(stage){
   wakeTried = new Set(); wakeGen++;
   stage.innerHTML = `
     <p class="ask">Help Lainey wake up Violet!</p>
-    <div class="wakeStage" id="wakeStage"><img src="art/wakeupviolet.png" alt="sleepy Violet"></div>
+    <div class="wakeStage" id="wakeStage"><img src="art/wakeupviolet.webp" alt="sleepy Violet"></div>
     <div class="wakeDial">
       <div class="wakeDialLabel" id="wakeDialLabel">Try to wake up Violet with a sound!</div>
       <div class="wakeDialTrack"><div class="wakeDialFill" id="wakeDialFill" style="width:0%"></div></div>
@@ -1986,13 +1986,13 @@ const MAZE_FLOWER_COLORS = ['#ff6fa3','#b06fe0','#ffd93d','#ff8c42','#5eb8ff'];
 const MAZE_ASK = 'Drag Violet through the bushes to find Lainey!';
 let mazeGrid=null, mazeGoal=null, mazePlayer=null, mazeTrail=[], mazeCanvas=null, mazeCtx=null, mazeCell=0, mazeWon=false, mazeDragging=false, mazePendingReward=false;
 let mazeRewardVid=null, mazeRewardUnlocked=false;
-const mazeVioletImg = new Image(); mazeVioletImg.src = 'art/violetmaze.png';
+const mazeVioletImg = new Image(); mazeVioletImg.src = 'art/violetmaze.webp';
 mazeVioletImg.onload = ()=>{ if(mazeCanvas) drawMaze(); };
-const mazeLaineyImg = new Image(); mazeLaineyImg.src = 'art/laineymaze.png';
+const mazeLaineyImg = new Image(); mazeLaineyImg.src = 'art/laineymaze.webp';
 mazeLaineyImg.onload = ()=>{ if(mazeCanvas) drawMaze(); };
 /* a small bush image, tiled with a canvas pattern to paint the maze
    walls themselves — see art/maze/README.txt for the exact filename */
-const mazeBushTileImg = new Image(); mazeBushTileImg.src = 'art/maze/bush-tile.png';
+const mazeBushTileImg = new Image(); mazeBushTileImg.src = 'art/maze/bush-tile.webp';
 let mazeBushPattern = null, mazeBushPatternCell = 0;
 mazeBushTileImg.onload = ()=>{ mazeBushPattern=null; if(mazeCanvas) drawMaze(); };
 function renderMazeGame(stage){
@@ -2328,11 +2328,11 @@ function kiteShuffle(a){
   return a;
 }
 const KB_CHARS = {
-  violet: {name:'Violet', plain:'art/violetplainframe.png', kite:'art/violetdecoframe.png', built1:'art/violetbuilt1.png', deco:'art/yellowflower.png', ref:'art/violetref.png', spoolItem:'art/spoolandropeviolet.png', spoolCrate:'art/violetspoolcrate.png', giveBox:'art/violetkitebox1.png', supply:'art/kitesupplybox.png',
+  violet: {name:'Violet', plain:'art/violetplainframe.webp', kite:'art/violetdecoframe.webp', built1:'art/violetbuilt1.webp', deco:'art/yellowflower.webp', ref:'art/violetref.webp', spoolItem:'art/spoolandropeviolet.webp', spoolCrate:'art/violetspoolcrate.webp', giveBox:'art/violetkitebox1.webp', supply:'art/kitesupplybox.webp',
     bows:[{f:'toppurplebow',x:63.0,y:58.7,w:17.4},{f:'yellowbow',x:72.5,y:63.8,w:14.5},{f:'bottompurplebow',x:80.4,y:73.9,w:18.1}]},
-  lainey: {name:'Lainey', plain:'art/laineyplainframe.png', kite:'art/laineydecoframe.png', built1:'art/laineybuilt1.png', deco:'art/blackdot.png',    ref:'art/laineyref.png', spoolItem:'art/spoolandthreadlainey.png', spoolCrate:'art/laineyspoolcrate.png', giveBox:'art/laineykitebox1.png', supply:'art/laineykitesupplybox.png',
+  lainey: {name:'Lainey', plain:'art/laineyplainframe.webp', kite:'art/laineydecoframe.webp', built1:'art/laineybuilt1.webp', deco:'art/blackdot.webp',    ref:'art/laineyref.webp', spoolItem:'art/spoolandthreadlainey.webp', spoolCrate:'art/laineyspoolcrate.webp', giveBox:'art/laineykitebox1.webp', supply:'art/laineykitesupplybox.webp',
     // Each bow must land exactly on the faint ghost bow printed on
-    // laineyplainframe.png — if it doesn't, the pale ghost peeks out and the
+    // laineyplainframe.webp — if it doesn't, the pale ghost peeks out and the
     // bow reads as a washed-out smear. Ghost centres measured from that art:
     // red 65.5/56.1 (w 16.9), black 72.9/62.6, red 79.3/69.4 (w 13.3), black 84.3/75.9.
     bows:[{f:'topredbow',x:65.5,y:56.1,w:17.4},{f:'topblackbow',x:74.8,y:62.3,w:13.6},{f:'lowredbow',x:79.3,y:69.4,w:14.1},{f:'lowblackbow',x:84.3,y:75.9,w:15.0}]}
@@ -2347,8 +2347,8 @@ function renderKiteGame(stage){
     <div class="kiteStage" id="kiteStage">
       <div class="kbHint kbChooseTitle">Whose kite will you build?</div>
       <div class="kbChoose">
-        <button class="kbCharPick violet" onclick="kbChoose('violet')"><img src="art/violetkitebox1.png" alt="Violet"><span>Violet</span></button>
-        <button class="kbCharPick lainey" onclick="kbChoose('lainey')"><img src="art/laineykitebox1.png" alt="Lainey"><span>Lainey</span></button>
+        <button class="kbCharPick violet" onclick="kbChoose('violet')"><img src="art/violetkitebox1.webp" alt="Violet"><span>Violet</span></button>
+        <button class="kbCharPick lainey" onclick="kbChoose('lainey')"><img src="art/laineykitebox1.webp" alt="Lainey"><span>Lainey</span></button>
       </div>
     </div>
     <div class="feedback" id="kiteFeedback"></div>`;
@@ -2364,7 +2364,7 @@ function kbChoose(char){
   const kiteStage = document.getElementById('kiteStage');
   // the base kite (redkitebows/purplekitebows) already shows faint ghost bows on
   // the string; the child drags the real bows onto those exact spots
-  const bowSolids = c.bows.map((b,i)=>`<img class="kbBowImg kbPart" id="kbPart-bow${i}" style="left:${b.x}%;top:${b.y}%;width:${b.w}%" src="art/${b.f}.png" alt="">`).join('');
+  const bowSolids = c.bows.map((b,i)=>`<img class="kbBowImg kbPart" id="kbPart-bow${i}" style="left:${b.x}%;top:${b.y}%;width:${b.w}%" src="art/${b.f}.webp" alt="">`).join('');
   kiteStage.innerHTML = `
     <div class="kbHint" id="kbHint">Build the kite to match the one on the left!</div>
     <img class="kbRef kbRef-${char}" src="${c.ref}" alt="">
@@ -2379,7 +2379,7 @@ function kbChoose(char){
   kiteShuffle(kbBuildParts(c)).forEach(part=>{
     // the crate uses a tight crop of the spool (spoolCrate); the full frame with
     // its long rope is what gets shown once the spool is placed on the kite
-    const src = part==='deco' ? c.deco : part==='spool' ? c.spoolCrate : 'art/'+c.bows[+part.slice(3)].f+'.png';
+    const src = part==='deco' ? c.deco : part==='spool' ? c.spoolCrate : 'art/'+c.bows[+part.slice(3)].f+'.webp';
     const p = document.createElement('div');
     // the full-colour spool sits in the crate with the bows (drag it onto the grayed spool on the kite)
     p.className='kbPiece'; p.id='kbPiece-'+part; p.dataset.part=part;
@@ -2660,11 +2660,11 @@ function kiteConfetti(){
    matching kite. Tap-based, so the winning tap plays the reward WITH sound.
    Get KM_TARGET_WINS right to see the reward. */
 const KM_COLORS = [
-  {name:'red',    label:'RED',    hex:'#e23b3b', img:'art/redkite.png'},
-  {name:'blue',   label:'BLUE',   hex:'#2196f3', img:'art/bluekite.png'},
-  {name:'orange', label:'ORANGE', hex:'#ef7d1a', img:'art/orangekite.png'},
-  {name:'pink',   label:'PINK',   hex:'#ff4fa3', img:'art/pinkkite.png'},
-  {name:'purple', label:'PURPLE', hex:'#8e2fd0', img:'art/purplekite.png'}
+  {name:'red',    label:'RED',    hex:'#e23b3b', img:'art/redkite.webp'},
+  {name:'blue',   label:'BLUE',   hex:'#2196f3', img:'art/bluekite.webp'},
+  {name:'orange', label:'ORANGE', hex:'#ef7d1a', img:'art/orangekite.webp'},
+  {name:'pink',   label:'PINK',   hex:'#ff4fa3', img:'art/pinkkite.webp'},
+  {name:'purple', label:'PURPLE', hex:'#8e2fd0', img:'art/purplekite.webp'}
 ];
 const KM_TARGET_WINS = 3;
 let kmTargetColor=null, kmWins=0, kmLock=false;
@@ -2753,11 +2753,11 @@ function playKiteMatchReward(){
 /* only real photo butterflies are used here — add more entries (with
    an img path) as more colors get made */
 const BFLY_COLORS = [
-  {name:'blue',    hex:'#2196f3', img:'art/bluebutterfly.png'},
-  {name:'orange',  hex:'#ff8c42', img:'art/orangebutterfly.png'},
-  {name:'pink',    hex:'#ff7eb6', img:'art/pinkbutterfly.png'},
-  {name:'purple',  hex:'#7b4ea8', img:'art/purplebutterfly.png'},
-  {name:'rainbow', hex:'#8e5fd6', swatch:'linear-gradient(90deg,#e23b3b,#ff8c42,#ffd34e,#4caf50,#2196f3,#7b4ea8)', img:'art/rainbowbutterfly.png'}
+  {name:'blue',    hex:'#2196f3', img:'art/bluebutterfly.webp'},
+  {name:'orange',  hex:'#ff8c42', img:'art/orangebutterfly.webp'},
+  {name:'pink',    hex:'#ff7eb6', img:'art/pinkbutterfly.webp'},
+  {name:'purple',  hex:'#7b4ea8', img:'art/purplebutterfly.webp'},
+  {name:'rainbow', hex:'#8e5fd6', swatch:'linear-gradient(90deg,#e23b3b,#ff8c42,#ffd34e,#4caf50,#2196f3,#7b4ea8)', img:'art/rainbowbutterfly.webp'}
 ];
 let bflyTarget=null, bflyRoundColors=[];
 /* tracks correct-in-a-row rounds; a wrong net tap anywhere in the round
@@ -2777,7 +2777,7 @@ function butterflySVG(hex){
   </svg>`;
 }
 /* fallback net icon, tinted to match each color, used until a real
-   art/<color>net.png exists — same graceful-degradation pattern as
+   art/<color>net.webp exists — same graceful-degradation pattern as
    every other placeholder icon in this app */
 function netSVG(hex){
   return `<svg viewBox="0 0 100 130" xmlns="http://www.w3.org/2000/svg">
@@ -2861,7 +2861,7 @@ function newButterflyRound(){
     const iconWrap=document.createElement('span');
     iconWrap.className='netIcon';
     const img=document.createElement('img');
-    img.src=`art/${c.name}net.png`;
+    img.src=`art/${c.name}net.webp`;
     img.alt=c.name+' net';
     img.onerror=()=>{ iconWrap.innerHTML = netSVG(c.hex); };
     iconWrap.appendChild(img);
@@ -3013,8 +3013,8 @@ function newPondRound(){
     card.id = 'card'+i;
     card.innerHTML = `
       <div class="cardInner">
-        <div class="cardFace cardBack"><img src="art/lillypad.png" alt="" onerror="this.parentElement.innerHTML=lilyPadSVG()"></div>
-        <div class="cardFace cardFront"><img src="art/${fish}fish.png" alt=""></div>
+        <div class="cardFace cardBack"><img src="art/lillypad.webp" alt="" onerror="this.parentElement.innerHTML=lilyPadSVG()"></div>
+        <div class="cardFace cardFront"><img src="art/${fish}fish.webp" alt=""></div>
       </div>`;
     card.onclick = ()=>flipCard(i);
     stageEl.appendChild(card);
@@ -3098,11 +3098,11 @@ function pondConfetti(){
    after the peek, the flowers actually swap positions a few times, so
    finding her means tracking movement, not color. */
 const HS_COLORS = [
-  {key:'blue',   closed:'art/blueclosedflower.png',   open:'art/blueopenflower.png'},
-  {key:'yellow', closed:'art/yellowclosedflower.png', open:'art/yellowopenflower.png'},
-  {key:'orange', closed:'art/orangeclosedflower.png', open:'art/orangeopenflower.png'},
-  {key:'purple', closed:'art/purpleclosedflower.png', open:'art/purpleopenflower.png'},
-  {key:'pink',   closed:'art/pinkclosedflower.png',   open:'art/pinkopenflower.png'},
+  {key:'blue',   closed:'art/blueclosedflower.webp',   open:'art/blueopenflower.webp'},
+  {key:'yellow', closed:'art/yellowclosedflower.webp', open:'art/yellowopenflower.webp'},
+  {key:'orange', closed:'art/orangeclosedflower.webp', open:'art/orangeopenflower.webp'},
+  {key:'purple', closed:'art/purpleclosedflower.webp', open:'art/purpleopenflower.webp'},
+  {key:'pink',   closed:'art/pinkclosedflower.webp',   open:'art/pinkopenflower.webp'},
 ];
 const HS_SLOT_COUNT = 5;
 const HS_SLOT_X = [8, 27, 50, 73, 92];
@@ -3144,7 +3144,7 @@ function startPeek(){
   document.getElementById('hsShuffleBtn').style.visibility='hidden';
   say("Watch closely!");
   setTimeout(()=>{
-    openFlowerSlot(hsHiddenFlowerId, 'art/laineyfront.png');
+    openFlowerSlot(hsHiddenFlowerId, 'art/laineyfront.webp');
     say("There she is!");
     setTimeout(()=>{
       closeFlowerSlot(hsHiddenFlowerId);
@@ -3193,7 +3193,7 @@ function pickFlower(k){
   if(k===hsHiddenFlowerId){
     hsFound=true;
     for(let j=0;j<HS_SLOT_COUNT;j++) document.getElementById('flower'+j).disabled=true;
-    openFlowerSlot(k, 'art/laineyflowerreveal.png');
+    openFlowerSlot(k, 'art/laineyflowerreveal.webp');
     fb.innerHTML='<span class="star">⭐ You found Lainey! ⭐</span>';
     say("You found me! Great job!");
     hsCelebrate();
@@ -3244,12 +3244,12 @@ function hsCelebrate(){
    kid taps them back in the same order — plays into the "fireflies
    twinkling" beat of that page of the story. */
 const FF_COUNT = 4;
-/* scattered across the starry half of fireflybackground.png (the horizon sits
+/* scattered across the starry half of fireflybackground.webp (the horizon sits
    at about y=58%), rather than in a row along the bottom */
 const FF_SLOTS = [{x:24,y:26},{x:70,y:18},{x:32,y:61},{x:76,y:53}];
 const FF_ROUNDS = 3;      // three chances
 const FF_BASE_LEN = 3;    // round 1 = 3 lights, round 2 = 4, round 3 = 5
-const FF_IMAGES = ['art/firefly1.png','art/firefly2.png','art/firefly3.png','art/firefly4.png'];
+const FF_IMAGES = ['art/firefly1.webp','art/firefly2.webp','art/firefly3.webp','art/firefly4.webp'];
 let ffPattern=[], ffPlayerIndex=0, ffBusy=false, ffRound=0;
 function renderFireflyGame(stage){
   stage.innerHTML = `
@@ -3404,15 +3404,15 @@ function ffConfetti(){
    The child picks who they want to be (Violet or Lainey), spins a wheel
    to see who goes first, then plays against the other character. The
    child always holds the X, the computer holds the O — the four X/O
-   character images were split out of art/xoxo.png. */
+   character images were split out of art/xoxo.webp. */
 const TTT_LINES=[[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
 // cell interior rectangles (in % of the board image) measured from the
-// wooden grid in art/tictactoebackground.png (1672x941)
+// wooden grid in art/tictactoebackground.webp (1672x941)
 const TTT_COLS=[[27.8,40.7],[43.0,56.1],[58.4,71.7]];   // [left%, right%]
 const TTT_ROWS=[[16.6,37.5],[41.3,62.5],[66.3,84.3]];   // [top%, bottom%]
 const TTT_MARK={   // [character][mark] -> image
-  violet:{X:'art/violetX.png', O:'art/violetO.png'},
-  lainey:{X:'art/laineyX.png', O:'art/laineyO.png'}
+  violet:{X:'art/violetX.webp', O:'art/violetO.webp'},
+  lainey:{X:'art/laineyX.webp', O:'art/laineyO.webp'}
 };
 const TTT_NAME={violet:'Violet', lainey:'Lainey'};
 let tttPlayerChar=null, tttPlayerLetter=null, tttAiChar=null, tttMark={}, tttBoard=[], tttTurn=null, tttBusy=false, tttGen=0;
@@ -3428,10 +3428,10 @@ function renderTttGame(stage){
   // one screen: all four choices — both Violets and both Laineys, X and O
   document.getElementById('tttArea').innerHTML = `
     <div class="tttChoose tttChoose4">
-      <button class="tttPick violet" onclick="tttChoose('violet','X')"><img src="art/violetX.png" alt="Violet with X"><span>Violet · X</span></button>
-      <button class="tttPick violet" onclick="tttChoose('violet','O')"><img src="art/violetO.png" alt="Violet with O"><span>Violet · O</span></button>
-      <button class="tttPick lainey" onclick="tttChoose('lainey','X')"><img src="art/laineyX.png" alt="Lainey with X"><span>Lainey · X</span></button>
-      <button class="tttPick lainey" onclick="tttChoose('lainey','O')"><img src="art/laineyO.png" alt="Lainey with O"><span>Lainey · O</span></button>
+      <button class="tttPick violet" onclick="tttChoose('violet','X')"><img src="art/violetX.webp" alt="Violet with X"><span>Violet · X</span></button>
+      <button class="tttPick violet" onclick="tttChoose('violet','O')"><img src="art/violetO.webp" alt="Violet with O"><span>Violet · O</span></button>
+      <button class="tttPick lainey" onclick="tttChoose('lainey','X')"><img src="art/laineyX.webp" alt="Lainey with X"><span>Lainey · X</span></button>
+      <button class="tttPick lainey" onclick="tttChoose('lainey','O')"><img src="art/laineyO.webp" alt="Lainey with O"><span>Lainey · O</span></button>
     </div>`;
   playAudio('tictactoe', "Let's play Tic-Tac-Toe! Choose Violet or Lainey, and choose X or O.", null, ()=>{});
 }
@@ -3495,7 +3495,7 @@ function tttStartPlay(winner){
   document.getElementById('tttArea').innerHTML = `
     <div class="tttBoard" id="tttBoard">
       <div class="tttZoom">
-        <img class="tttBg" src="art/tictactoebackground.png" alt="">
+        <img class="tttBg" src="art/tictactoebackground.webp" alt="">
         ${[0,1,2,3,4,5,6,7,8].map(i=>{
           const r=Math.floor(i/3), c=i%3;
           const left=TTT_COLS[c][0], top=TTT_ROWS[r][0];
@@ -3851,9 +3851,9 @@ function renderRockNapGame(stage){
       <div class="rockBand" id="rockBand">🦗🎶</div>
       ${[0,1,2].map(k=>`
         <button class="rockSpot" id="rock${k}" style="left:${RN_SLOT_X[k]}%" onclick="pickRock(${k})" disabled>
-          <img class="rockImg" src="art/rockshellgame.png" alt="rock" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'rockEmoji',textContent:'🪨'}))">
+          <img class="rockImg" src="art/rockshellgame.webp" alt="rock" onerror="this.replaceWith(Object.assign(document.createElement('span'),{className:'rockEmoji',textContent:'🪨'}))">
         </button>`).join('')}
-      <img class="rockLainey" id="rockLainey" src="art/shellgame.png?v=${Date.now()}" alt="Lainey" style="left:50%">
+      <img class="rockLainey" id="rockLainey" src="art/shellgame.webp?v=${Date.now()}" alt="Lainey" style="left:50%">
     </div>
     <div class="feedback" id="rnFeedback"></div>
     <button class="btn btn-daisy" id="rnPlayAgainBtn" onclick="renderRockNapGame(document.getElementById('stageArea'))" style="visibility:hidden">🔁 Play Again</button>
@@ -3983,7 +3983,7 @@ function rnConfetti(){
    the child taps always sounds musical. Tones are synthesized with the Web
    Audio API (no sound files needed), so every note has its own pitch and it
    plays instantly on tap. "Play my song" replays whatever they tapped.
-   Notes use art/note1.png … note6.png (red→purple), low→high pitch. */
+   Notes use art/note1.webp … note6.webp (red→purple), low→high pitch. */
 /* positions are in % of the scene; the notes arch across the FULL width of
    the sky above the owl, centred over it (low→high pitch, left→right) */
 const OWL_NOTES = [
@@ -4024,7 +4024,7 @@ function renderOwlSongGame(stage){
     <div class="owlInstruments" id="owlInstruments">
       ${OWL_INSTRUMENTS.map((ins,i)=>`<button class="owlInsBtn${i===0?' active':''}" data-key="${ins.key}" onclick="owlPickInstrument('${ins.key}')">${ins.emoji} ${ins.name}</button>`).join('')}
     </div>
-    <div class="owlScene" id="owlScene" style="background-image:url('art/owlsinging.png')"></div>
+    <div class="owlScene" id="owlScene" style="background-image:url('art/owlsinging.webp')"></div>
     <div class="owlBtns" id="owlBtns">
       <button class="btn btn-daisy" id="owlPlayBackBtn" onclick="owlPlayBack()">🔁 Play my song</button>
       <button class="btn btn-daisy" onclick="renderOwlSongGame(document.getElementById('stageArea'))">✨ Start over</button>
@@ -4041,7 +4041,7 @@ function renderOwlSongGame(stage){
     btn.setAttribute('aria-label', 'musical note');
     const img = document.createElement('img');
     img.className = 'owlNoteImg';
-    img.src = 'art/'+n.key+'.png';
+    img.src = 'art/'+n.key+'.webp';
     img.draggable = false;
     img.style.animationDelay = (i*0.25)+'s';   // bob out of sync
     btn.appendChild(img);
@@ -4225,7 +4225,7 @@ function updateFountainArt(){
   if(!stageEl) return;
   const thresholds = Object.keys(FT_STAGE_IMAGES).map(Number).sort((a,b)=>a-b);
   const current = thresholds.filter(t=>ftHits>=t).pop();
-  stageEl.style.backgroundImage = `url('art/${FT_STAGE_IMAGES[current]}.png')`;
+  stageEl.style.backgroundImage = `url('art/${FT_STAGE_IMAGES[current]}.webp')`;
 }
 function spawnDroplet(){
   const stageEl = document.getElementById('fountainStage');
@@ -4237,7 +4237,7 @@ function spawnDroplet(){
   el.className = 'droplet';
   el.style.left = x+'%';
   el.style.top = y+'%';
-  el.innerHTML = '<img src="art/waterdrop.png" alt="">';
+  el.innerHTML = '<img src="art/waterdrop.webp" alt="">';
   el.onclick = ()=>popDroplet(el, true);
   stageEl.appendChild(el);
   ftDropletTimer = setTimeout(()=>popDroplet(el, false), FT_DROPLET_LIFETIME);
@@ -4265,7 +4265,7 @@ function popDroplet(el, hit){
 }
 function updateFtProgress(){
   document.getElementById('ftProgress').innerHTML = Array.from({length:FT_TARGET_HITS}).map((_,i)=>
-    `<span class="beatDot ${i<ftHits?'filled':''}"><img src="art/waterdrop.png" alt=""></span>`).join('');
+    `<span class="beatDot ${i<ftHits?'filled':''}"><img src="art/waterdrop.webp" alt=""></span>`).join('');
 }
 function ftCelebrate(){
   // no spoken "you did it" line — go straight to the reward video
@@ -4336,8 +4336,8 @@ function renderAppleGame(stage){
     <p class="ask" id="apAsk">Choose Lainey or Violet to catch the falling apples. Catch 10, then tap your basket! 🪣</p>
     <div class="appleStage" id="appleStage">
       <div class="charChoice" id="apCharChoice">
-        <button class="charChoiceBtn" onclick="startAppleGame('violet')"><img src="art/violetbasket.png" alt="Violet"><span>Violet</span></button>
-        <button class="charChoiceBtn" onclick="startAppleGame('lainey')"><img src="art/laineybasket.png" alt="Lainey"><span>Lainey</span></button>
+        <button class="charChoiceBtn" onclick="startAppleGame('violet')"><img src="art/violetbasket.webp" alt="Violet"><span>Violet</span></button>
+        <button class="charChoiceBtn" onclick="startAppleGame('lainey')"><img src="art/laineybasket.webp" alt="Lainey"><span>Lainey</span></button>
       </div>
       <button class="basket" id="basket" style="left:${apBasketX}%;display:none"></button>
     </div>
@@ -4354,14 +4354,14 @@ function startAppleGame(character){
   document.getElementById('apCharChoice').remove();
   const basket = document.getElementById('basket');
   basket.style.display = 'block';
-  basket.innerHTML = `<img src="art/${character}basket.png" alt="">`;
+  basket.innerHTML = `<img src="art/${character}basket.webp" alt="">`;
   setupBasketDrag();
   // the apple bucket pops up and stays visible while they catch; it flashes
   // once all 10 are caught so they remember to tap it for the reward
   const apStage = document.getElementById('appleStage');
   if(apStage && !document.getElementById('apBucket')){
     const b=document.createElement('button'); b.type='button'; b.id='apBucket'; b.className='apBucket';
-    b.innerHTML='<img src="art/applebucket.png" alt="apple bucket">';
+    b.innerHTML='<img src="art/applebucket.webp" alt="apple bucket">';
     b.querySelector('img').addEventListener('error', ()=>b.remove());  // missing art -> just skip it
     apStage.appendChild(b);
   }
@@ -4524,7 +4524,7 @@ function renderAwakeGame(stage){
   stage.innerHTML = `
     <p class="ask" id="awAsk">Tap the Z's to help Violet stay awake!</p>
     <div class="awakeStage awNight" id="awakeStage">
-      <img class="awFull" id="awakeImg" src="art/${awPose}.png" alt="Violet">
+      <img class="awFull" id="awakeImg" src="art/${awPose}.webp" alt="Violet">
     </div>
     <div class="beatProgress" id="awProgress"></div>
     <button class="btn btn-daisy" id="awPlayAgainBtn" onclick="renderAwakeGame(document.getElementById('stageArea'))" style="visibility:hidden">🔁 Play Again</button>
@@ -4558,7 +4558,7 @@ function awSetPose(name){
   const img = document.getElementById('awakeImg'); if(!img) return;
   awPose = name;
   img.style.opacity = '0';
-  setTimeout(()=>{ img.src = 'art/'+name+'.png'; img.style.opacity = '1'; }, 120);
+  setTimeout(()=>{ img.src = 'art/'+name+'.webp'; img.style.opacity = '1'; }, 120);
 }
 function awHit(el, ch){
   if(!awActive){ el.remove(); return; }
@@ -4899,8 +4899,8 @@ function renderSeesawGame(stage){
     <div class="seesawStage" id="seesawStage">
       <div class="seesawBase"></div>
       <div class="seesawPlank" id="seesawPlank">
-        <img class="seesawChar seesawLeft" src="art/violetmaze.png" alt="Violet">
-        <img class="seesawChar seesawRight" src="art/laineymaze.png" alt="Lainey">
+        <img class="seesawChar seesawLeft" src="art/violetmaze.webp" alt="Violet">
+        <img class="seesawChar seesawRight" src="art/laineymaze.webp" alt="Lainey">
       </div>
       <button class="seesawZone seesawZoneLeft" onclick="seesawTap('left')" aria-label="tap left"></button>
       <button class="seesawZone seesawZoneRight" onclick="seesawTap('right')" aria-label="tap right"></button>
@@ -4997,8 +4997,8 @@ function renderTuckInGame(stage){
       <span class="tuckMoon">🌙</span>
       ${stars}
       <div class="tuckBed"></div>
-      <img class="tuckChar tuckViolet" src="art/violetmaze.png" alt="Violet">
-      <img class="tuckChar tuckLainey" src="art/laineyfront.png" alt="Lainey">
+      <img class="tuckChar tuckViolet" src="art/violetmaze.webp" alt="Violet">
+      <img class="tuckChar tuckLainey" src="art/laineyfront.webp" alt="Lainey">
       <div class="tuckPillow" id="tuckPillow">${tuckPillowSVG()}</div>
       <div class="tuckBlanket" id="tuckBlanket"></div>
       <button class="tuckLamp" id="tuckLamp" onclick="tuckLampTap()" style="display:none">💡</button>
@@ -5121,8 +5121,8 @@ function renderSheepGame(stage){
       <span class="tuckMoon">🌙</span>
       ${stars}
       <div class="tuckBed"></div>
-      <img class="tuckChar tuckViolet" src="art/violetmaze.png" alt="Violet">
-      <img class="tuckChar tuckLainey" src="art/laineyfront.png" alt="Lainey">
+      <img class="tuckChar tuckViolet" src="art/violetmaze.webp" alt="Violet">
+      <img class="tuckChar tuckLainey" src="art/laineyfront.webp" alt="Lainey">
       <div class="tuckZzz" id="sheepZzz">💤</div>
     </div>
     <div class="beatProgress" id="sheepProgress"></div>
@@ -5260,8 +5260,8 @@ function tuckStartCharacter(stage){
   tuckPajama = null; tuckBlanket = null;
   stage.innerHTML = `
     <p class="ask" id="tuckAsk">Pick cozy pajamas for ${tuckChar.name}!</p>
-    <div class="tuckScene" id="tuckScene" style="background-image:url('art/${tuckChar.key}closetwithpajamas.png')">
-      <img class="tuckCharPj plain" id="tuckCharPj" src="art/${tuckChar.plain}.png" alt="${tuckChar.name}">
+    <div class="tuckScene" id="tuckScene" style="background-image:url('art/${tuckChar.key}closetwithpajamas.webp')">
+      <img class="tuckCharPj plain" id="tuckCharPj" src="art/${tuckChar.plain}.webp" alt="${tuckChar.name}">
     </div>
     <div class="tuckOptions" id="tuckOptions"></div>
     <button class="btn btn-daisy" id="tuckPlayAgainBtn" onclick="renderNapTuckGame(document.getElementById('stageArea'))" style="visibility:hidden">🔁 Play Again</button>
@@ -5280,11 +5280,11 @@ function tuckStartCharacter(stage){
   });
   // preload this character's big swap-target scenes so swaps are instant,
   // plus the next character's closet
-  const pre = ['art/'+tuckChar.key+'blanketdrawer.png'];
-  TUCK_PAJAMAS.forEach(p=>pre.push('art/'+tuckChar.key+'pajama'+p+'.png'));
-  TUCK_BLANKETS.forEach(b=>pre.push('art/'+tuckChar.key+'in'+b+'blanket'+tuckChar.key+'.png'));
+  const pre = ['art/'+tuckChar.key+'blanketdrawer.webp'];
+  TUCK_PAJAMAS.forEach(p=>pre.push('art/'+tuckChar.key+'pajama'+p+'.webp'));
+  TUCK_BLANKETS.forEach(b=>pre.push('art/'+tuckChar.key+'in'+b+'blanket'+tuckChar.key+'.webp'));
   const next = TUCK_CHARS[tuckCharIdx+1];
-  if(next) pre.push('art/'+next.key+'closetwithpajamas.png');
+  if(next) pre.push('art/'+next.key+'closetwithpajamas.webp');
   pre.forEach(src=>{ const im=new Image(); im.src=src; });
 }
 function tuckPickPajama(p){
@@ -5294,7 +5294,7 @@ function tuckPickPajama(p){
   // dress the character in the chosen pajamas (full size, center)
   const img = document.getElementById('tuckCharPj');
   img.classList.remove('plain');
-  img.src = 'art/'+tuckChar.key+'pajama'+p+'.png';
+  img.src = 'art/'+tuckChar.key+'pajama'+p+'.webp';
   img.style.display = 'block';
   document.getElementById('tuckAsk').textContent = 'Look how cozy! Now pick a blanket for '+tuckChar.name+'!';
   playAudio('lookhowcozy', "Look how cozy! Now pick a blanket!");
@@ -5312,7 +5312,7 @@ const TUCK_BLANKET_ZONES = [
 function tuckShowBlanketDrawer(){
   const scene = document.getElementById('tuckScene');
   if(!scene) return;
-  scene.style.backgroundImage = "url('art/"+tuckChar.key+"blanketdrawer.png')";
+  scene.style.backgroundImage = "url('art/"+tuckChar.key+"blanketdrawer.webp')";
   document.getElementById('tuckCharPj').style.display = 'none';
   document.getElementById('tuckOptions').innerHTML = '';
   scene.querySelectorAll('.tuckZone').forEach(z=>z.remove());
@@ -5331,7 +5331,7 @@ function tuckPickBlanket(b){
   scene.querySelectorAll('.tuckZone').forEach(z=>z.remove());
   // swap to the full "in bed" scene (it already shows the character tucked
   // under this blanket), so keep the standing pajama overlay hidden
-  scene.style.backgroundImage = "url('art/"+tuckChar.key+"in"+b+"blanket"+tuckChar.key+".png')";
+  scene.style.backgroundImage = "url('art/"+tuckChar.key+"in"+b+"blanket"+tuckChar.key+".webp')";
   document.getElementById('tuckCharPj').style.display = 'none';
   document.getElementById('tuckOptions').innerHTML = '';
   document.getElementById('tuckAsk').textContent = tuckChar.name+" is all tucked in! 💤";
@@ -5384,9 +5384,9 @@ function playNapReward(fallbackFn){
    scattered around; the player drags each one into the treasure chest at
    the bottom. When all six are in, the chest bounces and the reward plays.
    Assets (drop into app/art/):
-     moonlitscene.png     – background WITH an open, empty chest painted in
+     moonlitscene.webp     – background WITH an open, empty chest painted in
                             at bottom-center (the drop zone sits over it)
-     treasure1.png … treasure6.png – the six treasures, transparent bg
+     treasure1.webp … treasure6.webp – the six treasures, transparent bg
    Optional: audio/filltreasurechest.mp3 (intro voice),
              art/treasurereward.mp4 (reward clip; else confetti). */
 const TREASURE_ITEMS = ['treasure1','treasure2','treasure3','treasure4','treasure5',
@@ -5396,7 +5396,7 @@ function renderTreasureGame(stage){
   treasureCollected=0; treasureTotal=TREASURE_ITEMS.length;
   stage.innerHTML = `
     <p class="ask" id="treasureAsk">Find the objects and drag them into the chest — then tap the chest! ✨</p>
-    <div class="treasureScene" id="treasureScene" style="background-image:url('art/moonlitscene.png')">
+    <div class="treasureScene" id="treasureScene" style="background-image:url('art/moonlitscene.webp')">
       <div class="treasureChest" id="treasureChest" aria-hidden="true"></div>
     </div>
     <div class="treasureRefGrid" id="treasureRef"></div>
@@ -5416,7 +5416,7 @@ function renderTreasureGame(stage){
     slot.dataset.key = key;
     const ref = document.createElement('img');
     ref.className = 'treasureRefImg';
-    ref.src = 'art/'+key+'.png';
+    ref.src = 'art/'+key+'.webp';
     cell.appendChild(slot);
     cell.appendChild(ref);
     grid.appendChild(cell);
@@ -5428,7 +5428,7 @@ function renderTreasureGame(stage){
   TREASURE_ITEMS.forEach((key,i)=>{
     const img = document.createElement('img');
     img.className = 'treasureItem';
-    img.src = 'art/'+key+'.png';
+    img.src = 'art/'+key+'.webp';
     img.dataset.key = key;
     img.dataset.home = 'left:'+pts[i].x+'%;top:'+pts[i].y+'%';
     img.style.cssText = img.dataset.home;
@@ -5517,7 +5517,7 @@ function treasureCollectItem(img, chest){
   const slot = document.querySelector('.treasureSlot[data-key="'+img.dataset.key+'"]');
   if(slot && !slot.classList.contains('filled')){
     const badge = document.createElement('img');
-    badge.src = 'art/'+img.dataset.key+'.png';
+    badge.src = 'art/'+img.dataset.key+'.webp';
     slot.appendChild(badge);
     slot.classList.add('filled');
   }
@@ -5532,7 +5532,7 @@ function treasureWin(){
   // chest; tapping it (a real tap) plays the reward video WITH sound
   const tap=document.createElement('button');
   tap.id='treasureTap'; tap.className='treasureTap'; tap.type='button';
-  tap.innerHTML='<img src="art/taptreasurechest.png" alt="tap the treasure chest">';
+  tap.innerHTML='<img src="art/taptreasurechest.webp" alt="tap the treasure chest">';
   let done=false;
   const go=()=>{ if(done) return; done=true; tap.remove(); playTreasureReward(treasureFinish); };
   tap.addEventListener('click', go);
@@ -5567,7 +5567,7 @@ function playTreasureReward(fallbackFn){
 }
 
 /* ===== Game: Find the Differences =====
-   Two side-by-side panels (one findthedifference<N>.png) with 5 differences.
+   Two side-by-side panels (one findthedifference<N>.webp) with 5 differences.
    Tap a difference on EITHER panel to circle it; find all 5 to win.
    FD_SPOTS holds each page's 5 differences as {x,y} in fraction of ONE panel's
    interior. Until a page's list is filled, the game runs in SETUP mode: tap
@@ -5598,7 +5598,7 @@ function renderFindDiffGame(stage){
   stage.innerHTML = `
     <p class="ask" id="fdAsk">${fdAuthor ? 'Setup ('+donePages+'/'+FD_PAGES+' pages done) — tap the 5 differences on page '+fdPage : 'Find the 5 differences! Tap them on either picture.'}</p>
     ${fdAuthor ? '<div class="fdSetupBtns"><button class="fdNav" onclick="fdSetupPrev()">◀ Prev</button><button class="fdNav" onclick="fdSetupRedo()">↺ Clear this page</button><button class="fdNav" onclick="fdSetupNext()">Next ▶</button></div>' : ''}
-    <div class="fdStage" id="fdStage" style="background-image:url('art/findthedifference${fdPage}.png')"></div>
+    <div class="fdStage" id="fdStage" style="background-image:url('art/findthedifference${fdPage}.webp')"></div>
     <div class="feedback" id="fdFeedback">${fdAuthor ? 'Tapped: '+fdAuthorTaps.length+' / 5' : 'Found: 0 / 5'}</div>
     ${fdAuthor ? '<div id="fdAuthorOut" style="font-size:12px;word-break:break-all;margin-top:6px;color:#5e3a85;font-weight:bold;"></div>'
                : '<div class="fdBtns"><button class="btn btn-daisy" id="fdHintBtn" onclick="fdHint()">💡 Hint</button>'
@@ -5728,7 +5728,7 @@ function fdAuthorRecord(sx, sy, st){
    color twice to win. Uses a simple square grid for robust matching. */
 const BUB_COLORS = ['purple','blue','pink','yellow','green','teal'];
 const BUB_IMGS = {};
-BUB_COLORS.forEach(c=>{ const im=new Image(); im.src='art/'+c+'bubble.png'; BUB_IMGS[c]=im; });
+BUB_COLORS.forEach(c=>{ const im=new Image(); im.src='art/'+c+'bubble.webp'; BUB_IMGS[c]=im; });
 const BUB_COLS = 12;
 const BUB_MATCH = 4;              // pop when 4+ of one colour touch
 const BUB_WIN_MATCHES = 3;        // make that happen this many times to win
